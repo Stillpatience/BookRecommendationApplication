@@ -11,10 +11,9 @@ import {
     Route,
     Link
 } from "react-router-dom";
-import {Hello} from "./Hello";
-import {Info} from "./Info";
-import {Books} from "./Books";
 import {Routes} from "./Routes";
+import {RoutePaths} from "./RoutePaths";
+import {Login} from "./Login";
 
 const useStyles = makeStyles({
     root: {
@@ -30,7 +29,6 @@ export const AppNavigation = () => {
         <div>
             <Router>
                 <Routes />
-
                 <BottomNavigation
                     value={value}
                     onChange={(event, newValue) => {
@@ -39,9 +37,9 @@ export const AppNavigation = () => {
                     showLabels
                     className={classes.root}
                 >
-                    <Link to={'/rate-and-discover'}> <BottomNavigationAction label="Rate and discover" icon={<FavoriteIcon/>}/> </Link>
-                    <Link to={'/books'}> <BottomNavigationAction label="My books" icon={<MenuBookIcon/>}/> </Link>
-                    <Link to={'/settings'}> <BottomNavigationAction label="Profile settings" icon={<AccountCircleIcon/>}/> </Link>
+                    <BottomNavigationAction label="Rate and discover" icon={<Link to={RoutePaths.RATE_AND_DISCOVER}> <FavoriteIcon/> </Link>}/>
+                    <BottomNavigationAction label="My books" icon={<Link to={RoutePaths.BOOKS}><MenuBookIcon/></Link>}/>
+                    <BottomNavigationAction label="Profile settings" icon={<Link to={RoutePaths.SETTINGS}><AccountCircleIcon/></Link>}/>
                 </BottomNavigation>
             </Router>
 

@@ -8,23 +8,24 @@ import {
 import {Info} from "./Info";
 import {Hello} from "./Hello";
 import {Books} from "./Books";
-import {AppNavigation} from "./AppNavigation";
 import {Settings} from "./Settings";
+import {RoutePaths} from "./RoutePaths";
+import {Login} from "./Login";
 
 export const Routes = () => {
     return (
         <Switch>
-            <Route path="/rate-and-discover">
-                <Books />
+            <Route path={RoutePaths.LOGIN}>
+                <Login />
             </Route>
-            <Route path="/books">
-                <Books />
-            </Route>
-            <Route path="/settings">
+            <Route path={RoutePaths.RATE_AND_DISCOVER}>
                 <Settings />
             </Route>
-            <Route path="/">
-                <Hello />
+            <Route path={RoutePaths.BOOKS}>
+                <Books />
+            </Route>
+            <Route path={RoutePaths.SETTINGS}>
+                <Settings />
             </Route>
         </Switch>);
 };

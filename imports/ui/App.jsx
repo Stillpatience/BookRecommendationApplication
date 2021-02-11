@@ -8,11 +8,12 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import {AppNavigation} from "./AppNavigation";
 import {Route, Switch} from "react-router-dom";
 import {Routes} from "./Routes";
+import {Login} from "./Login";
 
 export const App = () => (
 
     <div>
-        <h1>Welcome to Meteor!</h1>
+        <Login />
         <AppNavigation />
     </div>
 
