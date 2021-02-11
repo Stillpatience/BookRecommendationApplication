@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { LinksCollection, Books } from '/imports/api/links';
+import { LinksCollection, BooksCollection } from '/imports/api/links';
 
 function insertLink({ title, url }) {
   LinksCollection.insert({title, url, createdAt: new Date()});
@@ -8,9 +8,8 @@ function insertLink({ title, url }) {
 Meteor.startup(() => {
 
   Meteor.publish('books', function () {
-    return Books.find({}, {limit: 5});
+    return BooksCollection.find({}, {limit: 10});
   });
-
 
   // If the Links collection is empty, add some data.
   if (LinksCollection.find().count() === 0) {

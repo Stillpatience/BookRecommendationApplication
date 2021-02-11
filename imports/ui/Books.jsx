@@ -1,8 +1,10 @@
 import React from 'react';
-import {BooksCollection} from "../db/BooksCollections";
+import {BooksCollection} from '../api/links';
 
 export const Books = () => {
-    const books = BooksCollection.find({},{sort: {title: 1}, limit: 13}).fetch();
+
+    const books = BooksCollection.find({},{sort: {title: 1}, limit: 10}).fetch();
+
     console.log(books);
     return (
         <a href="http://google.com">
