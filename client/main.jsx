@@ -4,5 +4,6 @@ import { render } from 'react-dom';
 import { App } from '/imports/ui/App';
 
 Meteor.startup(() => {
+  Meteor.subscribe('recomended', 'robert');
   render(<App/>, document.getElementById('react-target'));
 });

@@ -10,11 +10,13 @@ import {Route, Switch} from "react-router-dom";
 import {Routes} from "./Routes";
 import {Login} from "./Login";
 
+
 export const App = () => (
 
     <div>
         <Login />
         <AppNavigation />
+        <Books />
     </div>
 
 );
