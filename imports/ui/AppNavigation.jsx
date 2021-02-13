@@ -7,13 +7,10 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {
     BrowserRouter as Router,
-    Switch,
-    Route,
     Link
 } from "react-router-dom";
 import {Routes} from "./Routes";
 import {RoutePaths} from "./RoutePaths";
-import {Login} from "./Login";
 
 const useStyles = makeStyles({
     root: {

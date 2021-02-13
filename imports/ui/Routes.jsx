@@ -1,13 +1,11 @@
 import React from 'react';
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
-    Link
 } from "react-router-dom";
-import {Info} from "./Info";
-import {Hello} from "./Hello";
 import {Books} from "./Books";
+import {Book} from "./Book";
+
 import {Settings} from "./Settings";
 import {RoutePaths} from "./RoutePaths";
 import {Login} from "./Login";
@@ -19,13 +17,16 @@ export const Routes = () => {
                 <Login />
             </Route>
             <Route path={RoutePaths.RATE_AND_DISCOVER}>
-                <Settings />
+                <Books />
             </Route>
             <Route path={RoutePaths.BOOKS}>
                 <Books />
             </Route>
             <Route path={RoutePaths.SETTINGS}>
                 <Settings />
+            </Route>
+            <Route path={RoutePaths.BOOK + "/:id"}>
+                <Book />
             </Route>
         </Switch>);
 };

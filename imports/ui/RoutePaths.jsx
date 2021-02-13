@@ -3,5 +3,6 @@ export const RoutePaths = {
     RATE_AND_DISCOVER: '/rate-and-discover',
     BOOKS: '/books',
     SETTINGS: '/settings',
-    LOGIN: '/login'
+    LOGIN: '/login',
+    BOOK: '/book'
 }
