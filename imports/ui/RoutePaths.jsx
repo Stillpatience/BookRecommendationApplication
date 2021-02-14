@@ -4,5 +4,7 @@ export const RoutePaths = {
     BOOKS: '/books',
     SETTINGS: '/settings',
     LOGIN: '/login',
-    BOOK: '/book'
+    BOOK: '/book',
+    SIGNUP: '/signup',
+    TERMS_AND_CONDITIONS: '/terms-and-conditions'
 }

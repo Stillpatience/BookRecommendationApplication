@@ -10,6 +10,9 @@ import {Settings} from "./Settings";
 import {RoutePaths} from "./RoutePaths";
 import {Login} from "./Login";
 import {MyBooks} from "./MyBooks";
+import {SignUp} from "./SignUp";
+import {TermsAndConditions} from "./TermsAndConditions";
+
 
 export const Routes = () => {
     return (
@@ -28,6 +31,12 @@ export const Routes = () => {
             </Route>
             <Route path={RoutePaths.BOOK + "/:id"}>
                 <Book />
+            </Route>
+            <Route path={RoutePaths.SIGNUP}>
+                <SignUp />
+            </Route>
+            <Route path={RoutePaths.TERMS_AND_CONDITIONS}>
+                <TermsAndConditions />
             </Route>
         </Switch>);
 };
