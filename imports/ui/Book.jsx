@@ -8,7 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import CloseIcon from '@material-ui/icons/Close';
 import {Link} from "react-router-dom";
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
+import Button from "@material-ui/core/Button";
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -40,19 +42,35 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: '100%',
         maxHeight: '100%',
     },
+    hr:{
+        position:"relative",
+        top:"-100px",
+    },
+    stars:{
+        position:"relative",
+        top:"-10px",
+    },
+    rating:{
+        position:"relative",
+        top:"-50px",
+        left:"140px",
+    },
+    "right-element":{
+        position:"relative",
+        top:"-15px",
+        left:"100px",
+    }
 }));
 
 export const Book = () => {
     const classes = useStyles();
 
+    const [value, setValue] = React.useState(2);
+
     const url = window.location.href
     const isbn = url.substring(url.indexOf(RoutePaths.BOOK) + RoutePaths.BOOK.length + 1, url.length);
     const book = BooksCollection.findOne({isbn: parseInt(isbn)});
     let description = book["description"];
-    console.log("description");
-
-    console.log(description);
-
     if (typeof description == 'undefined'){
         description = "No description found.";
     }
@@ -95,21 +113,50 @@ export const Book = () => {
 
             </Paper>
             <div className={classes.explanation}>
+                <hr />
+                <Grid container spacing={3}>
+                    <Grid item xs={6}>
+                        <Typography variant="body2" color="textSecondary"  display="inline">
+                            <Box component="fieldset" mb={3} borderColor="transparent">
+                                <Rating className={classes.stars} name="read-only" value={book["average_rating"]} readOnly />
+                                &nbsp; <p className={classes.rating}>{book["average_rating"]}</p>
+                            </Box>
+
+                        </Typography>
+                    </Grid>
+                    <Grid item xs  >
+                        <Typography variant="body2" color="textSecondary">
+                            <p className={classes["right-element"]}>{numberWithCommas(parseInt(book["ratings_count"]))} ratings</p>
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <hr className={classes.hr}/>
 
                 <Grid container spacing={3}>
                     <Grid item xs={6}>
                         <Typography variant="body2" color="textSecondary"  display="inline">
-                            <StarBorderIcon/><StarBorderIcon/><StarBorderIcon/><StarBorderIcon/><StarBorderIcon/>
-                            {book["average_rating"]}
+                            Rate this book:
+                            <Box component="fieldset" mb={3} borderColor="transparent">
+                                <Rating
+                                    name="simple-controlled"
+                                    value={value}
+                                    onChange={(event, newValue) => {
+                                        setValue(newValue);
+                                        console.log(newValue);
+                                    }}
+                                />
+                            </Box>
                         </Typography>
                     </Grid>
 
                     <Grid item xs  >
-                        <Typography variant="body2" color="textSecondary">
-                            {numberWithCommas(parseInt(book["ratings_count"]))} ratings
-                        </Typography>
+                        <Button className={classes["right-element"]} variant="contained" color="primary">
+                            Want to read
+                        </Button>
                     </Grid>
                 </Grid>
+                <h3> Why am I seeing this?</h3>
+
             </div>
 
         </div>
