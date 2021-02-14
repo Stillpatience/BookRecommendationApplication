@@ -11,6 +11,7 @@ import {Link} from "react-router-dom";
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
+import {wantToReadBooks} from "./Books";
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -62,13 +63,27 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+function removeItemOnce(arr, value) {
+    let index = arr.indexOf(value);
+    if (index > -1) {
+        arr.splice(index, 1);
+    }
+    return arr;
+}
+
 export const Book = () => {
+
+
     const classes = useStyles();
 
     const [value, setValue] = React.useState(2);
 
     const url = window.location.href
     const isbn = url.substring(url.indexOf(RoutePaths.BOOK) + RoutePaths.BOOK.length + 1, url.length);
+    let initState
+    initState = !wantToReadBooks.includes(isbn);
+    const [flag, setFlag] = React.useState(initState);
+
     const book = BooksCollection.findOne({isbn: parseInt(isbn)});
     let description = book["description"];
     if (typeof description == 'undefined'){
@@ -77,6 +92,17 @@ export const Book = () => {
     else {
         description = description.substring(0,100) + '...'
     }
+    const handleClick = () => {
+        console.log("handling click");
+        if (flag){
+            wantToReadBooks.push(isbn);
+        }
+        else{
+            removeItemOnce(wantToReadBooks, isbn);
+        }
+        setFlag(!flag);
+        console.log(wantToReadBooks);
+    };
     return (
         <div className={classes.root}>
             <Paper className={classes.header}>
@@ -150,7 +176,7 @@ export const Book = () => {
                     </Grid>
 
                     <Grid item xs  >
-                        <Button className={classes["right-element"]} variant="contained" color="primary">
+                        <Button className={classes["right-element"]} variant="contained" color={flag ? "primary" : "inherit"} onClick={handleClick}>
                             Want to read
                         </Button>
                     </Grid>
