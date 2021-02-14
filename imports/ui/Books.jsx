@@ -7,8 +7,7 @@ export var wantToReadBooks = [];
 
 export const Books = () => {
 
-    const books = BooksCollection.find({},{sort: {title: 1}, limit: 10}).fetch();
-    console.log(books);
+    const books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}, limit: 10}).fetch();
     return (
             <div className="row">{books.map(book =>
                 <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
