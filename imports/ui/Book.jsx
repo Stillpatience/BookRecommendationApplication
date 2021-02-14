@@ -76,7 +76,7 @@ export const Book = () => {
 
     const classes = useStyles();
 
-    const [value, setValue] = React.useState(2);
+    const [value, setValue] = React.useState(0);
 
     const url = window.location.href
     const isbn = url.substring(url.indexOf(RoutePaths.BOOK) + RoutePaths.BOOK.length + 1, url.length);
@@ -101,7 +101,6 @@ export const Book = () => {
             removeItemOnce(wantToReadBooks, isbn);
         }
         setFlag(!flag);
-        console.log(wantToReadBooks);
     };
     return (
         <div className={classes.root}>
