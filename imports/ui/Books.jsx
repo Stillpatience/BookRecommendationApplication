@@ -3,11 +3,11 @@ import {BooksCollection} from '../api/links';
 import {RoutePaths} from "./RoutePaths";
 import {Link} from "react-router-dom";
 
+export var wantToReadBooks = [];
 
 export const Books = () => {
 
     const books = BooksCollection.find({},{sort: {title: 1}, limit: 10}).fetch();
-
     console.log(books);
     return (
             <div className="row">{books.map(book =>

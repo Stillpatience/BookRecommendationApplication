@@ -9,6 +9,7 @@ import {Book} from "./Book";
 import {Settings} from "./Settings";
 import {RoutePaths} from "./RoutePaths";
 import {Login} from "./Login";
+import {MyBooks} from "./MyBooks";
 
 export const Routes = () => {
     return (
@@ -20,7 +21,7 @@ export const Routes = () => {
                 <Books />
             </Route>
             <Route path={RoutePaths.BOOKS}>
-                <Books />
+                <MyBooks />
             </Route>
             <Route path={RoutePaths.SETTINGS}>
                 <Settings />
