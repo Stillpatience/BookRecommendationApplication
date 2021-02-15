@@ -11,7 +11,7 @@ import {Link} from "react-router-dom";
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
-import {wantToReadBooks} from "./Books";
+import {ratings, wantToReadBooks} from "./Books";
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -71,18 +71,27 @@ function removeItemOnce(arr, value) {
     return arr;
 }
 
+function setRating(user, book, newValue){
+    ratings[[user, book]] = newValue;
+}
+
+function getRating(user, book){
+    return ratings[[user, book]];
+}
+
 export const Book = () => {
 
+    const user = 1;
 
     const classes = useStyles();
 
-    const [value, setValue] = React.useState(0);
+    const [stars, setStars] = React.useState(0);
 
     const url = window.location.href
     const isbn = url.substring(url.indexOf(RoutePaths.BOOK) + RoutePaths.BOOK.length + 1, url.length);
     let initState
     initState = !wantToReadBooks.includes(isbn);
-    const [flag, setFlag] = React.useState(initState);
+    const [wantToRead, setWantToRead] = React.useState(initState);
 
     const book = BooksCollection.findOne({isbn: parseInt(isbn)});
     let description = book["description"];
@@ -93,14 +102,13 @@ export const Book = () => {
         description = description.substring(0,100) + '...'
     }
     const handleClick = () => {
-        console.log("handling click");
-        if (flag){
+        if (wantToRead){
             wantToReadBooks.push(isbn);
         }
         else{
             removeItemOnce(wantToReadBooks, isbn);
         }
-        setFlag(!flag);
+        setWantToRead(!wantToRead);
     };
     return (
         <div className={classes.root}>
@@ -164,10 +172,10 @@ export const Book = () => {
                             <Box component="fieldset" mb={3} borderColor="transparent">
                                 <Rating
                                     name="simple-controlled"
-                                    value={value}
+                                    value={getRating(user, isbn) ? getRating(user, isbn) : stars}
                                     onChange={(event, newValue) => {
-                                        setValue(newValue);
-                                        console.log(newValue);
+                                        setStars(newValue);
+                                        setRating(user, isbn, newValue);
                                     }}
                                 />
                             </Box>
@@ -175,7 +183,7 @@ export const Book = () => {
                     </Grid>
 
                     <Grid item xs  >
-                        <Button className={classes["right-element"]} variant="contained" color={flag ? "primary" : "inherit"} onClick={handleClick}>
+                        <Button className={classes["right-element"]} variant="contained" color={wantToRead ? "primary" : "inherit"} onClick={handleClick}>
                             Want to read
                         </Button>
                     </Grid>

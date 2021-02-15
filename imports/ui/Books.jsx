@@ -4,7 +4,7 @@ import {RoutePaths} from "./RoutePaths";
 import {Link} from "react-router-dom";
 
 export var wantToReadBooks = [];
-
+export var ratings = {};
 export const Books = () => {
 
     const books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}, limit: 10}).fetch();
