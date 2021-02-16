@@ -8,7 +8,7 @@ function insertLink({ title, url }) {
 Meteor.startup(() => {
 
   Meteor.publish(BooksCollectionName, function () {
-    return BooksCollection.find({}, {limit: 10});
+    return BooksCollection.find({}, {limit: 200});
   });
 
   // If the Links collection is empty, add some data.

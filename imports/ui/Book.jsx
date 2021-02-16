@@ -92,8 +92,10 @@ export const Book = () => {
     let initState
     initState = !wantToReadBooks.includes(isbn);
     const [wantToRead, setWantToRead] = React.useState(initState);
-
-    const book = BooksCollection.findOne({isbn: parseInt(isbn)});
+    let book = BooksCollection.findOne({isbn: parseInt(isbn)});
+    if (typeof book == 'undefined'){
+        book = BooksCollection.findOne({isbn: isbn});
+    }
     let description = book["description"];
     if (typeof description == 'undefined'){
         description = "No description found.";
