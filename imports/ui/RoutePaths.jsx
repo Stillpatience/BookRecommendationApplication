@@ -5,6 +5,6 @@ export const RoutePaths = {
     SETTINGS: '/settings',
     LOGIN: '/login',
     BOOK: '/book',
-    SIGNUP: '/signup',
+    REGISTER: '/register',
     TERMS_AND_CONDITIONS: '/terms-and-conditions'
 }

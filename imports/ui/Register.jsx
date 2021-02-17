@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const SignUp = () => {
+export const Register = () => {
     const classes = useStyles();
     const [checked, setChecked] = React.useState(false);
     const handleClicked = () => {
@@ -44,7 +44,7 @@ export const SignUp = () => {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Register
                 </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
@@ -92,7 +92,7 @@ export const SignUp = () => {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        href={checked ? RoutePaths.RATE_AND_DISCOVER : RoutePaths.SIGNUP}
+                        href={checked ? RoutePaths.RATE_AND_DISCOVER : RoutePaths.REGISTER}
                     >
                         Sign up
                     </Button>
