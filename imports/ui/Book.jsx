@@ -80,7 +80,7 @@ function getRating(user, book){
 }
 
 export const Book = () => {
-
+    console.log("Loading book");
     const user = 1;
 
     const classes = useStyles();
@@ -90,12 +90,16 @@ export const Book = () => {
     const url = window.location.href
     const isbn = url.substring(url.indexOf(RoutePaths.BOOK) + RoutePaths.BOOK.length + 1, url.length);
     let initState
+    console.log(isbn);
     initState = !wantToReadBooks.includes(isbn);
     const [wantToRead, setWantToRead] = React.useState(initState);
     let book = BooksCollection.findOne({isbn: parseInt(isbn)});
     if (typeof book == 'undefined'){
+        console.log("undefined")
         book = BooksCollection.findOne({isbn: isbn});
     }
+    console.log(book);
+
     let description = book["description"];
     if (typeof description == 'undefined'){
         description = "No description found.";
@@ -103,6 +107,7 @@ export const Book = () => {
     else {
         description = description.substring(0,100) + '...'
     }
+
     const handleClick = () => {
         if (wantToRead){
             wantToReadBooks.push(isbn);
