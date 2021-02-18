@@ -20,11 +20,11 @@ export const InitializationBooks = () => {
                                             const element = document.getElementById(bookId);
                                              if (!selectedBooks.includes(bookId)){
                                                  selectedBooks.push(bookId);
-                                                 element.style.background = 'rgb(167,119,238)'
+                                                 element.style.border = "0.5rem solid rgb(98, 2, 238)";
                                              }
                                              else{
                                                  removeItemOnce(selectedBooks, bookId);
-                                                 element.style.background = 'white'
+                                                 element.style.border = "";
                                              }
                                             }}>
                         <img src={book["image_url"]} width="98" height="146" alt="Unable to load image"/>

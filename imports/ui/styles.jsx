@@ -6,6 +6,8 @@ export const useStyles = makeStyles((theme) => ({
     },
     book_card:{
         "background-color": 'white',
+        margin: "0rem 2rem 0rem 0rem",
+        cursor: "pointer",
     },
     paper: {
         marginTop: theme.spacing(8),
