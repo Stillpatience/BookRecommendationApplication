@@ -4,10 +4,6 @@ import {RoutePaths} from "./RoutePaths";
 import {Link, Route} from "react-router-dom";
 import ReactDOM from 'react-dom';
 import SearchBar from "material-ui-search-bar";
-import {
-    BrowserRouter as Router,
-    Redirect,
-} from "react-router-dom";
 export var wantToReadBooks = [];
 export var ratings = {};
 
@@ -66,13 +62,13 @@ export const Books = () => {
                     autoFocus
                 />
             </div>
-            <div className="row" id="books">
+            <div className="flex-container wrap" id="books">
                 {books.map(book =>
                 <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
                 <div className="column">
                     <div className="card">
-                        <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image"/>
-                        <div className="container">
+                        <img id={book["isbn"]} src={book["small_image_url"]} alt="Unable to load image"/>
+                        <div className="word-wrap">
                             <p><small>{book["title"]}</small></p>
                         </div>
                     </div>
