@@ -12,6 +12,7 @@ import {Login} from "./Login";
 import {MyBooks} from "./MyBooks";
 import {Register} from "./Register";
 import {TermsAndConditions} from "./TermsAndConditions";
+import {SetUp} from "./SetUp";
 
 
 export const Routes = () => {
@@ -37,6 +38,9 @@ export const Routes = () => {
             </Route>
             <Route path={RoutePaths.TERMS_AND_CONDITIONS}>
                 <TermsAndConditions />
+            </Route>
+            <Route path={RoutePaths.SETUP}>
+                <SetUp />
             </Route>
         </Switch>);
 };

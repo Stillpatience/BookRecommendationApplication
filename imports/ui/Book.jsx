@@ -1,7 +1,6 @@
 import React from "react";
 import {RoutePaths} from "./RoutePaths";
 import {BooksCollection} from "../api/links";
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -12,64 +11,11 @@ import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
 import {ratings, wantToReadBooks} from "./Books";
+import {useStyles} from "./styles";
+import {removeItemOnce} from "../utils/utils"
+import {numberWithCommas} from "../utils/utils"
 
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    header: {
-        padding: theme.spacing(2),
-        margin: 'auto',
-        maxWidth: 500,
-        "background-color": 'rgb(98, 2, 238)',
-        color: 'white',
-    },
-    explanation: {
-        padding: theme.spacing(2),
-        margin: 'auto',
-        maxWidth: 500,
-    },
-    image: {
-        width: 128,
-        height: 128,
-    },
-    img: {
-        margin: 'auto',
-        display: 'block',
-        maxWidth: '100%',
-        maxHeight: '100%',
-    },
-    hr:{
-        position:"relative",
-        top:"-100px",
-    },
-    stars:{
-        position:"relative",
-        top:"-10px",
-    },
-    rating:{
-        position:"relative",
-        top:"-50px",
-        left:"140px",
-    },
-    "right-element":{
-        position:"relative",
-        top:"-15px",
-        left:"100px",
-    }
-}));
-
-function removeItemOnce(arr, value) {
-    let index = arr.indexOf(value);
-    if (index > -1) {
-        arr.splice(index, 1);
-    }
-    return arr;
-}
 
 function setRating(user, book, newValue){
     ratings[[user, book]] = newValue;
