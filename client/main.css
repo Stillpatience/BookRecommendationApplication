@@ -56,6 +56,12 @@ img {
     display: flex;
 }
 
+.flex{
+    display: flex;
+    color: white;
+    background-color: rgb(98, 2, 238);
+}
+
 .nowrap  {
     -webkit-flex-wrap: nowrap;
     flex-wrap: nowrap;
@@ -81,8 +87,18 @@ img {
 .nobr { white-space: nowrap }
 
 .header{
-    padding: 1rem;
+    padding: 0.5rem;
     margin: auto;
     background-color: rgb(98, 2, 238);
     color: white;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden-overflow {
+    white-space: nowrap;
+    overflow: hidden;
 }
