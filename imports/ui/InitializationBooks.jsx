@@ -14,8 +14,7 @@ export const InitializationBooks = () => {
         <div>
             <div className="flex-container wrap">
                 {books.map(book =>
-                    <div className="card"
-                         >
+                    <div className="card">
                         <img id={book["isbn"]} src={book["small_image_url"]} alt="Unable to load image" onClick={() => {const bookId = book["isbn"];
                             const element = document.getElementById(bookId);
                             if (!selectedBooks.includes(bookId)){
