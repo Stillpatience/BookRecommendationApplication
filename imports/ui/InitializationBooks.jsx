@@ -15,19 +15,18 @@ export const InitializationBooks = () => {
             <div className={classes.flex_display}>
                 {books.map(book =>
                     <div className={classes.book_card}
-                         id={book["isbn"]}
                          onClick={() => {const bookId = book["isbn"];
-                                            const element = document.getElementById(bookId);
-                                             if (!selectedBooks.includes(bookId)){
-                                                 selectedBooks.push(bookId);
-                                                 element.style.border = "0.5rem solid rgb(98, 2, 238)";
-                                             }
-                                             else{
-                                                 removeItemOnce(selectedBooks, bookId);
-                                                 element.style.border = "";
-                                             }
-                                            }}>
-                        <img src={book["image_url"]} width="98" height="146" alt="Unable to load image"/>
+                                         const element = document.getElementById(bookId);
+                                         if (!selectedBooks.includes(bookId)){
+                                             selectedBooks.push(bookId);
+                                             element.style.border = "0.5rem solid rgb(98, 2, 238)";
+                                         }
+                                         else{
+                                             removeItemOnce(selectedBooks, bookId);
+                                             element.style.border = "";
+                                         }
+                                        }}>
+                        <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image"/>
                         <p><small>{book["title"]}</small></p>
                     </div>
                 )}
