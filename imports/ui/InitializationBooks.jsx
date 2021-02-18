@@ -12,22 +12,22 @@ export const InitializationBooks = () => {
 
     return (
         <div>
-            <div className={classes.flex_display}>
+            <div className="flex-container wrap">
                 {books.map(book =>
-                    <div className={classes.book_card}
-                         onClick={() => {const bookId = book["isbn"];
-                                         const element = document.getElementById(bookId);
-                                         if (!selectedBooks.includes(bookId)){
-                                             selectedBooks.push(bookId);
-                                             element.style.border = "0.5rem solid rgb(98, 2, 238)";
-                                         }
-                                         else{
-                                             removeItemOnce(selectedBooks, bookId);
-                                             element.style.border = "";
-                                         }
-                                        }}>
-                        <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image"/>
-                        <p><small>{book["title"]}</small></p>
+                    <div className="card"
+                         >
+                        <img id={book["isbn"]} src={book["small_image_url"]} alt="Unable to load image" onClick={() => {const bookId = book["isbn"];
+                            const element = document.getElementById(bookId);
+                            if (!selectedBooks.includes(bookId)){
+                                selectedBooks.push(bookId);
+                                element.style.border = "0.1rem solid rgb(98, 2, 238)";
+                            }
+                            else{
+                                removeItemOnce(selectedBooks, bookId);
+                                element.style.border = "";
+                            }
+                        }}/>
+                        <p className="word-wrap"><small>{book["title"]}</small></p>
                     </div>
                 )}
             </div>
