@@ -2,9 +2,7 @@ import React from "react";
 import {RoutePaths} from "./RoutePaths";
 import {BooksCollection} from "../api/links";
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import CloseIcon from '@material-ui/icons/Close';
 import {Link} from "react-router-dom";
 import Rating from '@material-ui/lab/Rating';
@@ -13,7 +11,7 @@ import Button from "@material-ui/core/Button";
 import {ratings, wantToReadBooks} from "./Books";
 import {removeItemOnce} from "../utils/utils"
 import {numberWithCommas} from "../utils/utils"
-
+import {Card, CardContent, CardMedia} from "@material-ui/core";
 
 
 function setRating(user, book, newValue){
@@ -60,41 +58,38 @@ export const Book = () => {
         }
         setWantToRead(!wantToRead);
     };
+    const authors = book["authors"];
+    let res = authors.split(" ");
+    const author = res[0] + " " + res[1];
     return (
         <div>
-            <Paper className="header">
-                <Grid container spacing={2}>
-                    <Grid item>
-                        <ButtonBase>
-                            <img id={book["isbn"]} src={book["small_image_url"]} alt="Unable to load image" />
-                        </ButtonBase>
-                    </Grid>
-                    <Grid item xs={12} sm container>
-                        <Grid item xs container direction="column" spacing={2}>
-                            <Grid item xs>
-                                <Typography gutterBottom variant="subtitle1">
-                                    {book["title"]}
-                                </Typography>
-                                <Typography variant="body2" gutterBottom>
-                                    by {book["authors"]}
-                                </Typography>
-                                <Typography variant="body2">
-                                    ISBN: {book["isbn"]}
-                                </Typography>
-                            </Grid>
-                            <Grid item>
-                                <Typography variant="body2">
-                                    {description}
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                        <Grid item>
-                            <Link to={RoutePaths.RATE_AND_DISCOVER}><CloseIcon style={{ color: 'white'}}/></Link>
-                        </Grid>
-                    </Grid>
-                </Grid>
+            <Card className="flex header">
+                <CardMedia
+                    title={book["title"]}
+                />
+                    <img src={book["image_url"]} alt="Unable to load image" height="150"/>
+                <CardMedia />
+                <div className= "flex header">
+                    <CardContent>
+                        <p>{book["title"]}</p>
+                        <Typography variant="subtitle2" color="white">
+                            <small><em>ISBN {book["isbn"]}</em></small>
+                        </Typography>
+                        <Typography variant="subtitle1" color="white">
+                            <small>by {author}</small>
+                        </Typography>
 
-            </Paper>
+                    </CardContent>
+
+                </div>
+
+                <div>
+                    <Link to={RoutePaths.RATE_AND_DISCOVER}><CloseIcon style={{ color: 'white'}}/></Link>
+                </div>
+            </Card>
+            <div className="flex header">
+                <small>{description}</small>
+            </div>
             <div>
                 <Grid container className="ratings-summary nobr">
                     <Grid item xs={6}  className="ratings-summary" align='left'>
