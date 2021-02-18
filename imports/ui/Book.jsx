@@ -11,7 +11,6 @@ import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
 import {ratings, wantToReadBooks} from "./Books";
-import {useStyles} from "./styles";
 import {removeItemOnce} from "../utils/utils"
 import {numberWithCommas} from "../utils/utils"
 
@@ -28,8 +27,6 @@ function getRating(user, book){
 export const Book = () => {
     console.log("Loading book");
     const user = 1;
-
-    const classes = useStyles();
 
     const [stars, setStars] = React.useState(0);
 
@@ -64,12 +61,12 @@ export const Book = () => {
         setWantToRead(!wantToRead);
     };
     return (
-        <div className={classes.root}>
-            <Paper className={classes.header}>
+        <div>
+            <Paper className="header">
                 <Grid container spacing={2}>
                     <Grid item>
-                        <ButtonBase className={classes.image}>
-                            <img className={classes.img} id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image" />
+                        <ButtonBase>
+                            <img id={book["isbn"]} src={book["small_image_url"]} alt="Unable to load image" />
                         </ButtonBase>
                     </Grid>
                     <Grid item xs={12} sm container>
@@ -98,26 +95,23 @@ export const Book = () => {
                 </Grid>
 
             </Paper>
-            <div className={classes.explanation}>
-                <hr />
-                <Grid container spacing={3}>
-                    <Grid item xs={6}>
+            <div>
+                <Grid container className="ratings-summary nobr">
+                    <Grid item xs={6}  className="ratings-summary" align='left'>
                         <Typography variant="body2" color="textSecondary"  display="inline">
                             <Box component="fieldset" mb={3} borderColor="transparent">
-                                <Rating className={classes.stars} name="read-only" value={book["average_rating"]} readOnly />
-                                &nbsp; <p className={classes.rating}>{book["average_rating"]}</p>
+                                <Rating name="read-only" value={book["average_rating"]} readOnly />
                             </Box>
 
                         </Typography>
                     </Grid>
-                    <Grid item xs  >
-                        <Typography variant="body2" color="textSecondary">
-                            <p className={classes["right-element"]}>{numberWithCommas(parseInt(book["ratings_count"]))} ratings</p>
+                    <Grid item xs  className="ratings-summary" align='right'>
+                        <Typography variant="body2" color="textSecondary" >
+                            <p>{numberWithCommas(parseInt(book["ratings_count"]))} ratings</p>
                         </Typography>
                     </Grid>
                 </Grid>
-                <hr className={classes.hr}/>
-
+                <br />
                 <Grid container spacing={3}>
                     <Grid item xs={6}>
                         <Typography variant="body2" color="textSecondary"  display="inline">
@@ -136,7 +130,7 @@ export const Book = () => {
                     </Grid>
 
                     <Grid item xs  >
-                        <Button className={classes["right-element"]} variant="contained" color={wantToRead ? "primary" : "inherit"} onClick={handleClick}>
+                        <Button variant="contained" color={wantToRead ? "primary" : "inherit"} onClick={handleClick}>
                             Want to read
                         </Button>
                     </Grid>

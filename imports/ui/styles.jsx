@@ -50,10 +50,6 @@ export const useStyles = makeStyles((theme) => ({
         maxWidth: '100%',
         maxHeight: '100%',
     },
-    hr:{
-        position:"relative",
-        top:"-100px",
-    },
     stars:{
         position:"relative",
         top:"-10px",

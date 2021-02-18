@@ -70,3 +70,19 @@ img {
     overflow-wrap: anywhere;
     font-size: 0.5rem;
 }
+
+.ratings-summary{
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    height: 4rem;
+    width: 100vw;
+}
+
+.nobr { white-space: nowrap }
+
+.header{
+    padding: 1rem;
+    margin: auto;
+    background-color: rgb(98, 2, 238);
+    color: white;
+}
