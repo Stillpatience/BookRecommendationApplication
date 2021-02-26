@@ -62,15 +62,13 @@ export const Books = () => {
                     autoFocus
                 />
             </div>
-            <div className="flex-container wrap" id="books">
+            <div className="grid-container" id="books">
                 {books.map(book =>
                 <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
-                <div className="column">
-                    <div className="card">
-                        <img id={book["isbn"]} src={book["small_image_url"]} alt="Unable to load image"/>
-                        <div className="word-wrap">
-                            <p><small>{book["title"]}</small></p>
-                        </div>
+                <div className="grid-item">
+                    <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image"/>
+                    <div className="word-wrap">
+                        <p>{book["title"]}</p>
                     </div>
                 </div>
                 </Link>)}
