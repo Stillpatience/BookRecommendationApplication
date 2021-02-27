@@ -30,9 +30,15 @@ export const AppNavigation = () => {
                 showLabels
                 className={classes.root}
             >
-                <BottomNavigationAction label="Rate and discover" icon={<Link to={RoutePaths.RATE_AND_DISCOVER}> <FavoriteIcon/> </Link>}/>
-                <BottomNavigationAction label="My books" icon={<Link to={RoutePaths.BOOKS}><MenuBookIcon/></Link>}/>
-                <BottomNavigationAction label="Profile settings" icon={<Link to={RoutePaths.SETTINGS}><AccountCircleIcon/></Link>}/>
+                <Link to={RoutePaths.RATE_AND_DISCOVER}>
+                    <BottomNavigationAction label="Rate and discover" icon={ <FavoriteIcon/>}/>
+                </Link>
+                <Link to={RoutePaths.BOOKS}>
+                    <BottomNavigationAction label="My books" icon={<MenuBookIcon/>}/>
+                </Link>
+                <Link to={RoutePaths.SETTINGS}>
+                    <BottomNavigationAction label="Profile settings" icon={<AccountCircleIcon/>}/>
+                </Link>
             </BottomNavigation>
         </div>
 

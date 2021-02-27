@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {useStyles} from "./styles";
+import {Link} from "react-router-dom";
 
 
 
@@ -18,6 +19,9 @@ export const Register = () => {
     const handleClicked = () => {
         setChecked(!checked);
     }
+    const ConditionalLink = ({ children, to, condition }) => (!!condition && to)
+        ? <Link to={to}>{children}</Link>
+        : <>{children}</>;
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -66,18 +70,19 @@ export const Register = () => {
                         onClick={handleClicked}
                     />
                     <Typography variant="body2" color="textSecondary"  display="inline">
-                    I agree to the <a href={RoutePaths.TERMS_AND_CONDITIONS}>terms & conditions </a>
+                    I agree to the <Link to={RoutePaths.TERMS_AND_CONDITIONS}>terms & conditions </Link>
                     </Typography>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        href={checked ? RoutePaths.SETUP : RoutePaths.REGISTER}
-                    >
-                        Sign up
-                    </Button>
+                    <ConditionalLink to={RoutePaths.SETUP} condition={checked}>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                        >
+                            Sign up
+                        </Button>
+                    </ConditionalLink>
+
                 </form>
             </div>
         </Container>

@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import SearchBar from "material-ui-search-bar";
 export var wantToReadBooks = [];
 export var ratings = {};
-
+import { Tracker } from 'meteor/tracker'
 function search(value) {
     console.log(value);
 }
@@ -50,7 +50,18 @@ function setBooks(books, search){
 
 }
 export const Books = () => {
+    //const short_books = sub.find();
+    Tracker.autorun(() => {
+        let sub = Meteor.subscribe('collections');
 
+        if(sub.ready()) {
+            let a = BooksCollection.find().count()
+            console.log(a);
+        } else {
+            console.log('Loading...');
+        }
+    });
+   // console.log(short_books);
     const books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}, limit: 20}).fetch();
     return (
         <div>

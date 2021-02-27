@@ -10,6 +10,7 @@ Meteor.startup(() => {
   Meteor.publish(BooksCollectionName, function () {
     return BooksCollection.find({}, {limit: 20});
   });
+  console.log("publ");
 
   // If the Links collection is empty, add some data.
   if (LinksCollection.find().count() === 0) {

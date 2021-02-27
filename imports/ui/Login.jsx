@@ -13,6 +13,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {useStyles} from "./styles";
+import {
+    Link as RouteLink
+} from "react-router-dom";
 
 function Copyright() {
     return (
@@ -67,16 +70,19 @@ export const Login = () => {
                         control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"
                     />
+                    <RouteLink to={RoutePaths.RATE_AND_DISCOVER}>
+
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        href={RoutePaths.RATE_AND_DISCOVER}
                     >
                         Sign in
                     </Button>
+                    </RouteLink>
+
                     <Grid container>
                         <Grid item xs>
                             <Link href="#" variant="body2">
@@ -84,9 +90,9 @@ export const Login = () => {
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href={RoutePaths.REGISTER} variant="body2">
+                            <RouteLink to={RoutePaths.REGISTER}>
                                 {"Don't have an account? Sign Up"}
-                            </Link>
+                            </RouteLink>
                         </Grid>
                     </Grid>
                 </form>

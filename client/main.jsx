@@ -6,5 +6,6 @@ import {BooksCollectionName} from "../imports/api/links";
 
 Meteor.startup(() => {
   Meteor.subscribe(BooksCollectionName);
+  console.log("Subc")
   render(<App/>, document.getElementById('react-target'));
 });

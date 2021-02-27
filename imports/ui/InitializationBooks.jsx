@@ -4,6 +4,7 @@ import {BooksCollection} from "../api/links";
 import {useStyles} from "./styles";
 import {removeItemOnce} from "../utils/utils"
 import Button from "@material-ui/core/Button";
+import {Link} from "react-router-dom";
 
 export const InitializationBooks = () => {
     const selectedBooks = [];
@@ -31,16 +32,17 @@ export const InitializationBooks = () => {
                 )}
             </div>
             <div>
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                    href={RoutePaths.RATE_AND_DISCOVER}
-                >
-                    Confirm selection
-                </Button>
+                <Link to={RoutePaths.RATE_AND_DISCOVER}>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                    >
+                        Confirm selection
+                    </Button>
+                </Link>
             </div>
         </div>);
 }
