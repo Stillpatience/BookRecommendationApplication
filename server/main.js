@@ -1,5 +1,11 @@
 import { Meteor } from 'meteor/meteor';
-import {LinksCollection, BooksCollection, BooksCollectionName} from '/imports/api/links';
+import {
+  LinksCollection,
+  BooksCollection,
+  BooksCollectionName,
+  SimilarBooksCollectionName,
+  SimilarBooksCollection
+} from '/imports/api/links';
 
 function insertLink({ title, url }) {
   LinksCollection.insert({title, url, createdAt: new Date()});
@@ -10,7 +16,10 @@ Meteor.startup(() => {
   Meteor.publish(BooksCollectionName, function () {
     return BooksCollection.find({}, {limit: 20});
   });
-  console.log("publ");
+
+  Meteor.publish(SimilarBooksCollectionName, function () {
+    return SimilarBooksCollection.find({}, {limit: 1000});
+  });
 
   // If the Links collection is empty, add some data.
   if (LinksCollection.find().count() === 0) {

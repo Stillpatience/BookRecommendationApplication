@@ -1,12 +1,11 @@
 import React from 'react';
-import {BooksCollection} from '../api/links';
+import {BooksCollection, SimilarBooksCollection} from '../api/links';
 import {RoutePaths} from "./RoutePaths";
 import {Link, Route} from "react-router-dom";
 import ReactDOM from 'react-dom';
 import SearchBar from "material-ui-search-bar";
 export var wantToReadBooks = [];
 export var ratings = {};
-import { Tracker } from 'meteor/tracker'
 function search(value) {
     console.log(value);
 }
@@ -50,19 +49,9 @@ function setBooks(books, search){
 
 }
 export const Books = () => {
-    //const short_books = sub.find();
-    Tracker.autorun(() => {
-        let sub = Meteor.subscribe('collections');
+    let books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}, limit: 20}).fetch();
+    let similar_books = SimilarBooksCollection.find({},{sort: {id: 1}, limit: 1000}).fetch();
 
-        if(sub.ready()) {
-            let a = BooksCollection.find().count()
-            console.log(a);
-        } else {
-            console.log('Loading...');
-        }
-    });
-   // console.log(short_books);
-    const books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}, limit: 20}).fetch();
     return (
         <div>
             <div>
@@ -74,15 +63,16 @@ export const Books = () => {
                 />
             </div>
             <div className="grid-container" id="books">
-                {books.map(book =>
-                <div className="grid-item">
-                    <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
-                        <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image"/>
-                    </Link>
-                    <div className="word-wrap">
-                        <p>{book["title"]}</p>
+                {
+                    books.map(book =>
+                    <div className="grid-item">
+                        <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
+                            <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image"/>
+                        </Link>
+                        <div className="word-wrap">
+                            <p>{book["title"]}</p>
+                        </div>
                     </div>
-                </div>
                 )}
             </div>
         </div>);
