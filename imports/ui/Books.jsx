@@ -75,14 +75,15 @@ export const Books = () => {
             </div>
             <div className="grid-container" id="books">
                 {books.map(book =>
-                <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
                 <div className="grid-item">
-                    <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image"/>
+                    <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
+                        <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image"/>
+                    </Link>
                     <div className="word-wrap">
                         <p>{book["title"]}</p>
                     </div>
                 </div>
-                </Link>)}
+                )}
             </div>
         </div>);
 }
