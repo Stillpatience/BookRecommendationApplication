@@ -13,10 +13,10 @@ export const InitializationBooks = () => {
 
     return (
         <div>
-            <div className="flex-container wrap">
+            <div className="grid-container">
                 {books.map(book =>
-                    <div className="card">
-                        <img id={book["isbn"]} src={book["small_image_url"]} alt="Unable to load image" onClick={() => {const bookId = book["isbn"];
+                    <div className="grid-item">
+                        <img id={book["isbn"]} src={book["image_url"]} alt="Unable to load image" onClick={() => {const bookId = book["isbn"];
                             const element = document.getElementById(bookId);
                             if (!selectedBooks.includes(bookId)){
                                 selectedBooks.push(bookId);
@@ -27,7 +27,7 @@ export const InitializationBooks = () => {
                                 element.style.border = "";
                             }
                         }}/>
-                        <p className="word-wrap"><small>{book["title"]}</small></p>
+                        <p className="word-wrap">{book["title"]}</p>
                     </div>
                 )}
             </div>
