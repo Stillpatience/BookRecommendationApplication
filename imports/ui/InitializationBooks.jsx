@@ -2,12 +2,11 @@ import React from 'react';
 import {RoutePaths} from "./RoutePaths";
 import {BooksCollection} from "../api/links";
 import {useStyles} from "./styles";
-import {removeItemOnce} from "../utils/utils"
+import {removeItemOnce, selectedBooks} from "../utils/utils"
 import Button from "@material-ui/core/Button";
 import {Link} from "react-router-dom";
 
 export const InitializationBooks = () => {
-    const selectedBooks = [];
     const classes = useStyles();
     const books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}, limit: 20}).fetch();
     return (
@@ -18,13 +17,14 @@ export const InitializationBooks = () => {
                     return <div className="grid-item">
                         <div className="tooltip">
                             <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image" onClick={() => {
-                                const bookId = book["isbn"];
-                                const element = document.getElementById(bookId);
-                                if (!selectedBooks.includes(bookId)) {
-                                    selectedBooks.push(bookId);
+                                const bookISBN = book["isbn"];
+                                const bookID = book["id"];
+                                const element = document.getElementById(bookISBN);
+                                if (!selectedBooks.includes(bookID)) {
+                                    selectedBooks.push(bookID);
                                     element.style.border = "0.25rem solid rgb(98, 2, 238)";
                                 } else {
-                                    removeItemOnce(selectedBooks, bookId);
+                                    removeItemOnce(selectedBooks, bookID);
                                     element.style.border = "";
                                 }
                             }}/>

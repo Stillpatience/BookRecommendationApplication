@@ -4,6 +4,7 @@ import {RoutePaths} from "./RoutePaths";
 import {Link, Route} from "react-router-dom";
 import ReactDOM from 'react-dom';
 import SearchBar from "material-ui-search-bar";
+import {recommendedBooks, updateRecommendations} from "../utils/utils";
 export var wantToReadBooks = [];
 export var ratings = {};
 function search(value) {
@@ -49,9 +50,9 @@ function setBooks(books, search){
 
 }
 export const Books = () => {
-    let books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}, limit: 20}).fetch();
+    const books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}, limit: 20}).fetch();
     let similar_books = SimilarBooksCollection.find({},{sort: {id: 1}, limit: 1000}).fetch();
-
+    updateRecommendations(similar_books, books);
     return (
         <div>
             <div>
@@ -64,7 +65,7 @@ export const Books = () => {
             </div>
             <div className="grid-container" id="books">
                 {
-                    books.map(book =>
+                    recommendedBooks.map(book =>
                     <div className="grid-item">
                         <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
                             <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image"/>
