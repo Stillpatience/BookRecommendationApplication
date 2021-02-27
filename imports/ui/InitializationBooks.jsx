@@ -10,26 +10,29 @@ export const InitializationBooks = () => {
     const selectedBooks = [];
     const classes = useStyles();
     const books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}, limit: 20}).fetch();
-
     return (
         <div>
             <div className="grid-container">
-                {books.map(book =>
-                    <div className="grid-item">
-                        <img id={book["isbn"]} src={book["image_url"]} alt="Unable to load image" onClick={() => {const bookId = book["isbn"];
-                            const element = document.getElementById(bookId);
-                            if (!selectedBooks.includes(bookId)){
-                                selectedBooks.push(bookId);
-                                element.style.border = "0.1rem solid rgb(98, 2, 238)";
-                            }
-                            else{
-                                removeItemOnce(selectedBooks, bookId);
-                                element.style.border = "";
-                            }
-                        }}/>
+                {books.map(book => {
+                    const description = typeof book["description"] == 'undefined' ? "No description found" : book["description"];
+                    return <div className="grid-item">
+                        <div className="tooltip">
+                            <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image" onClick={() => {
+                                const bookId = book["isbn"];
+                                const element = document.getElementById(bookId);
+                                if (!selectedBooks.includes(bookId)) {
+                                    selectedBooks.push(bookId);
+                                    element.style.border = "0.25rem solid rgb(98, 2, 238)";
+                                } else {
+                                    removeItemOnce(selectedBooks, bookId);
+                                    element.style.border = "";
+                                }
+                            }}/>
+                            <span className="tooltiptext">{description}</span>
+                        </div>
                         <p className="word-wrap">{book["title"]}</p>
                     </div>
-                )}
+                })}
             </div>
             <div>
                 <Link to={RoutePaths.RATE_AND_DISCOVER}>
