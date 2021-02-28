@@ -64,7 +64,31 @@ export const updateRecommendations = (similarBooksList, books) => {
             }
         }
     }
+    console.log(ratings);
+
+    let items = Object.keys(ratings).map(function(key) {
+        return [key, ratings[key]];
+    });
+    items.sort(function(first, second) {
+        return second[1] - first[1];
+    });
+
+    /*ratings = [];
+    console.log("items");
+    console.log(items);
+    items.forEach(item => {
+        let res = item[0].split(",");
+        let book_id = parseInt(res[1]);
+        let user = parseInt(res[0]);
+        console.log("item ratings");
+        console.log(item[1]);
+        let rating = parseFloat(item[1]);
+        setRating(user, book_id, rating)
+    })
+    console.log("ratings");
+    console.log(ratings);*/
 }
+
 export let newlyRatedBooks = [];
 export const getSimilarBooks = (similarBooksList, id) => {
     let result = null;
