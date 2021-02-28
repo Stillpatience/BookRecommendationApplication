@@ -73,20 +73,24 @@ export const updateRecommendations = (similarBooksList, books) => {
         return second[1] - first[1];
     });
 
-    /*ratings = [];
+    ratings = [];
     console.log("items");
     console.log(items);
     items.forEach(item => {
         let res = item[0].split(",");
         let book_id = parseInt(res[1]);
         let user = parseInt(res[0]);
-        console.log("item ratings");
-        console.log(item[1]);
-        let rating = parseFloat(item[1]);
-        setRating(user, book_id, rating)
+        ratings[[user, book_id]] = parseFloat(item[1]);
     })
-    console.log("ratings");
-    console.log(ratings);*/
+    recommendedBooks = [];
+    for (let key in ratings) {
+        let res = key.split(",");
+        let book_id = parseInt(res[1]);
+        let book = getBookFromID(book_id, books);
+        if (typeof book !== 'undefined' && !recommendedBooks.includes(book)){
+            recommendedBooks.push(book);
+        }
+    }
 }
 
 export let newlyRatedBooks = [];
