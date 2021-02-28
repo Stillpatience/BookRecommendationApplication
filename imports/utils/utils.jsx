@@ -40,28 +40,32 @@ export const updateRecommendations = (similarBooksList, books) => {
      }
     )
 
-    for (let key in ratings){
+    for (let key in ratings) {
         let res = key.split(",");
         let book_id = parseInt(res[1]);
         let user = parseInt(res[0]);
         let rating = parseFloat(ratings[key]);
+        if (newlyRatedBooks.includes(book_id)){
 
-        const similarBooks = getSimilarBooks(similarBooksList, book_id);
+            const similarBooks = getSimilarBooks(similarBooksList, book_id);
 
-        const similars = ["similar1", "similar2", "similar3", "similar4", "similar5"];
-        similars.forEach(similarString => {
-            const book_id = parseInt(similarBooks[similarString]);
-            const prevRating = getRating(user, book_id)
-            if (typeof prevRating !== 'undefined') {
-                setRating(user, book_id, prevRating + rating);
-            } else {
-                setRating(user, book_id, rating);
+            const similars = ["similar1", "similar2", "similar3", "similar4", "similar5"];
+            if (rating >= 3) {
+                similars.forEach(similarString => {
+                    const book_id = parseInt(similarBooks[similarString]);
+                    const prevRating = getRating(user, book_id)
+                    if (typeof prevRating !== 'undefined') {
+                        setRating(user, book_id, prevRating + rating);
+                    } else {
+                        setRating(user, book_id, rating);
+                    }
+                });
+                newlyRatedBooks = [];
             }
-        });
-
+        }
     }
 }
-
+export let newlyRatedBooks = [];
 export const getSimilarBooks = (similarBooksList, id) => {
     let result = null;
     similarBooksList.forEach(similarBook => {
@@ -106,6 +110,7 @@ export const getBookFromID = (id, books) => {
 export let selectedBooks = []
 
 export const setRating = (user, book_id, newValue) => {
+    newlyRatedBooks.push(book_id);
     ratings[[user, book_id]] = newValue;
 }
 
