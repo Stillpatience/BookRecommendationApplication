@@ -1,3 +1,5 @@
+import {ratings} from "../ui/Books";
+
 export const removeItemOnce = (arr, value) => {
     let index = arr.indexOf(value);
     if (index > -1) {
@@ -25,14 +27,71 @@ export const updateRecommendations = (similarBooksList, books) => {
          })
      })
      newlyRecommendedBooks.forEach(book => {
-         if (typeof book == 'undefined' || recommendedBooks.includes(book)){
+         if (typeof book == 'undefined'){
 
-         } else{
-             recommendedBooks.push(book);
+         } else if (recommendedBooks.includes(book)) {
+             updateWeight(book, weightedRecommendedBooks,
+                 weightedRecommendedBooks.get(book) +  getRating(1, book));
+         } else {
+             updateWeight(book, weightedRecommendedBooks,
+                 typeof getRating(1, book) == 'undefined' ?
+                     2.5 : getRating(1, book));
          }
      }
     )
+
+    for (let key in ratings){
+        let res = key.split(",");
+        let book_id = parseInt(res[1]);
+        let user = parseInt(res[0]);
+        let rating = parseFloat(ratings[key]);
+
+        const similarBooks = getSimilarBooks(similarBooksList, book_id);
+
+        const similars = ["similar1", "similar2", "similar3", "similar4", "similar5"];
+        similars.forEach(similarString => {
+            const book_id = parseInt(similarBooks[similarString]);
+            const prevRating = getRating(user, book_id)
+            if (typeof prevRating !== 'undefined') {
+                setRating(user, book_id, prevRating + rating);
+            } else {
+                setRating(user, book_id, rating);
+            }
+        });
+
+    }
 }
+
+export const getSimilarBooks = (similarBooksList, id) => {
+    let result = null;
+    similarBooksList.forEach(similarBook => {
+        if (parseInt(similarBook["id"]) === id){
+            result = similarBook;
+        }
+    })
+    return result
+}
+export const updateWeight = (book, weightedRecommendedBooks, newWeight) => {
+    weightedRecommendedBooks.forEach(weightedRecommendation => {
+        if (weightedRecommendation["id"] === book["id"]){
+            const current_weight = weightedRecommendation.get(book["id"]);
+            if (typeof current_weight == 'undefined') {
+                weightedRecommendation.set(book["id"], newWeight);
+            } else {
+                weightedRecommendation.set(book["id"], current_weight + newWeight);
+                }
+            }
+        }
+    )
+    if (weightedRecommendedBooks.size === 0){
+        weightedRecommendedBooks.set(book["id"], newWeight);
+    }
+    else if (typeof weightedRecommendedBooks.get(book["id"]) == 'undefined'){
+        weightedRecommendedBooks.set(book["id"], newWeight);
+    }
+}
+
+export let weightedRecommendedBooks = new Map();
 
 export const getBookFromID = (id, books) => {
     let result_book = undefined;
@@ -45,3 +104,11 @@ export const getBookFromID = (id, books) => {
 }
 
 export let selectedBooks = []
+
+export const setRating = (user, book_id, newValue) => {
+    ratings[[user, book_id]] = newValue;
+}
+
+export const getRating = (user, book_id) => {
+    return ratings[[user, book_id]];
+}

@@ -8,22 +8,12 @@ import {Link} from "react-router-dom";
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
-import {ratings, wantToReadBooks} from "./Books";
-import {removeItemOnce} from "../utils/utils"
+import {wantToReadBooks} from "./Books";
+import {getRating, removeItemOnce, setRating} from "../utils/utils"
 import {numberWithCommas} from "../utils/utils"
 import {Card, CardContent, CardMedia} from "@material-ui/core";
 
-
-function setRating(user, book, newValue){
-    ratings[[user, book]] = newValue;
-}
-
-function getRating(user, book){
-    return ratings[[user, book]];
-}
-
 export const Book = () => {
-    console.log("Loading book");
     const user = 1;
 
     const [stars, setStars] = React.useState(0);
@@ -31,15 +21,13 @@ export const Book = () => {
     const url = window.location.href
     const isbn = url.substring(url.indexOf(RoutePaths.BOOK) + RoutePaths.BOOK.length + 1, url.length);
     let initState
-    console.log(isbn);
+
     initState = !wantToReadBooks.includes(isbn);
     const [wantToRead, setWantToRead] = React.useState(initState);
     let book = BooksCollection.findOne({isbn: parseInt(isbn)});
     if (typeof book == 'undefined'){
-        console.log("undefined")
         book = BooksCollection.findOne({isbn: isbn});
     }
-    console.log(book);
 
     let description = book["description"];
     if (typeof description == 'undefined'){
@@ -61,6 +49,8 @@ export const Book = () => {
     const authors = book["authors"];
     let res = authors.split(" ");
     const author = res[0] + " " + res[1];
+    const book_id = book["id"];
+    console.log(book_id)
     return (
         <div>
             <Card className="flex header">
@@ -114,10 +104,10 @@ export const Book = () => {
                             <Box component="fieldset" mb={3} borderColor="transparent">
                                 <Rating
                                     name="simple-controlled"
-                                    value={getRating(user, isbn) ? getRating(user, isbn) : stars}
+                                    value={getRating(user, book_id) ? getRating(user, book_id) : stars}
                                     onChange={(event, newValue) => {
                                         setStars(newValue);
-                                        setRating(user, isbn, newValue);
+                                        setRating(user, book_id, newValue);
                                     }}
                                 />
                             </Box>

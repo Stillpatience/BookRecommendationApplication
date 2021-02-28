@@ -50,9 +50,17 @@ function setBooks(books, search){
 
 }
 export const Books = () => {
-    const books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}, limit: 20}).fetch();
+    let books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}, limit: 20}).fetch();
     let similar_books = SimilarBooksCollection.find({},{sort: {id: 1}, limit: 1000}).fetch();
     updateRecommendations(similar_books, books);
+
+    console.log("Recommended books");
+    console.log(recommendedBooks);
+    if (recommendedBooks.length !== 0){
+        console.log("Using recommemnder books");
+        books = recommendedBooks;
+    }
+    console.log(books);
     return (
         <div>
             <div>
@@ -65,7 +73,7 @@ export const Books = () => {
             </div>
             <div className="grid-container" id="books">
                 {
-                    recommendedBooks.map(book =>
+                    books.map(book =>
                     <div className="grid-item">
                         <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
                             <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image"/>
