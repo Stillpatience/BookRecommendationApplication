@@ -54,10 +54,7 @@ export const Books = () => {
     let similar_books = SimilarBooksCollection.find({},{sort: {id: 1}, limit: 1000}).fetch();
     updateRecommendations(similar_books, books);
 
-    console.log("Recommended books");
-    console.log(recommendedBooks);
     if (recommendedBooks.length !== 0){
-        console.log("Using recommemnder books");
         books = recommendedBooks;
     }
     console.log(books);

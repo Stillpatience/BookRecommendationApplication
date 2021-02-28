@@ -64,7 +64,6 @@ export const updateRecommendations = (similarBooksList, books) => {
             }
         }
     }
-    console.log(ratings);
 
     let items = Object.keys(ratings).map(function(key) {
         return [key, ratings[key]];
@@ -74,15 +73,20 @@ export const updateRecommendations = (similarBooksList, books) => {
     });
 
     ratings = [];
-    console.log("items");
-    console.log(items);
     items.forEach(item => {
         let res = item[0].split(",");
         let book_id = parseInt(res[1]);
         let user = parseInt(res[0]);
         ratings[[user, book_id]] = parseFloat(item[1]);
     })
+
     recommendedBooks = [];
+    newlyRecommendedBooks.forEach(book => {
+            if (typeof book !== 'undefined' && !recommendedBooks.includes(book)) {
+                recommendedBooks.push(book);
+            }
+        }
+    )
     for (let key in ratings) {
         let res = key.split(",");
         let book_id = parseInt(res[1]);
