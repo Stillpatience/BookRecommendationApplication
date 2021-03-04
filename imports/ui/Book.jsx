@@ -12,6 +12,7 @@ import {wantToReadBooks} from "./Books";
 import {getRating, removeItemOnce, setRating} from "../utils/utils"
 import {numberWithCommas} from "../utils/utils"
 import {Card, CardContent, CardMedia} from "@material-ui/core";
+import VennDiagram from "./VennDiagram";
 
 export const Book = () => {
     const user = 1;
@@ -121,7 +122,7 @@ export const Book = () => {
                     </Grid>
                 </Grid>
                 <h3> Why am I seeing this?</h3>
-
+                <VennDiagram />
             </div>
 
         </div>
