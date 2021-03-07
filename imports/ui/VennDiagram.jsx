@@ -14,7 +14,7 @@ class VennDiagram extends Component {
             .insert("svg",":first-child")
             .attr("width", w)
             .attr("height", h)
-            .attr("id", "venn_diagram")
+            .attr("id", "visualization")
             .style("margin-left", 100);
 
         svg.selectAll("circle")

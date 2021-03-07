@@ -82,9 +82,9 @@ export const Books = () => {
         books = recommendedBooks;
     }
     console.log(books);
-    const vennDiagram =  document.getElementById("venn_diagram");
-    if (vennDiagram !== null) {
-        vennDiagram.parentNode.removeChild(vennDiagram);
+    const visualization =  document.getElementById("visualization");
+    if (visualization !== null) {
+        visualization.parentNode.removeChild(visualization);
     }
     console.log(d3);
     return (
