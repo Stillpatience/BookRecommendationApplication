@@ -1,12 +1,17 @@
 import React from 'react';
-import {BooksCollection, SimilarBooksCollection} from '../api/links';
+import {BooksCollection, SimilarBooksCollection, GenresCollection} from '../api/links';
 import {RoutePaths} from "./RoutePaths";
 import {Link, Route} from "react-router-dom";
 import ReactDOM from 'react-dom';
 import SearchBar from "material-ui-search-bar";
 import {recommendedBooks, updateRecommendations} from "../utils/utils";
+import {Genres} from './Genres.jsx';
+import * as d3 from "d3";
+
 export var wantToReadBooks = [];
 export var ratings = {};
+export var genresMap = {};
+
 function search(value) {
     console.log(value);
 }
@@ -49,15 +54,39 @@ function setBooks(books, search){
     //ReactDOM.render(element, document.getElementById('books'));
 
 }
+
+export const getGenresFromID = (genres, id) => {
+    genres.forEach(genre => {
+        if (genre["id"] === id){
+            if (typeof genresMap[id] == 'undefined'){
+                genresMap[id] = [genre["genres"]];
+            } else {
+                genresMap[id] = genresMap[id].push(genre["genres"]);
+            }
+        }
+        }
+    )
+}
 export const Books = () => {
     let books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}, limit: 20}).fetch();
     let similar_books = SimilarBooksCollection.find({},{sort: {id: 1}, limit: 1000}).fetch();
+    let genres = GenresCollection.find({},{limit: 1000}).fetch();
+    console.log("genres");
+   // getGenresFromID(genres, 6787);
+    console.log(genres);
+    console.log(genresMap);
+    console.log(Genres);
     updateRecommendations(similar_books, books);
 
     if (recommendedBooks.length !== 0){
         books = recommendedBooks;
     }
     console.log(books);
+    const vennDiagram =  document.getElementById("venn_diagram");
+    if (vennDiagram !== null) {
+        vennDiagram.parentNode.removeChild(vennDiagram);
+    }
+    console.log(d3);
     return (
         <div>
             <div>

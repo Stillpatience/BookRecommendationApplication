@@ -4,7 +4,7 @@ import {
   BooksCollection,
   BooksCollectionName,
   SimilarBooksCollectionName,
-  SimilarBooksCollection
+  SimilarBooksCollection, GenresCollectionName, GenresCollection
 } from '/imports/api/links';
 
 function insertLink({ title, url }) {
@@ -19,6 +19,10 @@ Meteor.startup(() => {
 
   Meteor.publish(SimilarBooksCollectionName, function () {
     return SimilarBooksCollection.find({}, {limit: 1000});
+  });
+
+  Meteor.publish(GenresCollectionName, function () {
+    return GenresCollection.find({}, {limit: 1000});
   });
 
   // If the Links collection is empty, add some data.
