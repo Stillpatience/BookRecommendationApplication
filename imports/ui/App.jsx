@@ -10,7 +10,9 @@ export const App = () => (
     <div>
         <Router>
             <Routes />
-            <AppNavigation />
+            <div id="navigation">
+                <AppNavigation />
+            </div>
         </Router>
     </div>
 

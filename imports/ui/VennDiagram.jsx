@@ -10,8 +10,8 @@ class VennDiagram extends Component {
         const data = [12, 5, 6, 6, 9, 10];
         const w = window.innerWidth;
         const h = "20rem";
-        const svg = d3.select("body")
-            .append("svg")
+        const svg = d3.select("#navigation")
+            .insert("svg",":first-child")
             .attr("width", w)
             .attr("height", h)
             .attr("id", "venn_diagram")

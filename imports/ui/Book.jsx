@@ -122,8 +122,8 @@ export const Book = () => {
                     </Grid>
                 </Grid>
                 <h3> Why am I seeing this?</h3>
+                <VennDiagram/>
             </div>
-            <VennDiagram/>
         </div>
 
     );
