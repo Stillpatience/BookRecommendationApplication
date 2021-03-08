@@ -54,6 +54,12 @@ class BarChart extends Component {
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+        d3.select("body")
+            .select("#navigation")
+            .insert("p",":first-child")
+            .attr("id", "visualization-paragraph")
+            .text("This book matches your interests in following genres: ");
+
         const x = d3.scaleLinear()
             .range([0, width])
             .domain([0, d3.max(genres, function (d) {

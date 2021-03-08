@@ -86,6 +86,12 @@ export const Books = () => {
     if (visualization !== null) {
         visualization.parentNode.removeChild(visualization);
     }
+
+
+    const visualization_par =  document.getElementById("visualization-paragraph");
+    if (visualization_par !== null) {
+        visualization_par.parentNode.removeChild(visualization_par);
+    }
     console.log(d3);
     return (
         <div>
