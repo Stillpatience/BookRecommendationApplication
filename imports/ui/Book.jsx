@@ -31,12 +31,13 @@ export const Book = () => {
         book = BooksCollection.findOne({isbn: isbn});
     }
 
-    let description = book["description"];
-    if (typeof description == 'undefined'){
-        description = "No description found.";
+    let full_description = book["description"];
+    let short_description = "";
+    if (typeof full_description == 'undefined'){
+        full_description = "No description found.";
     }
     else {
-        description = description.substring(0,100) + '...'
+        short_description = full_description.substring(0,100) + '...'
     }
 
     const handleClick = () => {
@@ -55,32 +56,36 @@ export const Book = () => {
     console.log(book_id)
     return (
         <div>
-            <Card className="flex header">
-                <CardMedia
-                    title={book["title"]}
-                />
-                    <img src={book["image_url"]} alt="Unable to load image" height="150"/>
-                <CardMedia />
-                <div className= "flex header">
-                    <CardContent>
-                        <p>{book["title"]}</p>
-                        <Typography variant="subtitle2" color="white">
-                            <small><em>ISBN {book["isbn"]}</em></small>
-                        </Typography>
-                        <Typography variant="subtitle1" color="white">
-                            <small>by {author}</small>
-                        </Typography>
+            <Card >
+                <div className="flex header">
+                    <div className="right">
+                    <CardMedia
+                        title={book["title"]}
+                    />
+                        <img src={book["image_url"]} alt="Unable to load image" height="150"/>
+                    <CardMedia />
+                    </div>
+                    <div className= "flex header left">
+                        <CardContent>
+                            <p>{book["title"]}</p>
+                            <Typography variant="subtitle2" color="white">
+                                <small><em>ISBN {book["isbn"]}</em></small>
+                            </Typography>
+                            <Typography variant="subtitle1" color="white">
+                                <small>by {author}</small>
+                            </Typography>
 
-                    </CardContent>
+                        </CardContent>
 
-                </div>
+                    </div>
 
                 <div>
                     <Link to={RoutePaths.RATE_AND_DISCOVER}><CloseIcon style={{ color: 'white'}}/></Link>
                 </div>
+                </div>
             </Card>
             <div className="flex header">
-                <small>{description}</small>
+                <small>{full_description}</small>
             </div>
             <div>
                 <Grid container className="ratings-summary nobr">
@@ -92,7 +97,7 @@ export const Book = () => {
 
                         </Typography>
                     </Grid>
-                    <Grid item xs  className="ratings-summary" align='right'>
+                    <Grid item xs align='right'>
                         <Typography variant="body2" color="textSecondary" >
                             <p>{numberWithCommas(parseInt(book["ratings_count"]))} ratings</p>
                         </Typography>

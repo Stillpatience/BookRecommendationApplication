@@ -165,3 +165,13 @@ svg {
     margin-right:auto;
     display:block;
 }
+
+.right {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.left{
+    margin-left: 0;
+    margin-right: auto;
+}
