@@ -9,7 +9,7 @@ import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
 import {wantToReadBooks} from "./Books";
-import {addGenres, getRating, removeItemOnce, setRating} from "../utils/utils"
+import {addGenres, getRating, propagatedIDs, removeItemOnce, setRating} from "../utils/utils"
 import {numberWithCommas} from "../utils/utils"
 import {Card, CardContent, CardMedia} from "@material-ui/core";
 import BarChart from "./BarChart";
@@ -19,6 +19,8 @@ export const Book = () => {
     const user = 1;
 
     const [stars, setStars] = React.useState(0);
+    console.log("stars", stars);
+    console.log(getRating(user, 116))
 
     const url = window.location.href
     const isbn = url.substring(url.indexOf(RoutePaths.BOOK) + RoutePaths.BOOK.length + 1, url.length);
@@ -111,10 +113,11 @@ export const Book = () => {
                             <Box component="fieldset" mb={3} borderColor="transparent">
                                 <Rating
                                     name="simple-controlled"
-                                    value={getRating(user, book_id) ? getRating(user, book_id) : stars}
+                                    value={getRating(user, book_id) && !propagatedIDs.includes(book_id) ?
+                                        getRating(user, book_id) : stars}
                                     onChange={(event, newValue) => {
                                         setStars(newValue);
-                                        setRating(user, book_id, newValue);
+                                        setRating(user, book_id, newValue, false);
                                         let genres = GenresCollection.find({"id":book_id}, {}).fetch();
                                         addGenres(book_id, genres)
                                     }}

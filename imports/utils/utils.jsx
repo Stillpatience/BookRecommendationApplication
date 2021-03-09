@@ -55,9 +55,9 @@ export const updateRecommendations = (similarBooksList, books) => {
                     const book_id = parseInt(similarBooks[similarString]);
                     const prevRating = getRating(user, book_id)
                     if (typeof prevRating !== 'undefined') {
-                        setRating(user, book_id, prevRating + rating);
+                        setRating(user, book_id, prevRating + rating, true);
                     } else {
-                        setRating(user, book_id, rating);
+                        setRating(user, book_id, rating, true);
                     }
                 });
                 newlyRatedBooks = [];
@@ -140,10 +140,17 @@ export const getBookFromID = (id, books) => {
 }
 
 export let selectedBooks = []
-
-export const setRating = (user, book_id, newValue) => {
+export let propagatedIDs = []
+export const setRating = (user, book_id, newValue, propagated) => {
     newlyRatedBooks.push(book_id);
     ratings[[user, book_id]] = newValue;
+    if (propagated) {
+        propagatedIDs.push(book_id);
+    }
+    if (!propagated && propagatedIDs.includes(book_id)){
+        removeItemOnce(propagatedIDs, book_id);
+
+    }
 }
 
 export const getRating = (user, book_id) => {
