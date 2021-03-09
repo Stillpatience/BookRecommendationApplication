@@ -1,6 +1,6 @@
 import React from "react";
 import {RoutePaths} from "./RoutePaths";
-import {BooksCollection} from "../api/links";
+import {BooksCollection, GenresCollection} from "../api/links";
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
@@ -9,10 +9,11 @@ import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
 import {wantToReadBooks} from "./Books";
-import {getRating, removeItemOnce, setRating} from "../utils/utils"
+import {addGenres, getRating, removeItemOnce, setRating} from "../utils/utils"
 import {numberWithCommas} from "../utils/utils"
 import {Card, CardContent, CardMedia} from "@material-ui/core";
 import BarChart from "./BarChart";
+import OtherBookExplanation from "./OtherBookExplanation";
 
 export const Book = () => {
     const user = 1;
@@ -109,6 +110,8 @@ export const Book = () => {
                                     onChange={(event, newValue) => {
                                         setStars(newValue);
                                         setRating(user, book_id, newValue);
+                                        let genres = GenresCollection.find({"id":book_id}, {}).fetch();
+                                        addGenres(book_id, genres)
                                     }}
                                 />
                             </Box>

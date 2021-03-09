@@ -22,7 +22,7 @@ Meteor.startup(() => {
   });
 
   Meteor.publish(GenresCollectionName, function () {
-    return GenresCollection.find({}, {limit: 1000});
+    return GenresCollection.find({});
   });
 
   // If the Links collection is empty, add some data.

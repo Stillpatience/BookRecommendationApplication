@@ -1,4 +1,4 @@
-import {ratings} from "../ui/Books";
+import {genresMap, ratings} from "../ui/Books";
 
 export const removeItemOnce = (arr, value) => {
     let index = arr.indexOf(value);
@@ -148,4 +148,30 @@ export const setRating = (user, book_id, newValue) => {
 
 export const getRating = (user, book_id) => {
     return ratings[[user, book_id]];
+}
+
+export const addGenres = (book_id, genres) => {
+    genres.forEach(genre => {
+        const genre_name = genre["genres"];
+        if (typeof genresMap[book_id] == 'undefined'){
+            genresMap[book_id] = [genre_name]
+        }
+        genresMap[book_id].push(genre_name)
+    });
+}
+
+export const getHighestCountMap = (genresCount) => {
+    let total_count = 0
+    let newMap = []
+    for (const key in genresCount) {
+        // check if the property/key is defined in the object itself, not in parent
+        if (genresCount.hasOwnProperty(key)) {
+            total_count = total_count + genresCount[key];
+        }
+    }
+    for (const key in genresCount) {
+        const new_value =  Math.floor(genresCount[key]/total_count * 100)
+        newMap.push({"name":key, "value": new_value})
+    }
+    return newMap;
 }

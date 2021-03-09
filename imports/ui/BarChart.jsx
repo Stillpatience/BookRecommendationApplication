@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import * as d3 from "d3";
+import {genresMap} from "./Books";
+import {getHighestCountMap} from "../utils/utils";
 
 
 class BarChart extends Component {
@@ -8,7 +10,23 @@ class BarChart extends Component {
     }
 
     drawChart() {
-        let genres = [{
+        let genresCount = {}
+        for (const key in genresMap) {
+            // check if the property/key is defined in the object itself, not in parent
+            if (genresMap.hasOwnProperty(key)) {
+                const genres = genresMap[key];
+                genres.forEach(genre => {
+                    if (Object.keys(genresCount).includes(genre)){
+                        genresCount[genre] = genresCount[genre] + 1
+                    }
+                    else{
+                        genresCount[genre] = 1
+                    }
+                })
+            }
+        }
+        let genres = getHighestCountMap(genresCount);
+        /*let genres = [{
                 "name": "Genre1",
                 "value": 99,
             },
@@ -28,7 +46,7 @@ class BarChart extends Component {
                 "name": "Genre5",
                 "value": 53,
             },
-            ];
+            ];*/
 
         //sort bars based on value
         genres = genres.sort(function (a, b) {
@@ -42,9 +60,10 @@ class BarChart extends Component {
             bottom: 15,
             left: 60
         };
+        const newHeight = 100 * Object.keys(genres).length;
 
         const width = window.innerWidth - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom;
+            height = newHeight - margin.top - margin.bottom;
 
         const svg = d3.select("#navigation")
             .insert("svg",":first-child")
