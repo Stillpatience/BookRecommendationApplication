@@ -53,6 +53,10 @@ class BarChart extends Component {
             return d3.ascending(a.value, b.value);
         })
 
+        genres = genres.filter(function(value){
+            return value["value"] >= 50;
+        });
+
         //set up svg using margin conventions - we'll need plenty of room on the left for labels
         const margin = {
             top: 15,
@@ -81,9 +85,7 @@ class BarChart extends Component {
 
         const x = d3.scaleLinear()
             .range([0, width])
-            .domain([0, d3.max(genres, function (d) {
-                return d.value;
-            })]);
+            .domain([0, 100]);
 
         const y = d3.scaleBand()
             .rangeRound([height, 0])
