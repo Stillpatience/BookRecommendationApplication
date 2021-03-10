@@ -18,7 +18,7 @@ Meteor.startup(() => {
   });
 
   Meteor.publish(SimilarBooksCollectionName, function () {
-    return SimilarBooksCollection.find({}, {limit: 1000});
+    return SimilarBooksCollection.find({});
   });
 
   Meteor.publish(GenresCollectionName, function () {

@@ -1,4 +1,5 @@
 import {genresMap, ratings} from "../ui/Books";
+import {SimilarBooksCollection} from "../api/links";
 
 export const removeItemOnce = (arr, value) => {
     let index = arr.indexOf(value);
@@ -13,9 +14,12 @@ export const numberWithCommas = (x) => {
 
 export let recommendedBooks = [];
 
-export const updateRecommendations = (similarBooksList, books) => {
-    let newlyRecommendedBooks = [];
+export const updateRecommendations = (similarBooksList1, books) => {
+     let newlyRecommendedBooks = [];
      selectedBooks.forEach(selectedBook =>{
+         let similarBooksList = SimilarBooksCollection.find({"id":selectedBook["id"]}).fetch();
+         //console.log("similarBooksList", similarBooksList)
+
          similarBooksList.forEach(similarBook => {
              if (similarBook["id"] === selectedBook){
                  newlyRecommendedBooks.push(getBookFromID(similarBook["similar1"], books));
@@ -45,10 +49,9 @@ export const updateRecommendations = (similarBooksList, books) => {
         let book_id = parseInt(res[1]);
         let user = parseInt(res[0]);
         let rating = parseFloat(ratings[key]);
+
         if (newlyRatedBooks.includes(book_id)){
-
-            const similarBooks = getSimilarBooks(similarBooksList, book_id);
-
+            const similarBooks = SimilarBooksCollection.findOne({"id":book_id});
             const similars = ["similar1", "similar2", "similar3", "similar4", "similar5"];
             if (rating >= 3) {
                 similars.forEach(similarString => {
