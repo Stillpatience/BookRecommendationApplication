@@ -1,61 +1,59 @@
 import React, {Component} from 'react';
 import * as d3 from "d3";
-import {genresMap} from "./Books";
+import {genresMap, getGenresFromID} from "./Books";
 import {getHighestCountMap} from "../utils/utils";
+import {GenresCollection} from "../api/links";
 
+const countGenresMap = () => {
+    let genresCount = {}
 
+    for (const key in genresMap) {
+        // check if the property/key is defined in the object itself, not in parent
+        if (genresMap.hasOwnProperty(key)) {
+            const genres = genresMap[key];
+            genres.forEach(genre => {
+                if (Object.keys(genresCount).includes(genre)){
+                    genresCount[genre] = genresCount[genre] + 1
+                }
+                else{
+                    genresCount[genre] = 1
+                }
+            })
+        }
+    }
+    return genresCount;
+}
+
+const countGenres = (genres) => {
+}
+
+const countSimilarGenres = (genresCount, book_id) => {
+    const genres_in_book = GenresCollection.find({"id":book_id}, {}).fetch();
+    let selectedGenres = {}
+    genres_in_book.forEach(genre => {
+        if (genre["genres"] in genresCount){
+            const genre_name = genre["genres"]
+            selectedGenres[genre_name] = genresCount[genre_name]
+        }
+    })
+    return selectedGenres
+}
 class BarChart extends Component {
     componentDidMount() {
         this.drawChart();
     }
 
     drawChart() {
-        let genresCount = {}
-        for (const key in genresMap) {
-            // check if the property/key is defined in the object itself, not in parent
-            if (genresMap.hasOwnProperty(key)) {
-                const genres = genresMap[key];
-                genres.forEach(genre => {
-                    if (Object.keys(genresCount).includes(genre)){
-                        genresCount[genre] = genresCount[genre] + 1
-                    }
-                    else{
-                        genresCount[genre] = 1
-                    }
-                })
-            }
-        }
-        let genres = getHighestCountMap(genresCount);
-        /*let genres = [{
-                "name": "Genre1",
-                "value": 99,
-            },
-            {
-                "name": "Genre2",
-                "value": 98,
-            },
-            {
-                "name": "Genre3",
-                "value": 80,
-            },
-            {
-                "name": "Genre4",
-                "value": 55,
-            },
-            {
-                "name": "Genre5",
-                "value": 53,
-            },
-            ];*/
+        let genresCount = countGenresMap();
+
+        const similarGenresCount = countSimilarGenres(genresCount, this.props.book_id);
+
+        let genres = getHighestCountMap(similarGenresCount);
 
         //sort bars based on value
         genres = genres.sort(function (a, b) {
             return d3.ascending(a.value, b.value);
         })
-
-        genres = genres.filter(function(value){
-            return value["value"] >= 50;
-        });
 
         //set up svg using margin conventions - we'll need plenty of room on the left for labels
         const margin = {
@@ -66,7 +64,7 @@ class BarChart extends Component {
         };
         const newHeight = 100 * Object.keys(genres).length;
 
-        const width = window.innerWidth - margin.left - margin.right,
+        const width = 0.8 * window.innerWidth - margin.left - margin.right,
             height = newHeight - margin.top - margin.bottom;
 
         const svg = d3.select("#navigation")

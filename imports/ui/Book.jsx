@@ -133,7 +133,7 @@ export const Book = () => {
                     </Grid>
                 </Grid>
                 <h3> Why am I seeing this?</h3>
-                <BarChart/>
+                <BarChart book_id={book_id}/>
             </div>
         </div>
 
