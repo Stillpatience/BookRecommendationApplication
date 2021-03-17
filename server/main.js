@@ -4,7 +4,7 @@ import {
   BooksCollection,
   BooksCollectionName,
   SimilarBooksCollectionName,
-  SimilarBooksCollection, GenresCollectionName, GenresCollection
+  SimilarBooksCollection, GenresCollectionName, GenresCollection, FullBooksCollection, FullBooksCollectionName
 } from '/imports/api/links';
 
 function insertLink({ title, url }) {
@@ -16,6 +16,11 @@ Meteor.startup(() => {
   Meteor.publish(BooksCollectionName, function () {
     return BooksCollection.find({}, {limit: 400});
   });
+
+  Meteor.publish(FullBooksCollectionName, function () {
+    return BooksCollection.find({});
+  });
+
 
   Meteor.publish(SimilarBooksCollectionName, function () {
     return SimilarBooksCollection.find({});

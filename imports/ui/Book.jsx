@@ -134,7 +134,7 @@ export const Book = () => {
                     </Grid>
                 </Grid>
                 <h3> Why am I seeing this?</h3>
-                <VennDiagram book_id={book_id}/>
+                <OtherBookExplanation book_id={book_id}/>
             </div>
         </div>
 
