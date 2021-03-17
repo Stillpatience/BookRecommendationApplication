@@ -1,43 +1,14 @@
 import React, {Component} from 'react';
 import * as d3 from "d3";
 import {genresMap, getGenresFromID} from "./Books";
-import {getHighestCountMap} from "../utils/utils";
+import {getHighestCountMap, countSimilarGenres, countGenresMap} from "../utils/utils";
 import {GenresCollection} from "../api/links";
 
-const countGenresMap = () => {
-    let genresCount = {}
-
-    for (const key in genresMap) {
-        // check if the property/key is defined in the object itself, not in parent
-        if (genresMap.hasOwnProperty(key)) {
-            const genres = genresMap[key];
-            genres.forEach(genre => {
-                if (Object.keys(genresCount).includes(genre)){
-                    genresCount[genre] = genresCount[genre] + 1
-                }
-                else{
-                    genresCount[genre] = 1
-                }
-            })
-        }
-    }
-    return genresCount;
-}
 
 const countGenres = (genres) => {
 }
 
-const countSimilarGenres = (genresCount, book_id) => {
-    const genres_in_book = GenresCollection.find({"id":book_id}, {}).fetch();
-    let selectedGenres = {}
-    genres_in_book.forEach(genre => {
-        if (genre["genres"] in genresCount){
-            const genre_name = genre["genres"]
-            selectedGenres[genre_name] = genresCount[genre_name]
-        }
-    })
-    return selectedGenres
-}
+
 class BarChart extends Component {
     componentDidMount() {
         this.drawChart();

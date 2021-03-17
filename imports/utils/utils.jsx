@@ -1,5 +1,5 @@
 import {genresMap, ratings} from "../ui/Books";
-import {SimilarBooksCollection} from "../api/links";
+import {GenresCollection, SimilarBooksCollection} from "../api/links";
 
 export const removeItemOnce = (arr, value) => {
     let index = arr.indexOf(value);
@@ -192,4 +192,36 @@ export const getHighestCountMap = (genresCount) => {
         newMap.push({"name":key, "value": new_value})
     }
     return newMap;
+}
+
+export const countSimilarGenres = (genresCount, book_id) => {
+    const genres_in_book = GenresCollection.find({"id":book_id}, {}).fetch();
+    let selectedGenres = {}
+    genres_in_book.forEach(genre => {
+        if (genre["genres"] in genresCount){
+            const genre_name = genre["genres"]
+            selectedGenres[genre_name] = genresCount[genre_name]
+        }
+    })
+    return selectedGenres
+}
+
+export const countGenresMap = () => {
+    let genresCount = {}
+
+    for (const key in genresMap) {
+        // check if the property/key is defined in the object itself, not in parent
+        if (genresMap.hasOwnProperty(key)) {
+            const genres = genresMap[key];
+            genres.forEach(genre => {
+                if (Object.keys(genresCount).includes(genre)){
+                    genresCount[genre] = genresCount[genre] + 1
+                }
+                else{
+                    genresCount[genre] = 1
+                }
+            })
+        }
+    }
+    return genresCount;
 }
