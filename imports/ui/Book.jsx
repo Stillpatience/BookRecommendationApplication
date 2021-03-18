@@ -15,6 +15,7 @@ import {Card, CardContent, CardMedia} from "@material-ui/core";
 import BarChart from "./BarChart";
 import OtherBookExplanation from "./OtherBookExplanation";
 import VennDiagram from "./VennDiagram";
+import DoubleBarChart from "./DoubleBarChart";
 
 export const Book = () => {
     const user = 1;
@@ -134,7 +135,7 @@ export const Book = () => {
                     </Grid>
                 </Grid>
                 <h3> Why am I seeing this?</h3>
-                <OtherBookExplanation book_id={book_id}/>
+                <DoubleBarChart book_id={book_id}/>
             </div>
         </div>
 
