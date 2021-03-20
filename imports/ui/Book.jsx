@@ -16,6 +16,7 @@ import BarChart from "./BarChart";
 import OtherBookExplanation from "./OtherBookExplanation";
 import VennDiagram from "./VennDiagram";
 import DoubleBarChart from "./DoubleBarChart";
+import ArrowsExplanation from "./ArrowsExplanation";
 
 export const Book = () => {
     const user = 1;
@@ -135,7 +136,7 @@ export const Book = () => {
                     </Grid>
                 </Grid>
                 <h3> Why am I seeing this?</h3>
-                <DoubleBarChart book_id={book_id}/>
+                <ArrowsExplanation book_id={book_id}/>
             </div>
         </div>
 
