@@ -225,3 +225,11 @@ export const countGenresMap = () => {
     }
     return genresCount;
 }
+
+export const visualizationsMap = {
+    1:"barchart",
+    2:"venn-diagram",
+    3:"other-books",
+    4:"double-barchart",
+    5:"arrows"
+}

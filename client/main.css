@@ -175,3 +175,19 @@ svg {
     margin-left: 0;
     margin-right: auto;
 }
+
+#arrows{
+    display: none;
+}
+#barchart{
+    display: none;
+}
+#venn-diagram{
+    display: none;
+}
+#other-books{
+    display: none;
+}
+#double-barchart{
+    display: none;
+}

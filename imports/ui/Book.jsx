@@ -9,7 +9,7 @@ import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
 import {wantToReadBooks} from "./Books";
-import {addGenres, getRating, propagatedIDs, removeItemOnce, setRating} from "../utils/utils"
+import {addGenres, getRating, propagatedIDs, removeItemOnce, setRating, visualizationsMap} from "../utils/utils"
 import {numberWithCommas} from "../utils/utils"
 import {Card, CardContent, CardMedia} from "@material-ui/core";
 import BarChart from "./BarChart";
@@ -22,8 +22,6 @@ export const Book = () => {
     const user = 1;
 
     const [stars, setStars] = React.useState(0);
-    console.log("stars", stars);
-    console.log(getRating(user, 116))
 
     const url = window.location.href
     const isbn = url.substring(url.indexOf(RoutePaths.BOOK) + RoutePaths.BOOK.length + 1, url.length);
@@ -54,11 +52,26 @@ export const Book = () => {
         }
         setWantToRead(!wantToRead);
     };
+
+    const handleNumberClick = (number) => {
+        for (let key in visualizationsMap) {
+            // check if the property/key is defined in the object itself, not in parent
+            if (visualizationsMap.hasOwnProperty(key)) {
+                const node = document.getElementById(visualizationsMap[key]);
+                if (parseInt(key) !== parseInt(number)){
+                    node.style.display = "none";
+                } else{
+                    node.style.display = "block";
+
+                }
+            }
+        }
+    }
     const authors = book["authors"];
     let res = authors.split(" ");
     const author = res[0] + " " + res[1];
     const book_id = book["id"];
-    console.log(book_id)
+
     return (
         <div>
             <Card >
@@ -136,7 +149,26 @@ export const Book = () => {
                     </Grid>
                 </Grid>
                 <h3> Why am I seeing this?</h3>
+                <BarChart book_id={book_id}/>
+                <VennDiagram book_id={book_id}/>
+                <OtherBookExplanation book_id={book_id}/>
+                <DoubleBarChart book_id={book_id}/>
                 <ArrowsExplanation book_id={book_id}/>
+                <Button variant="contained" color="primary" onClick={() => { handleNumberClick(1) }}>
+                    1
+                </Button>
+                <Button variant="contained" color="primary" onClick={() => { handleNumberClick(2) }}>
+                    2
+                </Button>
+                <Button variant="contained" color="primary" onClick={() => { handleNumberClick(3) }}>
+                    3
+                </Button>
+                <Button variant="contained" color="primary" onClick={() => { handleNumberClick(4) }}>
+                    4
+                </Button>
+                <Button variant="contained" color="primary" onClick={() => { handleNumberClick(5) }}>
+                    5
+                </Button>
             </div>
         </div>
 

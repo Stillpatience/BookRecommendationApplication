@@ -18,7 +18,7 @@ class OtherBookExplanation extends Component {
             .insert("svg",":first-child")
             .attr("width", w)
             .attr("height", h)
-            .attr("id", "visualization")
+            .attr("id", "other-books")
             .style("margin-left", 100);
         d3.image(
             `http://lorempixel.com/200/200/`,
@@ -64,10 +64,7 @@ class OtherBookExplanation extends Component {
 
                 let x_img = 0
                 books.forEach(book_id => {
-
-                    console.log("book_id", book_id);
                     let book = BooksCollection.find({"id":parseInt(book_id)}, {}).fetch();
-                    console.log("book", book[0]["image_url"]);
                     let image_url = book[0]["image_url"];
                     let book_title = book[0]["title"];
 

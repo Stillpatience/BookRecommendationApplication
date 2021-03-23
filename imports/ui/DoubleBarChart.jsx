@@ -96,7 +96,6 @@ class DoubleBarChart extends Component {
             genres = mergeGenres(genres, this_book_genres);
         }
 
-        console.log("Final genres", genres)
         //set up svg using margin conventions - we'll need plenty of room on the left for labels
         const margin = {
             top: 15,
@@ -113,15 +112,10 @@ class DoubleBarChart extends Component {
             .insert("svg",":first-child")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-            .attr("id", "visualization")
+            .attr("id", "double-barchart")
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        d3.select("body")
-            .select("#navigation")
-            .insert("p",":first-child")
-            .attr("id", "visualization-paragraph")
-            .text("Your taste matches the genres of this book: ");
 
         const x = d3.scaleLinear()
             .range([0, width])
@@ -156,6 +150,14 @@ class DoubleBarChart extends Component {
                 return x(d.value);
             })
             .attr("style", "fill:rgb(117, 33, 240);stroke-width:3;");
+
+        bars.append("text")
+            .attr("class", "label")
+            //y position of the label is halfway down the bar
+            .attr("y", 0)
+            //x position is 3 pixels to the right of the bar
+            .attr("x", 0)
+            .text("Your taste matches the genres of this book: ");
 
         //add a value label to the right of each bar
         bars.append("text")

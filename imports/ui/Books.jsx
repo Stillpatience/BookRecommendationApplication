@@ -3,7 +3,7 @@ import {BooksCollection, SimilarBooksCollection} from '../api/links';
 import {RoutePaths} from "./RoutePaths";
 import {Link} from "react-router-dom";
 import SearchBar from "material-ui-search-bar";
-import {recommendedBooks, updateRecommendations} from "../utils/utils";
+import {recommendedBooks, updateRecommendations, visualizationsMap} from "../utils/utils";
 
 export var wantToReadBooks = [];
 export var ratings = {};
@@ -45,6 +45,18 @@ export const getGenresFromID = (genres, id) => {
         }
     )
 }
+
+const hideVisualizations = () => {
+    for (let key in visualizationsMap) {
+        // check if the property/key is defined in the object itself, not in parent
+        if (visualizationsMap.hasOwnProperty(key)) {
+            const node = document.getElementById(visualizationsMap[key]);
+            if (node !== null){
+                node.style.display = "none";
+            }
+        }
+    }
+}
 export const Books = () => {
     let books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}, limit: 400}).fetch();
     let similar_books = SimilarBooksCollection.find({},{sort: {id: 1}, limit: 1000}).fetch();
@@ -54,16 +66,7 @@ export const Books = () => {
     if (recommendedBooks.length !== 0){
         books = recommendedBooks;
     }
-    const visualization =  document.getElementById("visualization");
-    if (visualization !== null) {
-        visualization.parentNode.removeChild(visualization);
-    }
-
-
-    const visualization_par =  document.getElementById("visualization-paragraph");
-    if (visualization_par !== null) {
-        visualization_par.parentNode.removeChild(visualization_par);
-    }
+    hideVisualizations();
     let prevSearch = "";
     return (
         <div>

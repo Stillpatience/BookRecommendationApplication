@@ -42,15 +42,9 @@ class BarChart extends Component {
             .insert("svg",":first-child")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-            .attr("id", "visualization")
+            .attr("id", "barchart")
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        d3.select("body")
-            .select("#navigation")
-            .insert("p",":first-child")
-            .attr("id", "visualization-paragraph")
-            .text("This book matches your interests in following genres: ");
 
         const x = d3.scaleLinear()
             .range([0, width])
@@ -72,7 +66,7 @@ class BarChart extends Component {
         bars.append("rect")
             .attr("class", "bar")
             .attr("y", function (d) {
-                return y(d.name);
+                return y(d.name) + 20;
             })
             .attr("height", y.bandwidth() / 8)
             .attr("x", 0)
@@ -81,12 +75,20 @@ class BarChart extends Component {
             })
             .attr("style", "fill:rgb(117, 33, 240);stroke-width:3;");
 
+        bars.append("text")
+            .attr("class", "label")
+            //y position of the label is halfway down the bar
+            .attr("y", 0)
+            //x position is 3 pixels to the right of the bar
+            .attr("x", 0)
+            .text("This book matches your interests in following genres: ");
+
         //add a value label to the right of each bar
         bars.append("text")
             .attr("class", "label")
             //y position of the label is halfway down the bar
             .attr("y", function (d) {
-                return y(d.name) + y.bandwidth() / 4 - 25;
+                return y(d.name) + y.bandwidth() / 4 - 5;
             })
             //x position is 3 pixels to the right of the bar
             .attr("x", function (d) {
@@ -101,7 +103,7 @@ class BarChart extends Component {
             .attr("class", "label")
             //y position of the label is halfway down the bar
             .attr("y", function (d) {
-                return y(d.name) + y.bandwidth() / 4 - 25;
+                return y(d.name) + y.bandwidth() / 4 - 5;
             })
             //x position is 3 pixels to the right of the bar
             .attr("x", 0)

@@ -80,7 +80,7 @@ class ArrowsExplanation extends Component {
             .insert("svg",":first-child")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-            .attr("id", "visualization")
+            .attr("id", "arrows")
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
         let cy = 25;
@@ -123,7 +123,7 @@ class ArrowsExplanation extends Component {
             .attr("cx", left_ellipse_x)
             .attr("cy", left_ellipse_y)
             .attr("rx", left_ellipse_rx)
-            .attr("ry", (d,i) => { return d.ry; })
+            .attr("ry", (d) => { return d.ry; })
             .attr("style", "fill:none;stroke:black")
 
         svgEllipses.append("text")
@@ -140,7 +140,7 @@ class ArrowsExplanation extends Component {
             .attr("cx", right_ellipse_x)
             .attr("cy", right_ellipse_y)
             .attr("rx", right_ellipse_rx)
-            .attr("ry", (d,i) => { return d.ry; })
+            .attr("ry", (d) => { return d.ry; })
             .attr("style", "fill:none;stroke:black")
 
 
@@ -151,10 +151,10 @@ class ArrowsExplanation extends Component {
             .text("This book");
 
         svgEllipses.append("ellipse")
-            .attr("cx", (d,i) => { return d.cx; })
-            .attr("cy", (d,i) => { return d.cy; })
-            .attr("rx", (d,i) => { return d.rx; })
-            .attr("ry", (d,i) => { return d.ry; })
+            .attr("cx", (d) => { return d.cx; })
+            .attr("cy", (d) => { return d.cy; })
+            .attr("rx", (d) => { return d.rx; })
+            .attr("ry", (d) => { return d.ry; })
             .attr("style", "fill:none;stroke:black")
 
         ellipses.forEach(ellipse => {

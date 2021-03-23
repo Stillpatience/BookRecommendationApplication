@@ -42,5 +42,8 @@ export const Routes = () => {
             <Route path={RoutePaths.SETUP}>
                 <SetUp />
             </Route>
+            <Route path={RoutePaths.HOME}>
+                <Login />
+            </Route>
         </Switch>);
 };
