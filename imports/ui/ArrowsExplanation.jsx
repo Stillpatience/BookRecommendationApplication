@@ -58,7 +58,7 @@ const getGenreScores = (genres_in_book, genres_count) => {
     }
     return genreScores;
 }
-class BarChart extends Component {
+class ArrowsExplanation extends Component {
     componentDidMount() {
         this.drawChart();
     }
@@ -196,4 +196,4 @@ class BarChart extends Component {
     }
 }
 
-export default BarChart;
+export default ArrowsExplanation;
