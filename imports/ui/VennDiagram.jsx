@@ -58,7 +58,7 @@ class VennDiagram extends Component {
 
         const data = [12, 5, 6, 6, 9, 10];
         const w = window.innerWidth;
-        const h = "20rem";
+        const h = "22rem";
         const svg = d3.select("#navigation")
             .insert("svg",":first-child")
             .attr("width", w)
@@ -69,41 +69,49 @@ class VennDiagram extends Component {
         svg.selectAll("circle")
             .data(data)
             .enter()
-            .append("circle")
+
+        svg.append("circle")
             .attr("r", "10rem")
             .attr("cx", "47%")
             .attr("cy", "50%")
+            .attr("fill", "rgb(98, 2, 238)")
+            .attr("opacity", 0.5)
             .attr("stroke", "rgb(98, 2, 238)")
-            .attr("fill", "none")
             .attr("stroke-width", "3")
+
         svg.append("text")
             .attr("x", "65%")
             .attr("y", "10%")
             .attr("dy", ".35em")
             .attr("font-size", "2em")
             .text("This book");
+
         svg.append("text")
             .attr("x", "27%")
             .attr("y", "10%")
             .attr("dy", ".35em")
             .attr("font-size", "2em")
             .text("Your interests");
+
         svg.append("circle")
             .attr("r", "10rem")
             .attr("cx", "57%")
             .attr("cy", "50%")
+            .attr("fill", "rgb(98, 2, 238)")
+            .attr("opacity", 0.5)
             .attr("stroke", "rgb(98, 2, 238)")
-            .attr("fill", "none")
             .attr("stroke-width", "3")
 
         let x = 57
         let y = 10
+
         recommended_genres.forEach(text =>
             {
                 svg.append("text")
                 .attr("x", x.toString() + "%")
                 .attr("y", y.toString() + "%")
                 .attr("dy", ".35em")
+                .attr("fill", "white")
                 .text(text);
                 y += 10;
             }
@@ -117,6 +125,7 @@ class VennDiagram extends Component {
                     .attr("x", x.toString() + "%")
                     .attr("y", y.toString() + "%")
                     .attr("dy", ".35em")
+                    .attr("fill", "white")
                     .text(text);
                 y += 10;
             }
@@ -131,6 +140,7 @@ class VennDiagram extends Component {
                     .attr("x", x.toString() + "%")
                     .attr("y", y.toString() + "%")
                     .attr("dy", ".35em")
+                    .attr("fill", "white")
                     .attr("font-size", genre["value"] / 100 + "em")
                     .text(genre["name"]);
                 y += 10;
