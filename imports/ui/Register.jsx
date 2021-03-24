@@ -15,13 +15,22 @@ import {Link} from "react-router-dom";
 
 export const Register = () => {
     const classes = useStyles();
+
     const [checked, setChecked] = React.useState(false);
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+
     const handleClicked = () => {
         setChecked(!checked);
     }
+
     const ConditionalLink = ({ children, to, condition }) => (!!condition && to)
-        ? <Link to={to}>{children}</Link>
+        ? <Link to={to} onClick={submit}>{children}</Link>
         : <>{children}</>;
+
+    const submit = () => {
+        Accounts.createUser({username: email, email: email, password: password});
+    }
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -43,6 +52,7 @@ export const Register = () => {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        onChange={({ target : {value}}) => setEmail(value)}
                     />
                     <TextField
                         variant="outlined"
@@ -53,6 +63,7 @@ export const Register = () => {
                         label="Password"
                         type="password"
                         id="password"
+                        onChange={({ target : {value}}) => setPassword(value)}
                     />
                     <TextField
                         variant="outlined"
