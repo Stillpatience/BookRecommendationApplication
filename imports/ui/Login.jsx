@@ -30,8 +30,18 @@ function Copyright() {
     );
 }
 
+
+
 export const Login = () => {
     const classes = useStyles();
+
+
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+
+    const login = () => {
+        Meteor.loginWithPassword(email, password)
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -43,7 +53,7 @@ export const Login = () => {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form} noValidate onSubmit={login}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -54,6 +64,7 @@ export const Login = () => {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        onChange={({ target : {value}}) => setEmail(value)}
                     />
                     <TextField
                         variant="outlined"
@@ -65,22 +76,22 @@ export const Login = () => {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        onChange={({ target : {value}}) => setPassword(value)}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"
                     />
                     <RouteLink to={RoutePaths.RATE_AND_DISCOVER}>
-
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Sign in
-                    </Button>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Sign in
+                        </Button>
                     </RouteLink>
 
                     <Grid container>
