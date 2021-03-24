@@ -127,7 +127,6 @@ class DoubleBarChart extends Component {
             .domain(genres.map(function (d) {
                 return d.name;
             }));
-        console.log("y", y)
 
         const bars = svg.selectAll(".bar")
             .data(genres)
@@ -167,12 +166,8 @@ class DoubleBarChart extends Component {
             //y position of the label is halfway down the bar
             .attr("y", function (d) {
                 if (d.name.split(" ")[0] === "Your") {
-                    console.log(d.name)
-                    console.log(y(d.name))
                     return y(d.name) + y.bandwidth() / 4 - 25;
                 } else {
-                    console.log(d.name)
-                    console.log(y(d.name))
                     return y(d.name) + y.bandwidth() / 4 - 25 + 40;
                 }
             })
