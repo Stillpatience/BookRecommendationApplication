@@ -157,6 +157,8 @@ class DoubleBarChart extends Component {
             .attr("y", 0)
             //x position is 3 pixels to the right of the bar
             .attr("x", 0)
+            .attr("shape-rendering", "crispEdges")
+            .attr("stroke", "none")
             .text("Your taste matches the genres of this book: ");
 
         //add a value label to the right of each bar

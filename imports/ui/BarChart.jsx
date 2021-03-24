@@ -81,6 +81,8 @@ class BarChart extends Component {
             .attr("y", 0)
             //x position is 3 pixels to the right of the bar
             .attr("x", 0)
+            .attr("shape-rendering", "crispEdges")
+            .attr("stroke", "none")
             .text("This book matches your interests in following genres: ");
 
         //add a value label to the right of each bar
