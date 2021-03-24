@@ -157,29 +157,68 @@ class ArrowsExplanation extends Component {
             .attr("ry", (d) => { return d.ry; })
             .attr("style", "fill:none;stroke:black")
 
+        let legend = new Set();
+
         ellipses.forEach(ellipse => {
                 const stroke_width = ellipse["interest"] / highestInterest * 5;
+                legend.add(stroke_width)
                 svgEllipses.append("line")
                     .attr("class", "line")
                     .attr("x1", left_ellipse_x + left_ellipse_rx)
                     .attr("y1", left_ellipse_y)
                     .attr("x2", ellipse["cx"] - ellipse["rx"])
                     .attr("y2", ellipse["cy"])
-                    .attr("style", "stroke:rgb(0,0,0);stroke-width:"+stroke_width);
+                    .attr("style", "stroke:rgb(98, 2, 238);stroke-width:"+stroke_width);
             }
         )
 
         ellipses.forEach(ellipse => {
                 const stroke_width = ellipse["recommendation"] / highestRecommendation * 5;
+                legend.add(stroke_width)
                 svgEllipses.append("line")
                     .attr("class", "line")
                     .attr("x1", right_ellipse_x - right_ellipse_rx)
                     .attr("y1", right_ellipse_y)
                     .attr("x2", ellipse["cx"] + ellipse["rx"])
                     .attr("y2", ellipse["cy"])
-                    .attr("style", "stroke:rgb(0,0,0);stroke-width:"+stroke_width);
+                    .attr("style", "stroke:rgb(98, 2, 238);stroke-width:"+stroke_width);
             }
         )
+
+        let height_offset = 70
+
+        svgEllipses.append("text")
+            .attr("class", "label")
+            .attr("x", right_ellipse_x + right_ellipse_rx)
+            .attr("y", right_ellipse_y - height_offset)
+            .attr("shape-rendering", "crispEdges")
+            .attr("stroke", "none")
+            .text("Link strength");
+
+        legend.forEach(strokewidth => {
+            height_offset -= 20;
+
+            svgEllipses.append("line")
+                .attr("class", "line")
+                .attr("x1", right_ellipse_x + right_ellipse_rx + 20)
+                .attr("y1", right_ellipse_y - height_offset)
+                .attr("x2", right_ellipse_x + right_ellipse_rx + 60)
+                .attr("y2", right_ellipse_y - height_offset)
+                .attr("shape-rendering", "crispEdges")
+                .attr("stroke", "none")
+                .attr("style", "stroke:rgb(98, 2, 238);stroke-width:"+strokewidth);
+
+            const linkStrength = strokewidth * 5;
+            const string = linkStrength.toString();
+
+            svgEllipses.append("text")
+                .attr("class", "label")
+                .attr("x", right_ellipse_x + right_ellipse_rx + 70)
+                .attr("y", right_ellipse_y - height_offset)
+                .attr("shape-rendering", "crispEdges")
+                .attr("stroke", "none")
+                .text(string.slice(0, 2) + "%");
+        })
 
         svgEllipses.append("text")
             .attr("class", "label")
