@@ -58,7 +58,7 @@ const hideVisualizations = () => {
     }
 }
 export const Books = () => {
-    let books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}, limit: 400}).fetch();
+    let books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}}).fetch();
     let similar_books = SimilarBooksCollection.find({},{sort: {id: 1}, limit: 1000}).fetch();
 
     updateRecommendations(similar_books, books);
