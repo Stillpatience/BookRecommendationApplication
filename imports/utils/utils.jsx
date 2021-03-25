@@ -17,8 +17,7 @@ export let recommendedBooks = [];
 export const updateRecommendations = (similarBooksList1, books) => {
      let newlyRecommendedBooks = [];
      selectedBooks.forEach(selectedBook =>{
-         let similarBooksList = SimilarBooksCollection.find({"id":selectedBook["id"]}).fetch();
-         //console.log("similarBooksList", similarBooksList)
+         let similarBooksList = SimilarBooksCollection.find({"id":selectedBook}).fetch();
 
          similarBooksList.forEach(similarBook => {
              if (similarBook["id"] === selectedBook){
@@ -30,7 +29,8 @@ export const updateRecommendations = (similarBooksList1, books) => {
              }
          })
      })
-     newlyRecommendedBooks.forEach(book => {
+
+    newlyRecommendedBooks.forEach(book => {
          if (typeof book == 'undefined'){
 
          } else if (recommendedBooks.includes(book)) {
@@ -98,6 +98,8 @@ export const updateRecommendations = (similarBooksList1, books) => {
             recommendedBooks.push(book);
         }
     }
+
+    console.log("recommendedBooks2", recommendedBooks)
 }
 
 export let newlyRatedBooks = [];
