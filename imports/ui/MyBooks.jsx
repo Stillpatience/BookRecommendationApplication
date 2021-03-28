@@ -10,16 +10,17 @@ export const MyBooks = () => {
         books.push(BooksCollection.findOne({isbn: parseInt(wantToReadBooks[i])}));
     }
     return (
-        <div className="row">{books.map(book =>
-            <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
-                <div className="column">
-                    <div className="card">
-                        <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image"/>
-                        <div className="container">
-                            <p><small>{book["title"]}</small></p>
+        <div className="grid-container" id="books">
+            {
+                books.map(book =>
+                    <div className="grid-item" id={book["title"]}>
+                        <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
+                            <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image"/>
+                        </Link>
+                        <div className="word-wrap">
+                            <p>{book["title"]}</p>
                         </div>
                     </div>
-                </div>
-            </Link>)}
+                )}
         </div>);
 }
