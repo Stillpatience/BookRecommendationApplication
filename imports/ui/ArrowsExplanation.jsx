@@ -130,6 +130,7 @@ class ArrowsExplanation extends Component {
             .attr("class", "label")
             .attr("y", left_ellipse_y)
             .attr("x", left_ellipse_x)
+            .attr("text-anchor", "middle")
             .text("Your interests");
 
         const right_ellipse_y = ((ellipses.length - 1)/2)*50 + 25
@@ -148,6 +149,7 @@ class ArrowsExplanation extends Component {
             .attr("class", "label")
             .attr("y", right_ellipse_y)
             .attr("x", right_ellipse_x)
+            .attr("text-anchor", "middle")
             .text("This book");
 
         svgEllipses.append("ellipse")
@@ -224,6 +226,7 @@ class ArrowsExplanation extends Component {
             .attr("class", "label")
             .attr("y", (d) => {return d.cy; })
             .attr("x", (d) => {return d.cx; })
+            .attr("text-anchor", "middle")
             .text(function (d) {
                 return d.text;
             });
