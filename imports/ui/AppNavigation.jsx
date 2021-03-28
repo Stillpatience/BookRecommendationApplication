@@ -23,7 +23,7 @@ export const AppNavigation = () => {
     const history = useHistory();
 
     return(
-        <div>
+        <div id={"navigation"}>
             <BottomNavigation
                 value={value}
                 onChange={(event, newValue) => {
