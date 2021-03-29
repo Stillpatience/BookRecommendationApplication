@@ -14,7 +14,7 @@ function insertLink({ title, url }) {
 Meteor.startup(() => {
 
   Meteor.publish(BooksCollectionName, function () {
-    return BooksCollection.find({}, {limit: 400});
+    return BooksCollection.find({});
   });
 
   Meteor.publish(FullBooksCollectionName, function () {

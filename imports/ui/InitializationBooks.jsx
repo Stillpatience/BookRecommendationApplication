@@ -8,7 +8,7 @@ import {Link} from "react-router-dom";
 
 export const InitializationBooks = () => {
     const classes = useStyles();
-    const books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}, limit: 200}).fetch();
+    const books = BooksCollection.find({"isbn":{$ne : "isbn"}},{limit: 200}).fetch();
     return (
         <div>
             <div className="grid-container">
