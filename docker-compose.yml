@@ -3,13 +3,13 @@
 # docker volume create --name=recommender_discrete_volume
 version: '3.2'
 services:
-  tunify:
+  bookrs:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '3920:3000'
+      - '3990:3000'
     environment:
-      ROOT_URL: http://picasso.experiments.cs.kuleuven.be:3920/
-      MONGO_URL: mongodb+srv://admin:dGyaasOCIEkvOxK3@cluster0.9kdtw.mongodb.net/meteor?retryWrites=true&w=majority
+      ROOT_URL: http://picasso.experiments.cs.kuleuven.be:3990/
+      MONGO_URL: mongodb+srv://admin:admin@cluster0.8qwmt.mongodb.net/goodread-books?retryWrites=true&w=majority
       PORT: 3000
