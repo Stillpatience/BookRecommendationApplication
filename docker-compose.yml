@@ -1,0 +1,15 @@
+# docker volume create --name=mongodb_discrete_volume
+# docker volume create --name=corilus_discrete_volume
+# docker volume create --name=recommender_discrete_volume
+version: '3.2'
+services:
+  tunify:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3920:3000'
+    environment:
+      ROOT_URL: http://picasso.experiments.cs.kuleuven.be:3920/
+      MONGO_URL: mongodb+srv://admin:dGyaasOCIEkvOxK3@cluster0.9kdtw.mongodb.net/meteor?retryWrites=true&w=majority
+      PORT: 3000
