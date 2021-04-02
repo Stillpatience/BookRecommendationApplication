@@ -14,9 +14,14 @@ export const numberWithCommas = (x) => {
 
 export let recommendedBooks = [];
 
+export let previouslyLikedBooks = [];
+
 export const updateRecommendations = (similarBooksList1, books) => {
      let newlyRecommendedBooks = [];
-     selectedBooks.forEach(selectedBook =>{
+     console.log("updating recommendations")
+    console.log(selectedBooks)
+
+    selectedBooks.forEach(selectedBook =>{
          let similarBooksList = SimilarBooksCollection.find({"id":selectedBook}).fetch();
 
          similarBooksList.forEach(similarBook => {
@@ -29,7 +34,7 @@ export const updateRecommendations = (similarBooksList1, books) => {
              }
          })
      })
-
+    console.log(newlyRecommendedBooks)
     newlyRecommendedBooks.forEach(book => {
          if (typeof book == 'undefined'){
 
@@ -147,6 +152,9 @@ export const getBookFromID = (id, books) => {
 export let selectedBooks = []
 export let propagatedIDs = []
 export const setRating = (user, book_id, newValue, propagated) => {
+    if (newValue > 2){
+        previouslyLikedBooks.push(book_id)
+    }
     newlyRatedBooks.push(book_id);
     ratings[[user, book_id]] = newValue;
     if (propagated) {
@@ -233,5 +241,6 @@ export const visualizationsMap = {
     2:"venn-diagram",
     3:"other-books",
     4:"double-barchart",
-    5:"arrows"
+    5:"arrows",
+    6:"baseline"
 }

@@ -17,6 +17,7 @@ import OtherBookExplanation from "./OtherBookExplanation";
 import VennDiagram from "./VennDiagram";
 import DoubleBarChart from "./DoubleBarChart";
 import ArrowsExplanation from "./ArrowsExplanation";
+import Baseline from "./Baseline";
 
 export const Book = () => {
     const user = 1;
@@ -154,6 +155,7 @@ export const Book = () => {
                 <OtherBookExplanation book_id={book_id}/>
                 <DoubleBarChart book_id={book_id}/>
                 <ArrowsExplanation book_id={book_id}/>
+                <Baseline book_id={book_id}/>
                 <Button variant="contained" color="primary" onClick={() => { handleNumberClick(1) }}>
                     1
                 </Button>
@@ -168,6 +170,9 @@ export const Book = () => {
                 </Button>
                 <Button variant="contained" color="primary" onClick={() => { handleNumberClick(5) }}>
                     5
+                </Button>
+                <Button variant="contained" color="primary" onClick={() => { handleNumberClick(6) }}>
+                    6
                 </Button>
             </div>
         </div>

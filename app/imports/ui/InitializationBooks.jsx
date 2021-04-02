@@ -2,13 +2,16 @@ import React from 'react';
 import {RoutePaths} from "./RoutePaths";
 import {BooksCollection} from "../api/links";
 import {useStyles} from "./styles";
-import {removeItemOnce, selectedBooks} from "../utils/utils"
+import {previouslyLikedBooks, removeItemOnce, selectedBooks} from "../utils/utils"
 import Button from "@material-ui/core/Button";
 import {Link} from "react-router-dom";
 
 export const InitializationBooks = () => {
     const classes = useStyles();
-    const books = BooksCollection.find({"isbn":{$ne : "isbn"}},{limit: 50}).fetch();
+    let books = BooksCollection.find({"isbn":{$ne : "isbn"}},{limit: 50}).fetch();
+    while (typeof books === 'undefined'){
+        books = BooksCollection.find({"isbn":{$ne : "isbn"}},{limit: 50}).fetch();
+    }
     return (
         <div>
             <div className="grid-container">
@@ -22,9 +25,11 @@ export const InitializationBooks = () => {
                                 const element = document.getElementById(bookISBN);
                                 if (!selectedBooks.includes(bookID)) {
                                     selectedBooks.push(bookID);
+                                    previouslyLikedBooks.push(bookID)
                                     element.style.border = "0.25rem solid rgb(98, 2, 238)";
                                 } else {
                                     removeItemOnce(selectedBooks, bookID);
+                                    removeItemOnce(previouslyLikedBooks, bookID);
                                     element.style.border = "";
                                 }
                             }}/>

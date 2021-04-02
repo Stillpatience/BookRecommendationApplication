@@ -71,6 +71,7 @@ export const Books = () => {
     updateRecommendations(similar_books, books);
 
     if (recommendedBooks.length !== 0){
+        console.log("using recommended books")
         books = recommendedBooks;
     }
     hideVisualizations();
