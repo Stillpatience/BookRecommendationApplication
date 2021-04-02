@@ -9,7 +9,15 @@ import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
 import {wantToReadBooks} from "./Books";
-import {addGenres, getRating, propagatedIDs, removeItemOnce, setRating, visualizationsMap} from "../utils/utils"
+import {
+    addGenres,
+    getRating,
+    previouslyLikedBooks,
+    propagatedIDs,
+    removeItemOnce,
+    setRating,
+    visualizationsMap
+} from "../utils/utils"
 import {numberWithCommas} from "../utils/utils"
 import {Card, CardContent, CardMedia} from "@material-ui/core";
 import BarChart from "./BarChart";
@@ -134,6 +142,9 @@ export const Book = () => {
                                         getRating(user, book_id) : stars}
                                     onChange={(event, newValue) => {
                                         setStars(newValue);
+                                        if (newValue > 2){
+                                            previouslyLikedBooks.push(book_id)
+                                        }
                                         setRating(user, book_id, newValue, false);
                                         let genres = GenresCollection.find({"id":book_id}, {}).fetch();
                                         addGenres(book_id, genres)

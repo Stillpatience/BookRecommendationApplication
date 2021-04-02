@@ -152,9 +152,6 @@ export const getBookFromID = (id, books) => {
 export let selectedBooks = []
 export let propagatedIDs = []
 export const setRating = (user, book_id, newValue, propagated) => {
-    if (newValue > 2){
-        previouslyLikedBooks.push(book_id)
-    }
     newlyRatedBooks.push(book_id);
     ratings[[user, book_id]] = newValue;
     if (propagated) {
