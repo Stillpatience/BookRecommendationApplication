@@ -29,7 +29,7 @@ export const Register = () => {
         : <>{children}</>;
 
     const submit = () => {
-        Accounts.createUser({username: email, email: email, password: password});
+       // Accounts.createUser({username: email, email: email, password: password});
     }
     return (
         <Container component="main" maxWidth="xs">
