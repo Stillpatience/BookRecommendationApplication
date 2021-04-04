@@ -68,7 +68,7 @@ class ArrowsExplanation extends Component {
             top: 15,
             right: 25,
             bottom: 15,
-            left: 60
+            left: 15
         };
         const newHeight = 1000;
 
@@ -94,7 +94,7 @@ class ArrowsExplanation extends Component {
                 ellipses.push({
                     "cx": center,
                     "cy": cy,
-                    "rx": 100,
+                    "rx": 0.2 * width,
                     "ry": 20,
                     "text": genreScore["name"],
                     "interest": genreScore["interest"],

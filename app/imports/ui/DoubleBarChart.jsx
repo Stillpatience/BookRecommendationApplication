@@ -99,9 +99,9 @@ class DoubleBarChart extends Component {
         //set up svg using margin conventions - we'll need plenty of room on the left for labels
         const margin = {
             top: 15,
-            right: 25,
+            right: 100,
             bottom: 15,
-            left: 60
+            left: 0
         };
         const newHeight = 100 * Object.keys(genres).length;
 
@@ -158,7 +158,17 @@ class DoubleBarChart extends Component {
             .attr("x", 0)
             .attr("shape-rendering", "crispEdges")
             .attr("stroke", "none")
-            .text("Your taste matches the genres of this book: ");
+            .text("Your taste matches the ");
+
+        bars.append("text")
+            .attr("class", "label")
+            //y position of the label is halfway down the bar
+            .attr("y", 10)
+            //x position is 3 pixels to the right of the bar
+            .attr("x", 0)
+            .attr("dy", ".35rem")
+            .attr("font-size", "1rem")
+            .text("genres of this book: ")
 
         //add a value label to the right of each bar
         bars.append("text")
@@ -166,17 +176,17 @@ class DoubleBarChart extends Component {
             //y position of the label is halfway down the bar
             .attr("y", function (d) {
                 if (d.name.split(" ")[0] === "Your") {
-                    return y(d.name) + y.bandwidth() / 4 - 25;
+                    return y(d.name) + y.bandwidth() / 4;
                 } else {
-                    return y(d.name) + y.bandwidth() / 4 - 25 + 40;
+                    return y(d.name) + y.bandwidth() / 4 + 40;
                 }
             })
             //x position is 3 pixels to the right of the bar
             .attr("x", function (d) {
-                return x(d.value) - 80;
+                return x(d.value) + 10;
             })
             .text(function (d) {
-                return parseFloat(d.value).toFixed(2) + "% match";
+                return parseFloat(d.value).toFixed(0) + "% match";
             });
 
         //add a genre label to the left of each bar
