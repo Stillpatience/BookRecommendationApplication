@@ -68,7 +68,7 @@ class ArrowsExplanation extends Component {
             top: 15,
             right: 25,
             bottom: 15,
-            left: 15
+            left: 0
         };
         const newHeight = 1000;
 
@@ -94,7 +94,7 @@ class ArrowsExplanation extends Component {
                 ellipses.push({
                     "cx": center,
                     "cy": cy,
-                    "rx": 0.2 * width,
+                    "rx": 0.15 * width,
                     "ry": 20,
                     "text": genreScore["name"],
                     "interest": genreScore["interest"],
@@ -117,8 +117,8 @@ class ArrowsExplanation extends Component {
 
 
         const left_ellipse_y = ((ellipses.length - 1)/2)*50 + 25
-        const left_ellipse_x = center - 300
-        const left_ellipse_rx = 100
+        const left_ellipse_x = 0.15 * width
+        const left_ellipse_rx = 0.15 * width
         svgEllipses.append("ellipse")
             .attr("cx", left_ellipse_x)
             .attr("cy", left_ellipse_y)
@@ -134,8 +134,8 @@ class ArrowsExplanation extends Component {
             .text("Your interests");
 
         const right_ellipse_y = ((ellipses.length - 1)/2)*50 + 25
-        const right_ellipse_x = center + 300
-        const right_ellipse_rx = 100
+        const right_ellipse_x = width - 0.15 * width
+        const right_ellipse_rx = 0.15 * width
 
         svgEllipses.append("ellipse")
             .attr("cx", right_ellipse_x)

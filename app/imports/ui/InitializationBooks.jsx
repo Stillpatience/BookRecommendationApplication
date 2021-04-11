@@ -19,7 +19,7 @@ export const InitializationBooks = () => {
                     const description = typeof book["description"] == 'undefined' ? "No description found" : book["description"];
                     return <div className="grid-item">
                         <div className="tooltip">
-                            <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image" onClick={() => {
+                            <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" onClick={() => {
                                 const bookISBN = book["isbn"];
                                 const bookID = book["id"];
                                 const element = document.getElementById(bookISBN);

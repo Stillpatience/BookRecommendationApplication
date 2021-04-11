@@ -89,7 +89,7 @@ export const Book = () => {
                     <CardMedia
                         title={book["title"]}
                     />
-                        <img src={book["image_url"]} alt="Unable to load image" height="150"/>
+                        <img src={book["image_url"]} height="150"/>
                     <CardMedia />
                     </div>
                     <div className= "flex header left">

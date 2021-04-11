@@ -15,7 +15,7 @@ export const MyBooks = () => {
                 books.map(book =>
                     <div className="grid-item" id={book["title"]}>
                         <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
-                            <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" alt="Unable to load image"/>
+                            <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" />
                         </Link>
                         <div className="word-wrap">
                             <p>{book["title"]}</p>
