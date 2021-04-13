@@ -64,25 +64,21 @@ class ArrowsExplanation extends Component {
     }
 
     drawChart() {
-        const margin = {
-            top: 15,
-            right: 25,
-            bottom: 15,
-            left: 0
-        };
-        const newHeight = 1000;
 
-        const width = 0.8 * window.innerWidth - margin.left - margin.right,
-            height = newHeight - margin.top - margin.bottom;
+        const newHeight = 100;
 
-        const center = (0.8 * window.innerWidth - margin.left - margin.right) / 2
+        const width = 0.8 * window.innerWidth,
+            height = newHeight;
+
+        const center = (0.8 * window.innerWidth) / 2
+
         const svg = d3.select("#navigation")
             .insert("svg",":first-child")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+            .attr("width", width)
+            .attr("height", height)
             .attr("id", "arrows")
             .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
         let cy = 25;
         let ellipses = []
         const genresCount = countGenresMap();
@@ -130,6 +126,7 @@ class ArrowsExplanation extends Component {
             .attr("class", "label")
             .attr("y", left_ellipse_y)
             .attr("x", left_ellipse_x)
+            .attr("font-size", "smaller")
             .attr("text-anchor", "middle")
             .text("Your interests");
 
@@ -150,6 +147,7 @@ class ArrowsExplanation extends Component {
             .attr("y", right_ellipse_y)
             .attr("x", right_ellipse_x)
             .attr("text-anchor", "middle")
+            .attr("font-size", "smaller")
             .text("This book");
 
         svgEllipses.append("ellipse")
@@ -202,10 +200,10 @@ class ArrowsExplanation extends Component {
 
             svgEllipses.append("line")
                 .attr("class", "line")
-                .attr("x1", right_ellipse_x + right_ellipse_rx + 20)
-                .attr("y1", right_ellipse_y - height_offset)
-                .attr("x2", right_ellipse_x + right_ellipse_rx + 60)
-                .attr("y2", right_ellipse_y - height_offset)
+                .attr("x1", right_ellipse_x - right_ellipse_rx - 20)
+                .attr("y1", right_ellipse_y + height_offset)
+                .attr("x2", right_ellipse_x - right_ellipse_rx)
+                .attr("y2", right_ellipse_y + height_offset)
                 .attr("shape-rendering", "crispEdges")
                 .attr("stroke", "none")
                 .attr("style", "stroke:rgb(98, 2, 238);stroke-width:"+strokewidth);
@@ -215,8 +213,8 @@ class ArrowsExplanation extends Component {
 
             svgEllipses.append("text")
                 .attr("class", "label")
-                .attr("x", right_ellipse_x + right_ellipse_rx + 70)
-                .attr("y", right_ellipse_y - height_offset)
+                .attr("x", right_ellipse_x - right_ellipse_rx)
+                .attr("y", right_ellipse_y + height_offset)
                 .attr("shape-rendering", "crispEdges")
                 .attr("stroke", "none")
                 .text(string.slice(0, 2) + "%");
