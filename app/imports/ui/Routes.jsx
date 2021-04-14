@@ -44,7 +44,6 @@ export const Routes = () => {
             </Route>
             <Route path={RoutePaths.TERMS_AND_CONDITIONS}>
                 <TermsAndConditions />
-                <AppNavigation />
             </Route>
             <Route path={RoutePaths.SETUP}>
                 <SetUp />

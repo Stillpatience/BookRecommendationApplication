@@ -65,7 +65,7 @@ class ArrowsExplanation extends Component {
 
     drawChart() {
 
-        const newHeight = 100;
+        const newHeight = 200;
 
         const width = 0.8 * window.innerWidth,
             height = newHeight;
@@ -171,7 +171,6 @@ class ArrowsExplanation extends Component {
                     .attr("style", "stroke:rgb(98, 2, 238);stroke-width:"+stroke_width);
             }
         )
-
         ellipses.forEach(ellipse => {
                 const stroke_width = ellipse["recommendation"] / highestRecommendation * 5;
                 legend.add(stroke_width)
@@ -185,25 +184,29 @@ class ArrowsExplanation extends Component {
             }
         )
 
-        let height_offset = 70
+        let height_offset = ellipses[ellipses.length - 1]["cy"];
+        height_offset += 20;
 
         svgEllipses.append("text")
             .attr("class", "label")
-            .attr("x", right_ellipse_x + right_ellipse_rx)
-            .attr("y", right_ellipse_y - height_offset)
+            .attr("x", right_ellipse_x - right_ellipse_rx + 40)
+            .attr("y", right_ellipse_y + height_offset)
             .attr("shape-rendering", "crispEdges")
+            .attr("text-anchor", "middle")
+            .attr("font-size", "smaller")
             .attr("stroke", "none")
             .text("Link strength");
 
         legend.forEach(strokewidth => {
-            height_offset -= 20;
+            height_offset += 20;
 
             svgEllipses.append("line")
                 .attr("class", "line")
-                .attr("x1", right_ellipse_x - right_ellipse_rx - 20)
+                .attr("x1", right_ellipse_x - right_ellipse_rx + 40)
                 .attr("y1", right_ellipse_y + height_offset)
                 .attr("x2", right_ellipse_x - right_ellipse_rx)
                 .attr("y2", right_ellipse_y + height_offset)
+                .attr("font-size", "smaller")
                 .attr("shape-rendering", "crispEdges")
                 .attr("stroke", "none")
                 .attr("style", "stroke:rgb(98, 2, 238);stroke-width:"+strokewidth);
@@ -213,9 +216,10 @@ class ArrowsExplanation extends Component {
 
             svgEllipses.append("text")
                 .attr("class", "label")
-                .attr("x", right_ellipse_x - right_ellipse_rx)
+                .attr("x", right_ellipse_x - right_ellipse_rx + 40)
                 .attr("y", right_ellipse_y + height_offset)
                 .attr("shape-rendering", "crispEdges")
+                .attr("font-size", "smaller")
                 .attr("stroke", "none")
                 .text(string.slice(0, 2) + "%");
         })
