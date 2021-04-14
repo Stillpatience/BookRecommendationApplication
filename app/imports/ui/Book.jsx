@@ -80,7 +80,8 @@ export const Book = () => {
     let res = authors.split(" ");
     const author = res[0] + " " + res[1];
     const book_id = book["id"];
-
+    const book_img = book["id"] + ".jpg"
+    console.log(book["id"] + ".jpg")
     return (
         <div>
             <Card >
@@ -89,7 +90,7 @@ export const Book = () => {
                     <CardMedia
                         title={book["title"]}
                     />
-                        <img src={book["image_url"]} height="150"/>
+                        <img src={"/" + book["id"] + ".jpg"} height="150"/>
                     <CardMedia />
                     </div>
                     <div className= "flex header left">

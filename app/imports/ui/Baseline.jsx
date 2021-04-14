@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import * as d3 from "d3";
 import {BooksCollection} from "../api/links";
 import {previouslyLikedBooks} from "../utils/utils";
-import DoubleBarChart from "./DoubleBarChart";
 
 class Baseline extends Component {
     componentDidMount() {
@@ -35,8 +34,8 @@ class Baseline extends Component {
 
         previouslyLikedBooks.forEach(book_id => {
             let book = BooksCollection.find({"id":parseInt(book_id)}, {}).fetch();
-            let image_url = book[0]["image_url"];
             let book_title = book[0]["title"];
+            let image_url = "/" + book_id + ".jpg";
 
             let y_img = y + 2;
             svg.append("svg:image")
@@ -45,6 +44,7 @@ class Baseline extends Component {
                 .attr('width', 98)
                 .attr('height', 146)
                 .attr("xlink:href", image_url)
+
             let y_text = y_img + 10;
             svg.append("text")
                 .attr('x', x_img + "em")

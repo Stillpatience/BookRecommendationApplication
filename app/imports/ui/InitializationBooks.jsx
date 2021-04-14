@@ -16,10 +16,11 @@ export const InitializationBooks = () => {
         <div>
             <div className="grid-container">
                 {books.map(book => {
+                    const book_img = book["id"] + ".jpg"
                     const description = typeof book["description"] == 'undefined' ? "No description found" : book["description"];
                     return <div className="grid-item">
                         <div className="tooltip">
-                            <img id={book["isbn"]} src={book["image_url"]} width="98" height="146" onClick={() => {
+                            <img id={book["isbn"]} src={book_img} width="98" height="146" onClick={() => {
                                 const bookISBN = book["isbn"];
                                 const bookID = book["id"];
                                 const element = document.getElementById(bookISBN);

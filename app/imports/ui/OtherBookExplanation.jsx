@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import * as d3 from "d3";
-import {getBookFromID} from "../utils/utils";
-import {BooksCollection, FullBooksCollection, GenresCollection} from "../api/links";
+import {BooksCollection} from "../api/links";
 import {genresMap} from "./Books";
 
 class OtherBookExplanation extends Component {
@@ -10,8 +9,7 @@ class OtherBookExplanation extends Component {
     }
 
     drawChart(){
-        let books = BooksCollection.find({"isbn":{$ne : "isbn"}},{sort: {title: 1}, limit: 20}).fetch();
-        //const genresToBooks = {"Science Fiction": [1,2,3], "Fantasy": [3,4,5,6]}
+
         const w = window.innerWidth;
         const h = "60rem";
         const svg = d3.select("#navigation")
@@ -20,13 +18,7 @@ class OtherBookExplanation extends Component {
             .attr("height", h)
             .attr("id", "other-books")
             .style("margin-left", 100);
-        d3.image(
-            `http://lorempixel.com/200/200/`,
-            { crossOrigin: "anonymous" }).then((img) => {
-            document.body.append("Image using d3.image()");
-            document.body.append(img);
-        });
-        console.log(this.props.book_id);
+
         const genresToBooks = {};
         for (const key in genresMap) {
             if (genresMap.hasOwnProperty(key)) {
@@ -65,7 +57,7 @@ class OtherBookExplanation extends Component {
                 let x_img = 0
                 books.forEach(book_id => {
                     let book = BooksCollection.find({"id":parseInt(book_id)}, {}).fetch();
-                    let image_url = book[0]["image_url"];
+                    let image_url = "/" + book_id + ".jpg";
                     let book_title = book[0]["title"];
 
                     let y_img = y + 2;
@@ -75,6 +67,7 @@ class OtherBookExplanation extends Component {
                         .attr('width', 98)
                         .attr('height', 146)
                         .attr("xlink:href", image_url)
+
                     let y_text = y_img + 10;
                     svg.append("text")
                         .attr('x', x_img + "em")

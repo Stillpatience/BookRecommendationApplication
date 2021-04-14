@@ -76,6 +76,7 @@ export const Books = () => {
     }
     hideVisualizations();
     let prevSearch = "";
+
     return (
         <div>
             <div>
@@ -92,9 +93,10 @@ export const Books = () => {
             <div className="grid-container" id="books">
                 {
                     books.map(book =>
+
                     <div className="grid-item" id={book["title"]}>
                         <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
-                            <img id={book["isbn"]} src={book["image_url"]} width="98" height="146"/>
+                            <img id={book["isbn"]} src={book["id"] + ".jpg"} width="98" height="146"/>
                         </Link>
                         <div className="word-wrap">
                             <p>{book["title"]}</p>
