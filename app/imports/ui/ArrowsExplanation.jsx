@@ -64,8 +64,15 @@ class ArrowsExplanation extends Component {
     }
 
     drawChart() {
+        let cy = 25;
+        let ellipses = []
+        const genresCount = countGenresMap();
+        const genres_in_book = GenresCollection.find({"id":this.props.book_id}, {}).fetch();
 
-        const newHeight = 200;
+        let genreScores = getGenreScores(genres_in_book, genresCount);
+
+
+        const newHeight = genreScores.length * 100;
 
         const width = 0.8 * window.innerWidth,
             height = newHeight;
@@ -79,12 +86,6 @@ class ArrowsExplanation extends Component {
             .attr("id", "arrows")
             .append("g")
 
-        let cy = 25;
-        let ellipses = []
-        const genresCount = countGenresMap();
-        const genres_in_book = GenresCollection.find({"id":this.props.book_id}, {}).fetch();
-
-        let genreScores = getGenreScores(genres_in_book, genresCount);
         genreScores.forEach( genreScore =>
             {
                 ellipses.push({
@@ -184,7 +185,11 @@ class ArrowsExplanation extends Component {
             }
         )
 
-        let height_offset = ellipses[ellipses.length - 1]["cy"];
+        let height_offset = 0;
+
+        if (ellipses.length > 0) {
+            height_offset = ellipses[ellipses.length - 1]["cy"];
+        }
         height_offset += 20;
 
         svgEllipses.append("text")
@@ -211,8 +216,7 @@ class ArrowsExplanation extends Component {
                 .attr("stroke", "none")
                 .attr("style", "stroke:rgb(98, 2, 238);stroke-width:"+strokewidth);
 
-            const linkStrength = strokewidth * 5;
-            const string = linkStrength.toString();
+            const linkStrength = strokewidth / 5 * 100;
 
             svgEllipses.append("text")
                 .attr("class", "label")
@@ -221,7 +225,7 @@ class ArrowsExplanation extends Component {
                 .attr("shape-rendering", "crispEdges")
                 .attr("font-size", "smaller")
                 .attr("stroke", "none")
-                .text(string.slice(0, 2) + "%");
+                .text(linkStrength + "%");
         })
 
         svgEllipses.append("text")
