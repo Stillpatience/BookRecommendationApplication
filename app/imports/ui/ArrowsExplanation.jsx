@@ -217,9 +217,10 @@ class ArrowsExplanation extends Component {
                 .attr("style", "stroke:rgb(98, 2, 238);stroke-width:"+strokewidth);
 
             const linkStrength = strokewidth / 5 * 100;
-            const string = linkStrength.toString();
+            let string = linkStrength.toString();
             if (string !== "100"){
-                string.slice(0, 2);
+                console.log("updating")
+                string = string.slice(0, 2);
             }
 
             svgEllipses.append("text")
