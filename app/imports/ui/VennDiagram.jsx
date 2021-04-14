@@ -33,7 +33,7 @@ class VennDiagram extends Component {
                         in_overlap = true;
                     }
                 })
-                if(!in_overlap){
+                if(!in_overlap && !recommended_genres.includes(genre_name)){
                     recommended_genres.push(genre_name);
                 }
             }
@@ -49,7 +49,7 @@ class VennDiagram extends Component {
                             in_overlap = true;
                         }
                     })
-                    if (!in_overlap && !recommended_genres.includes(genre)){
+                    if (!in_overlap && !recommended_genres.includes(genre) && !my_genres.includes(genre)){
                         my_genres.push(genre);
                     }
                 })
