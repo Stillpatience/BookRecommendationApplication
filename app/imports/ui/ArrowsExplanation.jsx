@@ -219,7 +219,6 @@ class ArrowsExplanation extends Component {
             const linkStrength = strokewidth / 5 * 100;
             let string = linkStrength.toString();
             if (string !== "100"){
-                console.log("updating")
                 string = string.slice(0, 2);
             }
 
