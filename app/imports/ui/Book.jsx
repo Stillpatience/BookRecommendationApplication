@@ -81,7 +81,6 @@ export const Book = () => {
     const author = res[0] + " " + res[1];
     const book_id = book["id"];
     const book_img = book["id"] + ".jpg"
-    console.log(book["id"] + ".jpg")
     return (
         <div>
             <Card >
@@ -90,7 +89,7 @@ export const Book = () => {
                     <CardMedia
                         title={book["title"]}
                     />
-                        <img src={"/" + book["id"] + ".jpg"} height="150"/>
+                        <img src={"/" + book["id"] + ".jpg"} height="150" alt="Loading"/>
                     <CardMedia />
                     </div>
                     <div className= "flex header left">
@@ -113,7 +112,7 @@ export const Book = () => {
                 </div>
             </Card>
             <div className="flex header">
-                <small>{full_description}</small>
+                <small>{short_description}</small>
             </div>
             <div>
                 <Grid container className="ratings-summary nobr">

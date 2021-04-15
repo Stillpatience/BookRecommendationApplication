@@ -5,15 +5,19 @@ import {Alert} from "@material-ui/lab";
 import {RoutePaths} from "./RoutePaths";
 import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 export const SetUp = () => {
     const classes = useStyles();
     return (
         <div>
-            <Paper className={classes.header}>
+            <Paper className={classes.header} style={{backgroundColor: "rgb(98, 2, 238)", color: 'white'}}>
                 <Alert severity="success">Account created successfully!</Alert>
-                <br/> To understand your preferences, we will ask you to select some books that you like in the following screen.
-                You can select as many or as little books as you want.
+                <br/>
+                <Typography component="h5">
+                    To understand your preferences, we will ask you to select some books that you like in the following screen.
+                    You can select as many or as few books as you want.
+                </Typography>
             </Paper>
             <br/>
             <div className={classes.center}>

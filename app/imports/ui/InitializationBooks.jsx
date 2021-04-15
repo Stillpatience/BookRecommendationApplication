@@ -27,7 +27,7 @@ export const InitializationBooks = () => {
                                     if (!selectedBooks.includes(bookID)) {
                                         selectedBooks.push(bookID);
                                         previouslyLikedBooks.push(bookID)
-                                        element.style.border = "0.25rem solid rgb(98, 2, 238)";
+                                        element.style.border = "0.5rem solid rgb(98, 2, 238)";
                                     } else {
                                         removeItemOnce(selectedBooks, bookID);
                                         removeItemOnce(previouslyLikedBooks, bookID);

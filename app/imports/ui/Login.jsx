@@ -31,7 +31,7 @@ export const Login = () => {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
+                <Avatar className={classes.avatar} style={{backgroundColor: "rgb(245, 0, 87)"}}>
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
