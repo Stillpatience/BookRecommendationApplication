@@ -75,5 +75,8 @@ export const useStyles = makeStyles((theme) => ({
         "margin-left": "auto",
         "margin-right": "auto",
         width: "50%",
-    }
+    },
+    formControl: {
+        margin: 'auto',
+    },
 }));

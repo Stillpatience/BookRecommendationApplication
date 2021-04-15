@@ -16,9 +16,20 @@ import {TermsAndConditions} from "./TermsAndConditions";
 import {SetUp} from "./SetUp";
 import {AppNavigation} from "./AppNavigation";
 import {InitializationBooks} from "./InitializationBooks";
+import {Genres} from "./Genres";
 
 
 export const Routes = () => {
+    const genreStatesMap = {}
+    Genres.forEach(genre =>{
+        genreStatesMap[genre] = false
+    })
+    const [genreStates, setGenreState] = React.useState(genreStatesMap);
+
+    const handleGenreChange = (event) => {
+        setGenreState({ ...genreStates, [event.target.name]: event.target.checked })
+    }
+
     return (
         <Switch>
             <Route path={RoutePaths.LOGIN}>
@@ -33,7 +44,7 @@ export const Routes = () => {
                 <AppNavigation />
             </Route>
             <Route path={RoutePaths.SETTINGS}>
-                <Settings />
+                <Settings genreStates={genreStates} handleGenreChange={handleGenreChange}/>
                 <AppNavigation />
             </Route>
             <Route path={RoutePaths.BOOK + "/:id"}>
