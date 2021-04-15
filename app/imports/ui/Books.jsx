@@ -4,15 +4,14 @@ import {RoutePaths} from "./RoutePaths";
 import {Link} from "react-router-dom";
 import SearchBar from "material-ui-search-bar";
 import {recommendedBooks, updateRecommendations, visualizationsMap} from "../utils/utils";
+import {useStyles} from "./styles";
+import Typography from "@material-ui/core/Typography";
 
 export var wantToReadBooks = [];
 export var ratings = {};
 export var genresMap = {};
 
-function setBooks(books, search, prevSearch){
-    if (prevSearch.length > search.length){
-
-    }
+function setBooks(books, search){
     let titles = []
     const new_books = BooksCollection.find({"title" : {$regex : ".*"+search+".*", $options: 'i'}}).fetch();
     new_books.forEach(book =>
@@ -45,10 +44,9 @@ export const getGenresFromID = (genres, id) => {
         }
     )
 }
-
+//TODO: remove this
 const hideVisualizations = () => {
     for (let key in visualizationsMap) {
-        // check if the property/key is defined in the object itself, not in parent
         if (visualizationsMap.hasOwnProperty(key)) {
             const node = document.getElementById(visualizationsMap[key]);
             if (node !== null){
@@ -58,6 +56,8 @@ const hideVisualizations = () => {
     }
 }
 export const Books = () => {
+    const classes = useStyles();
+
     let books;
     while (typeof books === 'undefined'){
         books = BooksCollection.find({"isbn":{$ne : "isbn"}}).fetch();
@@ -71,37 +71,30 @@ export const Books = () => {
     updateRecommendations(similar_books, books);
 
     if (recommendedBooks.length !== 0){
-        console.log("using recommended books")
         books = recommendedBooks;
     }
     hideVisualizations();
-    let prevSearch = "";
 
     return (
         <div>
             <div>
                 <SearchBar
-                    onChange={(newValue) => {
-                        setBooks(books, newValue, prevSearch);
-                        prevSearch = newValue;
-                        }
+                    onChange={(newValue) => {setBooks(books, newValue);}
                     }
                     placeholder="Title, author, keyword or ISBN"
                     autoFocus
                 />
             </div>
-            <div className="grid-container" id="books">
+            <div className={classes.books_container} id="books">
                 {
                     books.map(book =>
-
-                    <div className="grid-item" id={book["title"]}>
-                        <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
-                            <img id={book["isbn"]} src={book["id"] + ".jpg"} width="98" height="146"/>
-                        </Link>
-                        <div className="word-wrap">
-                            <p>{book["title"]}</p>
+                        <div className={classes.books_item} id={book["title"]}>
+                            <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
+                                <img id={book["isbn"]} src={book["id"] + ".jpg"} width="98" height="146"
+                                alt="Loading"/>
+                            </Link>
+                            <Typography className={classes.word_wrap} >{book["title"]}</Typography>
                         </div>
-                    </div>
                 )}
             </div>
         </div>);

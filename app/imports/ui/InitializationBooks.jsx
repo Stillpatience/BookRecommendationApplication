@@ -42,7 +42,7 @@ export const InitializationBooks = () => {
                                     }
                                  }
                              }/>
-                        <CheckIcon id={"check" + book["isbn"]} style={{color: "green"}}/>
+                        <CheckIcon id={"check" + book["isbn"]} style={{color: "green", display :"none"}}/>
                         <Typography className={classes.word_wrap} >{book["title"]}</Typography>
                     </div>
                     </div>
