@@ -17,24 +17,24 @@ export const InitializationBooks = () => {
             <div className="grid-container">
                 {books.map(book => {
                     const book_img = book["id"] + ".jpg"
-                    const description = typeof book["description"] == 'undefined' ? "No description found" : book["description"];
                     return <div className="grid-item">
                         <div className="tooltip">
-                            <img id={book["isbn"]} src={book_img} width="98" height="146" onClick={() => {
-                                const bookISBN = book["isbn"];
-                                const bookID = book["id"];
-                                const element = document.getElementById(bookISBN);
-                                if (!selectedBooks.includes(bookID)) {
-                                    selectedBooks.push(bookID);
-                                    previouslyLikedBooks.push(bookID)
-                                    element.style.border = "0.25rem solid rgb(98, 2, 238)";
-                                } else {
-                                    removeItemOnce(selectedBooks, bookID);
-                                    removeItemOnce(previouslyLikedBooks, bookID);
-                                    element.style.border = "";
-                                }
-                            }}/>
-                            <span className="tooltiptext">{description}</span>
+                            <img id={book["isbn"]} src={book_img} width="98" height="146"
+                                 alt="Loading" onClick={() => {
+                                    const bookISBN = book["isbn"];
+                                    const bookID = book["id"];
+                                    const element = document.getElementById(bookISBN);
+                                    if (!selectedBooks.includes(bookID)) {
+                                        selectedBooks.push(bookID);
+                                        previouslyLikedBooks.push(bookID)
+                                        element.style.border = "0.25rem solid rgb(98, 2, 238)";
+                                    } else {
+                                        removeItemOnce(selectedBooks, bookID);
+                                        removeItemOnce(previouslyLikedBooks, bookID);
+                                        element.style.border = "";
+                                    }
+                                 }
+                             }/>
                         </div>
                         <p className="word-wrap">{book["title"]}</p>
                     </div>
