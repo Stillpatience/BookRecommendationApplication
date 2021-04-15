@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,26 +11,20 @@ import Container from '@material-ui/core/Container';
 import {useStyles} from "./styles";
 import {Link} from "react-router-dom";
 
-
-
 export const Register = () => {
     const classes = useStyles();
 
     const [checked, setChecked] = React.useState(false);
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
 
     const handleClicked = () => {
         setChecked(!checked);
     }
 
     const ConditionalLink = ({ children, to, condition }) => (!!condition && to)
-        ? <Link to={to} onClick={submit}>{children}</Link>
-        : <>{children}</>;
+        ? <Link to={to}>{children}</Link>
+        : <div>{children}</div>;
 
-    const submit = () => {
-       // Accounts.createUser({username: email, email: email, password: password});
-    }
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -52,7 +46,6 @@ export const Register = () => {
                         name="email"
                         autoComplete="email"
                         autoFocus
-                        onChange={({ target : {value}}) => setEmail(value)}
                     />
                     <TextField
                         variant="outlined"
@@ -63,7 +56,6 @@ export const Register = () => {
                         label="Password"
                         type="password"
                         id="password"
-                        onChange={({ target : {value}}) => setPassword(value)}
                     />
                     <TextField
                         variant="outlined"
@@ -80,8 +72,8 @@ export const Register = () => {
                         inputProps={{ 'aria-label': 'secondary checkbox' }}
                         onClick={handleClicked}
                     />
-                    <Typography variant="body2" color="textSecondary"  display="inline">
-                    I agree to the <Link to={RoutePaths.TERMS_AND_CONDITIONS}>terms & conditions </Link>
+                    <Typography variant="body2" color={checked ? "primary" : "error"}  display="inline">
+                        I agree to the <Link to={RoutePaths.TERMS_AND_CONDITIONS}>terms & conditions </Link>
                     </Typography>
                     <ConditionalLink to={RoutePaths.SETUP} condition={checked}>
                         <Button
