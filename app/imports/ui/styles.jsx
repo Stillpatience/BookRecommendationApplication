@@ -63,5 +63,11 @@ export const useStyles = makeStyles((theme) => ({
         position:"relative",
         top:"-15px",
         left:"100px",
+    },
+    center: {
+        display: "block",
+        "margin-left": "auto",
+        "margin-right": "auto",
+        width: "50%",
     }
 }));

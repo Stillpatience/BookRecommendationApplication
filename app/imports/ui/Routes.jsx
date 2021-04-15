@@ -15,6 +15,7 @@ import {Register} from "./Register";
 import {TermsAndConditions} from "./TermsAndConditions";
 import {SetUp} from "./SetUp";
 import {AppNavigation} from "./AppNavigation";
+import {InitializationBooks} from "./InitializationBooks";
 
 
 export const Routes = () => {
@@ -47,6 +48,9 @@ export const Routes = () => {
             </Route>
             <Route path={RoutePaths.SETUP}>
                 <SetUp />
+            </Route>
+            <Route path={RoutePaths.INITIALIZATION_BOOKS}>
+                <InitializationBooks />
             </Route>
             <Redirect to={RoutePaths.LOGIN} />
         </Switch>);

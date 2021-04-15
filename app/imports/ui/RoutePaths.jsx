@@ -7,5 +7,6 @@ export const RoutePaths = {
     BOOK: '/book',
     REGISTER: '/register',
     TERMS_AND_CONDITIONS: '/terms-and-conditions',
-    SETUP: '/setup'
+    SETUP: '/setup',
+    INITIALIZATION_BOOKS: '/preferences'
 }
