@@ -1,21 +1,15 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import HomeIcon from '@material-ui/icons/Home';
 import {
     Link,
     useHistory
 } from "react-router-dom";
 import {RoutePaths} from "./RoutePaths";
-
-const useStyles = makeStyles({
-    root: {
-        width: "100vw",
-    },
-});
+import {useStyles} from "./styles";
 
 export const AppNavigation = () => {
     const classes = useStyles();
@@ -30,17 +24,17 @@ export const AppNavigation = () => {
                     setValue(newValue);
                 }}
                 showLabels
-                className={classes.root}
+                fullWidth
+                className={classes.bottom_fixed}
             >
-                <Link onClick={() => history.push(RoutePaths.RATE_AND_DISCOVER)}>
-                    <BottomNavigationAction label="Rate and discover" icon={ <FavoriteIcon/>}/>
-                </Link>
-                <Link to={RoutePaths.BOOKS}>
-                    <BottomNavigationAction label="My books" icon={<MenuBookIcon/>}/>
-                </Link>
-                <Link to={RoutePaths.SETTINGS}>
-                    <BottomNavigationAction label="Profile settings" icon={<AccountCircleIcon/>}/>
-                </Link>
+                <BottomNavigationAction component={Link} onClick={() => history.push(RoutePaths.RATE_AND_DISCOVER)}
+                                        label="Home" icon={ <HomeIcon/>}/>
+
+                <BottomNavigationAction component={Link} to={RoutePaths.BOOKS}
+                                        label="My books" icon={<MenuBookIcon/>}/>
+                <BottomNavigationAction component={Link} to={RoutePaths.SETTINGS}
+                                        label="Profile" icon={<AccountCircleIcon/>}/>
+
             </BottomNavigation>
         </div>
 

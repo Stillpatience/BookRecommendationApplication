@@ -47,7 +47,7 @@ export const InitializationBooks = () => {
                         fullWidth
                         variant="contained"
                         color="primary"
-                        className={classes.submit}
+                        className={classes.bottom_fixed}
                     >
                         Confirm selection
                     </Button>

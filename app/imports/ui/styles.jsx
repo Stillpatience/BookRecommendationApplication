@@ -22,13 +22,7 @@ export const useStyles = makeStyles((theme) => ({
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
     },
-    submit: {
-        position: "fixed",
-        bottom: "0px",
-    },
-    root: {
-        flexGrow: 1,
-    },
+
     header: {
         padding: theme.spacing(2),
         margin: 'auto',
@@ -36,6 +30,17 @@ export const useStyles = makeStyles((theme) => ({
         "background-color": 'rgb(98, 2, 238)',
         color: 'white',
     },
+
+    bottom_fixed: {
+        position: "fixed",
+        bottom: "0px",
+        width: "100%",
+    },
+
+    root: {
+        flexGrow: 1,
+    },
+
     explanation: {
         padding: theme.spacing(2),
         margin: 'auto',
