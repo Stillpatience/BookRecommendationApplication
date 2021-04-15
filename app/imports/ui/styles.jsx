@@ -33,4 +33,41 @@ export const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2),
         margin: 'auto',
     },
+
+    // Book list pages
+    books_container: {
+        display: "flex",
+        "flex-wrap": "wrap",
+        padding: 0,
+        "flex-direction":"row",
+    },
+
+    books_item: {
+        padding: "5px 2px 5px 0",
+        "overflow-wrap": "anywhere",
+        "overflow":"hidden",
+        "text-overflow": "ellipsis",
+    },
+
+    bottom_fixed: {
+        position: "fixed",
+        bottom: "0px",
+        width: "95%",
+    },
+
+
+    word_wrap: {
+        "overflow-wrap": "anywhere",
+        "overflow":"hidden",
+        "flex-grow": 0,
+        "width": "98px",
+        padding: "0px 0px 20px 0",
+        "text-overflow": "ellipsis",
+    },
+
+    test: {
+        "border-style": "solid",
+        "border-color": "black",
+    }
+
 }));

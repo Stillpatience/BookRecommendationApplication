@@ -5,6 +5,8 @@ import {useStyles} from "./styles";
 import {previouslyLikedBooks, removeItemOnce, selectedBooks} from "../utils/utils"
 import Button from "@material-ui/core/Button";
 import {Link} from "react-router-dom";
+import Typography from "@material-ui/core/Typography";
+import CheckIcon from '@material-ui/icons/Check';
 
 export const InitializationBooks = () => {
     const classes = useStyles();
@@ -14,30 +16,38 @@ export const InitializationBooks = () => {
     }
     return (
         <div>
-            <div className="grid-container">
+            <div className={classes.books_container}>
                 {books.map(book => {
                     const book_img = book["id"] + ".jpg"
-                    return <div className="grid-item">
-                        <div className="tooltip">
+                    return <div>
+                    <div className={classes.books_item}>
                             <img id={book["isbn"]} src={book_img} width="98" height="146"
                                  alt="Loading" onClick={() => {
                                     const bookISBN = book["isbn"];
                                     const bookID = book["id"];
                                     const element = document.getElementById(bookISBN);
+                                    const checkElement = document.getElementById("check" + bookISBN);
+
                                     if (!selectedBooks.includes(bookID)) {
                                         selectedBooks.push(bookID);
                                         previouslyLikedBooks.push(bookID)
-                                        element.style.border = "0.5rem solid rgb(98, 2, 238)";
+                                        element.style.opacity = "0.5";
+                                        checkElement.style.display = "block"
                                     } else {
                                         removeItemOnce(selectedBooks, bookID);
                                         removeItemOnce(previouslyLikedBooks, bookID);
-                                        element.style.border = "";
+                                        element.style.opacity = "1";
+                                        checkElement.style.display = "none"
+
                                     }
                                  }
                              }/>
-                        </div>
-                        <p className="word-wrap">{book["title"]}</p>
+                        <CheckIcon id={"check" + book["isbn"]} style={{color: "green"}}/>
+                        <Typography className={classes.word_wrap} >{book["title"]}</Typography>
                     </div>
+                    </div>
+
+
                 })}
             </div>
             <div>
