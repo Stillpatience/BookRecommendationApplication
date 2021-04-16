@@ -17,7 +17,7 @@ export const AppNavigation = () => {
     const history = useHistory();
 
     return(
-        <div id={"navigation"}>
+        <div id="navigation">
             <BottomNavigation
                 value={value}
                 onChange={(event, newValue) => {
@@ -28,7 +28,7 @@ export const AppNavigation = () => {
                 className={classes.bottom_fixed}
             >
                 <BottomNavigationAction component={Link} onClick={() => history.push(RoutePaths.RATE_AND_DISCOVER)}
-                                        label="Home" icon={ <HomeIcon/>}/>
+                                        label="Home" icon={<HomeIcon/>}/>
 
                 <BottomNavigationAction component={Link} to={RoutePaths.BOOKS}
                                         label="My books" icon={<MenuBookIcon/>}/>

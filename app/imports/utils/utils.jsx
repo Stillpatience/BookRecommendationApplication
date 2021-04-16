@@ -18,9 +18,6 @@ export let previouslyLikedBooks = [];
 
 export const updateRecommendations = (similarBooksList1, books) => {
      let newlyRecommendedBooks = [];
-     console.log("updating recommendations")
-    console.log(selectedBooks)
-
     selectedBooks.forEach(selectedBook =>{
          let similarBooksList = SimilarBooksCollection.find({"id":selectedBook}).fetch();
 
@@ -34,7 +31,6 @@ export const updateRecommendations = (similarBooksList1, books) => {
              }
          })
      })
-    console.log(newlyRecommendedBooks)
     newlyRecommendedBooks.forEach(book => {
          if (typeof book == 'undefined'){
 
@@ -104,7 +100,6 @@ export const updateRecommendations = (similarBooksList1, books) => {
         }
     }
 
-    console.log("recommendedBooks2", recommendedBooks)
 }
 
 export let newlyRatedBooks = [];
@@ -168,7 +163,6 @@ export const getRating = (user, book_id) => {
 }
 
 export const addGenres = (book_id, genres) => {
-    console.log("AddGenres genres", genres);
     genres.forEach(genre => {
         const genre_name = genre["genres"];
         if (typeof genresMap[book_id] == 'undefined'){
@@ -178,7 +172,6 @@ export const addGenres = (book_id, genres) => {
             genresMap[book_id].push(genre_name)
         }
     });
-    console.log("genresMap", genresMap)
 }
 
 export const getHighestCountMap = (genresCount) => {
@@ -186,7 +179,6 @@ export const getHighestCountMap = (genresCount) => {
     let newMap = []
     let highest_count = 0
     for (const key in genresCount) {
-        // check if the property/key is defined in the object itself, not in parent
         if (genresCount.hasOwnProperty(key)) {
             total_count = total_count + genresCount[key];
             if (genresCount[key] > highest_count) {
@@ -195,8 +187,10 @@ export const getHighestCountMap = (genresCount) => {
         }
     }
     for (const key in genresCount) {
-        let new_value = Math.floor((genresCount[key]/highest_count) * 100)
-        newMap.push({"name":key, "value": new_value})
+        if (genresCount.hasOwnProperty(key)) {
+            let new_value = Math.floor((genresCount[key]/highest_count) * 100)
+            newMap.push({"name":key, "value": new_value})
+        }
     }
     return newMap;
 }
@@ -217,7 +211,6 @@ export const countGenresMap = () => {
     let genresCount = {}
 
     for (const key in genresMap) {
-        // check if the property/key is defined in the object itself, not in parent
         if (genresMap.hasOwnProperty(key)) {
             const genres = genresMap[key];
             genres.forEach(genre => {
