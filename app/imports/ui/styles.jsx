@@ -65,9 +65,22 @@ export const useStyles = makeStyles((theme) => ({
         "text-overflow": "ellipsis",
     },
 
-    test: {
-        "border-style": "solid",
-        "border-color": "black",
-    }
+    //Book details
+    right: {
+        "margin-left": "auto",
+        "margin-right": 0,
+    },
+
+    left:{
+        "margin-left": 0,
+        "margin-right": "auto",
+        "display": "flex",
+        "margin": "auto",
+    },
+
+    flex_header: {
+        "display": "flex",
+        "margin": "auto",
+    },
 
 }));

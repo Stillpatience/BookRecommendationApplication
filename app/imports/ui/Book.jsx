@@ -26,8 +26,20 @@ import VennDiagram from "./VennDiagram";
 import DoubleBarChart from "./DoubleBarChart";
 import ArrowsExplanation from "./ArrowsExplanation";
 import Baseline from "./Baseline";
+import {useStyles} from "./styles";
+
+const showFullDescription = () => {
+    const fullDescription = document.getElementById("full-description");
+    fullDescription.style.display = "block"
+    const shortDescription = document.getElementById("short-description");
+    shortDescription.style.display = "none"
+
+}
 
 export const Book = () => {
+
+    const classes = useStyles();
+
     const user = 1;
 
     const [stars, setStars] = React.useState(0);
@@ -44,12 +56,13 @@ export const Book = () => {
     }
 
     let full_description = book["description"];
-    let short_description = "";
+    let short_description;
     if (typeof full_description == 'undefined'){
         full_description = "No description found.";
+        short_description = full_description
     }
     else {
-        short_description = full_description.substring(0,100) + '...'
+        short_description = full_description.substring(0,200)
     }
 
     const handleClick = () => {
@@ -64,7 +77,6 @@ export const Book = () => {
 
     const handleNumberClick = (number) => {
         for (let key in visualizationsMap) {
-            // check if the property/key is defined in the object itself, not in parent
             if (visualizationsMap.hasOwnProperty(key)) {
                 const node = document.getElementById(visualizationsMap[key]);
                 if (parseInt(key) !== parseInt(number)){
@@ -80,21 +92,23 @@ export const Book = () => {
     let res = authors.split(" ");
     const author = res[0] + " " + res[1];
     const book_id = book["id"];
-    const book_img = book["id"] + ".jpg"
     return (
         <div>
             <Card >
-                <div className="flex header">
-                    <div className="right">
+                <div className={classes.flex_header} style={{backgroundColor: "rgb(98, 2, 238)", color: 'white'}}>
+                    <div className={classes.right}>
                     <CardMedia
                         title={book["title"]}
                     />
                         <img src={"/" + book["id"] + ".jpg"} height="150" alt="Loading"/>
                     <CardMedia />
                     </div>
-                    <div className= "flex header left">
+                    <div className= {classes.left}>
                         <CardContent>
-                            <p>{book["title"]}</p>
+                            <Typography variant="h6" color="white">
+                                {book["title"]}
+                            </Typography>
+                            <br/>
                             <Typography variant="subtitle2" color="white">
                                 <small><em>ISBN {book["isbn"]}</em></small>
                             </Typography>
@@ -110,14 +124,26 @@ export const Book = () => {
                     <Link to={RoutePaths.RATE_AND_DISCOVER}><CloseIcon style={{ color: 'white'}}/></Link>
                 </div>
                 </div>
+                <div className={classes.flex_header} style={{backgroundColor: "rgb(98, 2, 238)", color: 'white'}}>
+                    <Typography variant="subtitle2" color="white" id="short-description" style={{display :"block"}}>
+                        <small>
+                        {short_description} {"("} <a style={{cursor :"pointer", textDecoration :"underline"}}
+                                               onClick={showFullDescription}>more</a> {")"}
+                        </small>
+                    </Typography>
+                    <Typography variant="subtitle1" color="white" id="full-description" style={{display :"none"}}>
+                        <small>
+                            {full_description}
+                        </small>
+                    </Typography>
+                </div>
             </Card>
-            <div className="flex header">
-                <small>{short_description}</small>
-            </div>
+
             <div>
-                <Grid container className="ratings-summary nobr">
-                    <Grid item xs={6}  className="ratings-summary" align='left'>
+                <Grid container>
+                    <Grid item xs={6} align='left'>
                         <Typography variant="body2" color="textSecondary"  display="inline">
+                            Average rating
                             <Box component="fieldset" mb={3} borderColor="transparent">
                                 <Rating name="read-only" value={book["average_rating"]} readOnly />
                             </Box>
@@ -126,11 +152,11 @@ export const Book = () => {
                     </Grid>
                     <Grid item xs align='right'>
                         <Typography variant="body2" color="textSecondary" >
+                            Based on  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;
                             <p>{numberWithCommas(parseInt(book["ratings_count"]))} ratings</p>
                         </Typography>
                     </Grid>
                 </Grid>
-                <br />
                 <Grid container spacing={3}>
                     <Grid item xs={6}>
                         <Typography variant="body2" color="textSecondary"  display="inline">
@@ -160,7 +186,7 @@ export const Book = () => {
                         </Button>
                     </Grid>
                 </Grid>
-                <h3> Why am I seeing this?</h3>
+                <Typography variant="h5"> Why am I seeing this?</Typography>
                 <BarChart book_id={book_id}/>
                 <VennDiagram book_id={book_id}/>
                 <OtherBookExplanation book_id={book_id}/>

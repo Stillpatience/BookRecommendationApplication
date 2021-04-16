@@ -69,6 +69,7 @@ export const Books = () => {
     }
 
     updateRecommendations(similar_books, books);
+    console.log("recommendedBooks", recommendedBooks)
 
     if (recommendedBooks.length !== 0){
         books = recommendedBooks;
