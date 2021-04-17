@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import {Link} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import CheckIcon from '@material-ui/icons/Check';
+import {getShortTitle} from "./Books";
 
 export const InitializationBooks = () => {
     const classes = useStyles();
@@ -43,7 +44,7 @@ export const InitializationBooks = () => {
                                  }
                              }/>
                         <CheckIcon id={"check" + book["isbn"]} style={{color: "green", display :"none"}}/>
-                        <Typography className={classes.word_wrap} >{book["title"]}</Typography>
+                        <Typography className={classes.word_wrap} >{getShortTitle(book)}</Typography>
                     </div>
                     </div>
 

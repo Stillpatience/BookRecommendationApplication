@@ -44,6 +44,19 @@ export const getGenresFromID = (genres, id) => {
         }
     )
 }
+
+export const getShortTitle = (book) =>{
+    let book_title = book["title"].toString();
+    if (typeof book_title !== "undefined" && book_title.includes("(")){
+        book_title = book_title.substring(0, book_title.indexOf("("));
+    }
+
+    if (typeof book_title !== "undefined" && book_title.includes(":")){
+        book_title = book_title.substring(0, book_title.indexOf(":"));
+    }
+    return book_title;
+}
+
 //TODO: remove this
 const hideVisualizations = () => {
     for (let key in visualizationsMap) {
@@ -68,8 +81,8 @@ export const Books = () => {
         similar_books = SimilarBooksCollection.find({}).fetch();
     }
 
+
     updateRecommendations(similar_books, books);
-    console.log("recommendedBooks", recommendedBooks)
 
     if (recommendedBooks.length !== 0){
         books = recommendedBooks;
@@ -94,7 +107,7 @@ export const Books = () => {
                                 <img id={book["isbn"]} src={book["id"] + ".jpg"} width="98" height="146"
                                 alt="Loading"/>
                             </Link>
-                            <Typography className={classes.word_wrap} >{book["title"]}</Typography>
+                            <small><Typography className={classes.word_wrap} >{getShortTitle(book)}</Typography></small>
                         </div>
                 )}
             </div>

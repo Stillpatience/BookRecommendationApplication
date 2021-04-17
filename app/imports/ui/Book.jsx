@@ -8,7 +8,7 @@ import {Link} from "react-router-dom";
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
-import {wantToReadBooks} from "./Books";
+import {getShortTitle, wantToReadBooks} from "./Books";
 import {
     addGenres,
     getRating,
@@ -98,7 +98,7 @@ export const Book = () => {
                 <div className={classes.flex_header} style={{backgroundColor: "rgb(98, 2, 238)", color: 'white'}}>
                     <div className={classes.right}>
                     <CardMedia
-                        title={book["title"]}
+                        title={getShortTitle(book)}
                     />
                         <img src={"/" + book["id"] + ".jpg"} height="150" alt="Loading"/>
                     <CardMedia />
@@ -106,7 +106,7 @@ export const Book = () => {
                     <div className= {classes.left}>
                         <CardContent>
                             <Typography variant="h6" color="white">
-                                {book["title"]}
+                                {getShortTitle(book)}
                             </Typography>
                             <br/>
                             <Typography variant="subtitle2" color="white">
