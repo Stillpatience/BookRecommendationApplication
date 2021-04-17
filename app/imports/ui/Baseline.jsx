@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import * as d3 from "d3";
 import {BooksCollection} from "../api/links";
 import {previouslyLikedBooks} from "../utils/utils";
+import {getShortTitle} from "./Books";
 
 class Baseline extends Component {
     componentDidMount() {
@@ -9,9 +10,13 @@ class Baseline extends Component {
     }
 
     drawChart(){
+        const amountOfBooks = Object.keys(previouslyLikedBooks).length;
+        const w = 0.9 * window.innerWidth;
+        const booksPerLine = Math.floor(w / 98);
+        const amountOfLines = Math.ceil(amountOfBooks / booksPerLine)
 
-        const w = window.innerWidth;
-        const h = "60rem";
+        const textHeight = 3
+        const h = textHeight + (17 * amountOfLines) + "rem";
         const svg = d3.select("#navigation")
             .insert("svg",":first-child")
             .attr("width", w)
@@ -21,22 +26,33 @@ class Baseline extends Component {
 
         let y = 2
 
-        svg.append("text")
+        const fo1 = svg.append("foreignObject")
             .attr("x", 0)
-            .attr("y", y + "em")
+            .attr("y", 0)
+            .attr("width", w)
+            .attr("height", 300)
+            .append('xhtml:div')
+            .attr("text-overflow", "ellipsis")
+            .attr("overflow-wrap", "anywhere")
+            .attr("overflow", "hidden")
+
+
+        fo1.append("p")
+            .attr('x', 0)
+            .attr('y', 0)
             .attr("dy", ".35em")
             .attr("font-size", "1em")
-            .attr("font-weight", "bold")
-            .attr("overflow", "ellipsis")
-            .text("Other books you have liked previously: ");
+            .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
+            .text("Other books you have liked previously: ")
 
         let x_img = 0
+        let current_width = 0
+        let x = 0
 
         previouslyLikedBooks.forEach(book_id => {
             let book = BooksCollection.find({"id":parseInt(book_id)}, {}).fetch();
-            let book_title = book[0]["title"];
+            let book_title = getShortTitle(book[0]);
             let image_url = "/" + book_id + ".jpg";
-
             let y_img = y + 2;
             svg.append("svg:image")
                 .attr('x', x_img + "em")
@@ -44,16 +60,38 @@ class Baseline extends Component {
                 .attr('width', 98)
                 .attr('height', 146)
                 .attr("xlink:href", image_url)
+            current_width += 98;
+            let y_text = y_img + 9;
 
-            let y_text = y_img + 10;
-            svg.append("text")
+            const fo = svg.append("foreignObject")
+                .attr("x", x_img + "em")
+                .attr("y", y_text + "rem")
+                .attr("width", w)
+                .attr("height", 300)
+                .append('xhtml:div')
+                .style("width", "98px")
+                .attr("text-overflow", "ellipsis")
+                .attr("overflow-wrap", "anywhere")
+                .attr("overflow", "hidden")
+
+            fo.append("p")
                 .attr('x', x_img + "em")
-                .attr('y', y_text + "em")
+                .attr('y', y_text + "rem")
                 .attr("dy", ".35em")
-                .attr("text-length", "6em")
-                .attr("font-size", "1em")
+                .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
+                .style("font-size", "1rem")
                 .text(book_title)
-            y += 14
+            current_width += 98
+
+            if (current_width > w) {
+                y += 17
+                x_img = 0
+                current_width = 0
+            } else {
+                x += 10;
+                x_img += 6.5;
+            }
+
 
         })
     }
