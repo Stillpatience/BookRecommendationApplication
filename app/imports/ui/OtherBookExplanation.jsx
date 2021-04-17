@@ -23,7 +23,7 @@ class OtherBookExplanation extends Component {
             }
         }
         const w = window.innerWidth;
-        const h = ((17 * Object.keys(genresToBooks).length)  + 3) + "rem";
+        const h = ((17 * Object.keys(genresToBooks).length)  + 10) + "rem";
 
         const svg = d3.select("#navigation")
             .insert("svg",":first-child")
@@ -34,13 +34,25 @@ class OtherBookExplanation extends Component {
 
 
         let y = 2
-        svg.append("text")
+
+        const fo1 = svg.append("foreignObject")
             .attr("x", 0)
-            .attr("y", "1em")
+            .attr("y", 0)
+            .attr("width", w)
+            .attr("height", 300)
+            .append('xhtml:div')
+            .attr("text-overflow", "ellipsis")
+            .attr("overflow-wrap", "anywhere")
+            .attr("overflow", "hidden")
+
+
+        fo1.append("p")
+            .attr('x', 0)
+            .attr('y', 0)
             .attr("dy", ".35em")
             .attr("font-size", "1em")
             .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
-            .text("Other books you read contain the same genres: ");
+            .text("Other books you read contain the same genres: ")
 
         for (const key in genresToBooks) {
             if (genresToBooks.hasOwnProperty(key)) {
