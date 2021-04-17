@@ -95,95 +95,119 @@ class DoubleBarChart extends Component {
         if (this_book_genres.length > 0 && genres.length > 0) {
             genres = mergeGenres(genres, this_book_genres);
         }
+        const textHeight = 60
+        const bottomHeight = 60
+        const newHeight = textHeight + bottomHeight + 160 * Object.keys(genres).length;
+        const distanceWithinBars = 60;
 
-        //set up svg using margin conventions - we'll need plenty of room on the left for labels
-        const margin = {
-            top: 15,
-            right: 100,
-            bottom: 15,
-            left: 0
-        };
-        const newHeight = 100 * Object.keys(genres).length;
-
-        const width = 0.8 * window.innerWidth - margin.left - margin.right,
-            height = newHeight - margin.top - margin.bottom;
+        const width = 0.9 * window.innerWidth,
+            height = newHeight;
 
         const svg = d3.select("#navigation")
             .insert("svg",":first-child")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+            .attr("width", width)
+            .attr("height", height / 1.75)
             .attr("id", "double-barchart")
             .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
 
         const x = d3.scaleLinear()
             .range([0, width])
             .domain([0, 100]);
 
-        const y = d3.scaleBand()
-            .rangeRound([height, 0])
-            .padding(.1)
-            .domain(genres.map(function (d) {
-                return d.name;
-            }));
+        const barHeight = 10;
+
+        const yBandInterval = (height - textHeight - bottomHeight) / Object.keys(genres).length;
+
+        let yCoordinates = {};
+        let currentY = 100;
+
+        for (let i = 0; i < Object.keys(genres).length; i++) {
+            if (genres[i]["name"].split(" ")[0] === "Your"){
+                yCoordinates[genres[i]["name"]] = currentY
+                yCoordinates[genres[i]["name"].replace("Your taste", "This book")] = currentY
+                currentY += yBandInterval
+            }
+        }
 
         const bars = svg.selectAll(".bar")
             .data(genres)
             .enter()
             .append("g")
 
+        const fo1 = svg.append("foreignObject")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", width)
+            .attr("height", 300)
+            .append('xhtml:div')
+            .attr("text-overflow", "ellipsis")
+            .attr("overflow-wrap", "anywhere")
+            .attr("overflow", "hidden")
+
+
+        fo1.append("p")
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr("dy", ".35em")
+            .attr("font-size", "1em")
+            .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
+            .text("Your taste matches the genres of this book: ")
+
+        //Append ghost rects
+        bars.append("rect")
+            .attr("class", "bar")
+            .attr("y", d => {
+                if (d.name.split(" ")[0] === "Your"){
+                    return yCoordinates[d.name];
+                }else{
+                    return yCoordinates[d.name] + distanceWithinBars;
+                }
+            })
+            .attr("height", barHeight)
+            .attr("x", 0)
+            .attr("width", width)
+            .attr("style", "fill:rgb(117, 33, 240);stroke-width:3;")
+            .style("opacity", 0.2);
+
         //append rects
         bars.append("rect")
             .attr("class", "bar")
             .attr("y", function (d) {
                 if (d.name.split(" ")[0] === "Your"){
-                    return y(d.name);
+                    return yCoordinates[d.name];
                 }else{
-                    return y(d.name)+40;
+                    return yCoordinates[d.name] + distanceWithinBars;
                 }
             })
-            .attr("height", y.bandwidth() / 8)
+            .attr("height", barHeight)
             .attr("x", 0)
             .attr("width", function (d) {
                 return x(d.value);
             })
             .attr("style", "fill:rgb(117, 33, 240);stroke-width:3;");
-
-        bars.append("text")
-            .attr("class", "label")
-            //y position of the label is halfway down the bar
-            .attr("y", 0)
-            //x position is 3 pixels to the right of the bar
-            .attr("x", 0)
-            .attr("shape-rendering", "crispEdges")
-            .attr("stroke", "none")
-            .text("Your taste matches the ");
-
-        bars.append("text")
-            .attr("class", "label")
-            //y position of the label is halfway down the bar
-            .attr("y", 10)
-            //x position is 3 pixels to the right of the bar
-            .attr("x", 0)
-            .attr("dy", ".35rem")
-            .attr("font-size", "1rem")
-            .text("genres of this book: ")
-
         //add a value label to the right of each bar
         bars.append("text")
             .attr("class", "label")
             //y position of the label is halfway down the bar
             .attr("y", function (d) {
                 if (d.name.split(" ")[0] === "Your") {
-                    return y(d.name) + y.bandwidth() / 4;
+                    return yCoordinates[d.name] + distanceWithinBars / 2;
                 } else {
-                    return y(d.name) + y.bandwidth() / 4 + 40;
+                    return yCoordinates[d.name] + distanceWithinBars * 1.5;
                 }
             })
             //x position is 3 pixels to the right of the bar
             .attr("x", function (d) {
-                return x(d.value) + 10;
+                return x(d.value);
+            })
+            .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
+            .attr("text-anchor", d =>
+            {
+                if (d.value > 50){
+                    return "end"
+                } else {
+                    return "start"
+                }
             })
             .text(function (d) {
                 return parseFloat(d.value).toFixed(0) + "% match";
@@ -195,11 +219,12 @@ class DoubleBarChart extends Component {
             //y position of the label is halfway down the bar
             .attr("y", function (d) {
                 if (d.name.split(" ")[0] === "Your") {
-                    return y(d.name) + y.bandwidth() / 4 - 25;
+                    return yCoordinates[d.name] - 10;
                 } else{
-                    return y(d.name) + y.bandwidth() / 4 - 25 + 40;
+                    return yCoordinates[d.name] + distanceWithinBars - 10;
                 }
             })
+            .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
             //x position is 3 pixels to the right of the bar
             .attr("x", 0)
             .text(function (d) {
