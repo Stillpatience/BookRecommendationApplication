@@ -57,44 +57,50 @@ class VennDiagram extends Component {
         }
 
         const data = [12, 5, 6, 6, 9, 10];
-        const w = window.innerWidth;
-        const h = 0.5 * window.innerWidth;
+        const w = 0.95 * window.innerWidth;
+        const h = 0.6 * window.innerWidth;
+        const bottomHeight = 20;
+        const textHeight = 100;
         const svg = d3.select("#navigation")
             .insert("svg",":first-child")
-            .attr("width", w)
-            .attr("height", h)
+            .attr("width", w )
+            .attr("height", h + textHeight + bottomHeight)
             .attr("id", "venn-diagram");
+
+        const fo = svg.append("foreignObject")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", w)
+            .attr("height", textHeight)
+            .append('xhtml:div')
+
+        fo
+            .append('p')
+            .style("text-align", "left")
+            .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
+            .html("Your interests: ")
+            .append('span')
+            .style('float', 'right')
+            .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
+            .html("This book ")
+
+
 
         svg.selectAll("circle")
             .data(data)
             .enter()
 
-        const cy = 0.5*h
+        const cx = 0.35*w;
+        const cy = 0.6*h
         const r = 0.22*w
         svg.append("circle")
             .attr("r", r)
-            .attr("cx", 0.35*w)
+            .attr("cx", cx)
             .attr("cy", cy)
             .attr("fill", "rgb(98, 2, 238)")
             .attr("opacity", 0.5)
             .attr("stroke", "rgb(98, 2, 238)")
             .attr("stroke-width", "3")
-
-        svg.append("text")
-            .attr("x", 0.85*w)
-            .attr("y", 0.1*h)
-            .attr("dy", ".35rem")
-            .attr("font-size", "1rem")
-            .attr("text-anchor", "middle")
-            .text("This book");
-
-        svg.append("text")
-            .attr("x", 0.15*w)
-            .attr("y", 0.1*h)
-            .attr("dy", ".35rem")
-            .attr("font-size", "1rem")
-            .attr("text-anchor", "middle")
-            .text("Your interests");
 
         svg.append("circle")
             .attr("r",  r)
@@ -105,51 +111,77 @@ class VennDiagram extends Component {
             .attr("stroke", "rgb(98, 2, 238)")
             .attr("stroke-width", "3")
 
-        let x = 65
+        let x = 75
         let y = cy - 0.6*r
-
-        recommended_genres.forEach(text =>
-            {
-                svg.append("text")
-                .attr("x", x.toString() + "%")
-                .attr("y", y)
-                .attr("dy", ".35rem")
-                .attr("fill", "white")
-                .attr("text-anchor", "left")
-                .text(text);
-                y += 20;
+        let recommended_genres_count = 0
+        recommended_genres.forEach(text => {
+                if (recommended_genres_count < 6) {
+                    svg.append("text")
+                        .attr("x", x.toString() + "%")
+                        .attr("y", y)
+                        .attr("dy", ".35rem")
+                        .attr("text-anchor", () => {
+                            if (text.length > 9) {
+                                return "middle"
+                            } else {
+                                return "end"
+                            }
+                        })
+                        .style("font-family", '"Roboto", "Helvetica", "Arial", sans-serif')
+                        .attr("font-size", 0.7 + "rem")
+                        .text(text);
+                    y += 20;
+                    recommended_genres_count++;
+                }
             }
         );
 
         x = 25
         y =  cy - 0.6*r
 
+        let my_genres_count = 0;
         my_genres.forEach(text =>
             {
-                svg.append("text")
-                    .attr("x", x.toString() + "%")
-                    .attr("y", y)
-                    .attr("dy", ".35rem")
-                    .attr("fill", "white")
-                    .attr("text-anchor", "middle")
-                    .text(text);
-                y += 20;
+                if (my_genres_count < 6) {
+
+                    svg.append("text")
+                        .attr("x", x.toString() + "%")
+                        .attr("y", y)
+                        .attr("dy", ".35rem")
+                        .attr("text-anchor", () => {
+                            if (text.length > 9){
+                                return "middle"
+                            }
+                            else {
+                                return "start"
+                            }
+                        })
+                        .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
+                        .attr("font-size", 0.7 + "rem")
+                        .text(text);
+                    y += 20;
+                    my_genres_count++;
+                }
             }
         );
 
         x = 50
-        y = 35
+        y = 30
+        let overlap_genres_count = 0;
         overlap_genres.forEach(genre =>
             {
-                svg.append("text")
-                    .attr("x", x.toString() + "%")
-                    .attr("y", y.toString() + "%")
-                    .attr("dy", ".35rem")
-                    .attr("fill", "white")
-                    .attr("font-size", genre["value"] / 100 + "rem")
-                    .attr("text-anchor", "middle")
-                    .text(genre["name"]);
-                y += 10;
+                if (overlap_genres_count < 6) {
+                    svg.append("text")
+                        .attr("x", x.toString() + "%")
+                        .attr("y", y.toString() + "%")
+                        .attr("dy", ".35rem")
+                        .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
+                        .attr("font-size", 0.7 + "rem")
+                        .attr("text-anchor", "middle")
+                        .text(genre["name"]);
+                    y += 5;
+                    overlap_genres_count++;
+                }
             }
         );
 

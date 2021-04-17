@@ -75,7 +75,6 @@ export const useStyles = makeStyles((theme) => ({
         "margin-left": 0,
         "margin-right": "auto",
         "display": "flex",
-        "margin": "auto",
     },
 
     flex_header: {
