@@ -9,8 +9,6 @@ class BarChart extends Component {
 
     drawChart() {
 
-
-
         let genresCount = countGenresMap();
 
         const similarGenresCount = countSimilarGenres(genresCount, this.props.book_id);
@@ -19,11 +17,12 @@ class BarChart extends Component {
 
         //sort bars based on value
         genres = genres.sort(function (a, b) {
-            return d3.ascending(a.value, b.value);
+            return d3.descending(a.value, b.value);
         })
 
         const textHeight = 60
-        const newHeight = textHeight + 80 * Object.keys(genres).length;
+        const bottomHeight = 60
+        const newHeight = textHeight + 80 * Object.keys(genres).length + bottomHeight;
         const width = 0.9 * window.innerWidth,
             height = newHeight;
 
@@ -49,14 +48,9 @@ class BarChart extends Component {
             .range([0, width])
             .domain([0, 100]);
 
-        const y = d3.scaleBand()
-            .rangeRound([height, 0])
-            .padding(.1)
-            .domain(genres.map(function (d) {
-                return d.name;
-            }));
+        const barHeight = 10;
 
-        const yBandInterval = (height - textHeight)/ Object.keys(genres).length;
+        const yBandInterval = (height - textHeight - bottomHeight)/ Object.keys(genres).length;
         let yCoordinates = {};
         let currentY = 100;
 
@@ -74,7 +68,7 @@ class BarChart extends Component {
         bars.append("rect")
             .attr("class", "bar")
             .attr("y", d => yCoordinates[d.name])
-            .attr("height", y.bandwidth() / 8)
+            .attr("height", barHeight)
             .attr("x", 0)
             .attr("width", width)
             .attr("style", "fill:rgb(117, 33, 240);stroke-width:3;")
@@ -86,7 +80,7 @@ class BarChart extends Component {
             .attr("y", function (d) {
                 return yCoordinates[d.name];
             })
-            .attr("height", y.bandwidth() / 8)
+            .attr("height", 10)
             .attr("x", 0)
             .attr("width", function (d) {
                 return x(d.value);
@@ -99,13 +93,20 @@ class BarChart extends Component {
             .attr("class", "label")
             //y position of the label is halfway down the bar
             .attr("y", function (d) {
-                return yCoordinates[d.name] + y.bandwidth() / 3;
+                return yCoordinates[d.name] + 3 * barHeight;
             })
             //x position is 3 pixels to the right of the bar
             .attr("x", function (d) {
                 return x(d.value);
             })
-            .attr("text-anchor", "end")
+            .attr("text-anchor", d =>
+            {
+                    if (d.value > 50){
+                        return "end"
+                    } else {
+                        return "start"
+                    }
+            })
             .text(function (d) {
                 return d.value + "% match";
             });
@@ -116,7 +117,7 @@ class BarChart extends Component {
             .attr("class", "label")
             //y position of the label is halfway down the bar
             .attr("y", function (d) {
-                return yCoordinates[d.name] - 10;
+                return yCoordinates[d.name] - barHeight;
             })
             //x position is 3 pixels to the right of the bar
             .attr("x", 0)
