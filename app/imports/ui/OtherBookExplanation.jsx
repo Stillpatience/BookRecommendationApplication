@@ -30,6 +30,7 @@ class OtherBookExplanation extends Component {
             .attr("width", w)
             .attr("height", h)
             .attr("id", "other-books")
+            .style("display", "none")
             .style("margin-left", 100);
 
 

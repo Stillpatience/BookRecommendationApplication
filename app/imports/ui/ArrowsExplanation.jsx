@@ -84,6 +84,7 @@ class ArrowsExplanation extends Component {
             .attr("width", width)
             .attr("height", height)
             .attr("id", "arrows")
+            .style("display", "none")
             .append("g")
 
         genreScores.forEach( genreScore =>

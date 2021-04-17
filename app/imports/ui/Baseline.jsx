@@ -22,6 +22,7 @@ class Baseline extends Component {
             .attr("width", w)
             .attr("height", h)
             .attr("id", "baseline")
+            .style("display", "none")
             .style("margin-left", 100);
 
         let y = 2

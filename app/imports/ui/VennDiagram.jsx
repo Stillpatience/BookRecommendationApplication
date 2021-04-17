@@ -65,7 +65,8 @@ class VennDiagram extends Component {
             .insert("svg",":first-child")
             .attr("width", w )
             .attr("height", h + textHeight + bottomHeight)
-            .attr("id", "venn-diagram");
+            .attr("id", "venn-diagram")
+            .style("display", "none");
 
         const fo = svg.append("foreignObject")
             .attr("x", 0)

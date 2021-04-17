@@ -110,6 +110,7 @@ class DoubleBarChart extends Component {
             .attr("width", width)
             .attr("height", height / 1.75)
             .attr("id", "double-barchart")
+            .style("display", "none")
             .append("g")
 
         const x = d3.scaleLinear()

@@ -33,6 +33,7 @@ class BarChart extends Component {
             .attr("width", width)
             .attr("height", height)
             .attr("id", "barchart")
+            .style("display", "none")
 
         svg.append("foreignObject")
             .attr("x", 0)
