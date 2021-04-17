@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import * as d3 from "d3";
-import {genresMap, getGenresFromID} from "./Books";
-import {getHighestCountMap, countSimilarGenres, countGenresMap} from "../utils/utils";
+import {countSimilarGenres, countGenresMap} from "../utils/utils";
 import {GenresCollection} from "../api/links";
 
 const getGenrePercentages = (book_id) => {
@@ -23,8 +22,11 @@ const getSimilarGenres = (genresCount) => {
         }
     }
     for (const key in genresCount) {
-        let new_value = Math.floor((genresCount[key]/total_amount_of_genres) * 100)
-        newMap.push({"name":"Your taste: " + key, "value": new_value})
+        if (genresCount.hasOwnProperty(key)) {
+
+            let new_value = Math.floor((genresCount[key]/total_amount_of_genres) * 100)
+            newMap.push({"name":"Your taste: " + key, "value": new_value})
+        }
     }
     return newMap;
 }
