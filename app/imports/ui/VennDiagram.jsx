@@ -78,7 +78,7 @@ class VennDiagram extends Component {
             .append('p')
             .style("text-align", "left")
             .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
-            .html("Your interests: ")
+            .html("Your interests ")
             .append('span')
             .style('float', 'right')
             .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')

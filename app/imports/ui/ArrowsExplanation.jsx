@@ -129,6 +129,7 @@ class ArrowsExplanation extends Component {
             .attr("x", left_ellipse_x)
             .attr("font-size", "smaller")
             .attr("text-anchor", "middle")
+            .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
             .text("Your interests");
 
         const right_ellipse_y = ((ellipses.length - 1)/2)*50 + 25
@@ -149,6 +150,7 @@ class ArrowsExplanation extends Component {
             .attr("x", right_ellipse_x)
             .attr("text-anchor", "middle")
             .attr("font-size", "smaller")
+            .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
             .text("This book");
 
         svgEllipses.append("ellipse")
@@ -156,6 +158,7 @@ class ArrowsExplanation extends Component {
             .attr("cy", (d) => { return d.cy; })
             .attr("rx", (d) => { return d.rx; })
             .attr("ry", (d) => { return d.ry; })
+            .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
             .attr("style", "fill:none;stroke:black")
 
         let legend = new Set();
@@ -194,12 +197,13 @@ class ArrowsExplanation extends Component {
 
         svgEllipses.append("text")
             .attr("class", "label")
-            .attr("x", right_ellipse_x - right_ellipse_rx + 40)
+            .attr("x", right_ellipse_x + right_ellipse_rx)
             .attr("y", right_ellipse_y + height_offset)
             .attr("shape-rendering", "crispEdges")
-            .attr("text-anchor", "middle")
+            .attr("text-anchor", "end")
             .attr("font-size", "smaller")
             .attr("stroke", "none")
+            .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
             .text("Link strength");
 
         legend.forEach(strokewidth => {
@@ -214,6 +218,7 @@ class ArrowsExplanation extends Component {
                 .attr("font-size", "smaller")
                 .attr("shape-rendering", "crispEdges")
                 .attr("stroke", "none")
+                .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
                 .attr("style", "stroke:rgb(98, 2, 238);stroke-width:"+strokewidth);
 
             const linkStrength = strokewidth / 5 * 100;
@@ -228,6 +233,7 @@ class ArrowsExplanation extends Component {
                 .attr("y", right_ellipse_y + height_offset)
                 .attr("shape-rendering", "crispEdges")
                 .attr("font-size", "smaller")
+                .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
                 .attr("stroke", "none")
                 .text(string + "%");
         })
@@ -236,6 +242,7 @@ class ArrowsExplanation extends Component {
             .attr("class", "label")
             .attr("y", (d) => {return d.cy; })
             .attr("x", (d) => {return d.cx; })
+            .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
             .attr("text-anchor", "middle")
             .text(function (d) {
                 return d.text;
