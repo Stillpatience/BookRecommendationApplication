@@ -35,7 +35,7 @@ const hideVisualizations = () => {
         }
     }
 }
-export const Books = () => {
+export const Books = (props) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
 
@@ -58,6 +58,7 @@ export const Books = () => {
     hideVisualizations();
     const handleClose = () => {
         setOpen(false);
+        props.setFirstTimeBooks(false);
         const snackbar = document.getElementById("welcome-snackbar");
         snackbar.style.display = "none";
     }
@@ -85,7 +86,7 @@ export const Books = () => {
                 )}
             </div>
             <div id="welcome-snackbar" style={{display :"block"}}>
-                <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                <Snackbar open={open && props.firstTimeBooks} autoHideDuration={2000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="info">
                         Welcome to BookFlix!
                     </Alert>

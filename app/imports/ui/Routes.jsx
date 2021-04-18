@@ -31,6 +31,8 @@ export const Routes = () => {
     }
 
     const [firstTime, setFirstTime] = React.useState(true);
+    const [firstTimeBooks, setFirstTimeBooks] = React.useState(true);
+
 
     return (
         <Switch>
@@ -38,7 +40,7 @@ export const Routes = () => {
                 <Login />
             </Route>
             <Route path={RoutePaths.RATE_AND_DISCOVER}>
-                <Books />
+                <Books  firstTimeBooks={firstTimeBooks} setFirstTimeBooks={setFirstTimeBooks}/>
                 <AppNavigation />
             </Route>
             <Route path={RoutePaths.BOOKS}>
