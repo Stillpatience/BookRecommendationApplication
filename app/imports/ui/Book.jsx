@@ -19,7 +19,7 @@ import {
     visualizationsMap
 } from "../utils/utils"
 import {numberWithCommas} from "../utils/utils"
-import {Card, CardContent, CardMedia} from "@material-ui/core";
+import {Card, CardContent, CardMedia, Snackbar} from "@material-ui/core";
 import BarChart from "./BarChart";
 import OtherBookExplanation from "./OtherBookExplanation";
 import VennDiagram from "./VennDiagram";
@@ -27,6 +27,7 @@ import DoubleBarChart from "./DoubleBarChart";
 import ArrowsExplanation from "./ArrowsExplanation";
 import Baseline from "./Baseline";
 import {useStyles} from "./styles";
+import {Alert} from "@material-ui/lab";
 
 const showFullDescription = () => {
     const fullDescription = document.getElementById("full-description");
@@ -51,6 +52,8 @@ export const Book = () => {
     const user = 1;
 
     const [stars, setStars] = React.useState(0);
+    const [addedOpen, setAddedOpen] = React.useState(false);
+    const [removedOpen, setRemovedOpen] = React.useState(false);
 
     const url = window.location.href
     const isbn = url.substring(url.indexOf(RoutePaths.BOOK) + RoutePaths.BOOK.length + 1, url.length);
@@ -75,12 +78,20 @@ export const Book = () => {
 
     const handleClick = () => {
         if (wantToRead){
+            console.log("visible now")
+            setAddedOpen(true);
+            const snackbar = document.getElementById("added-to-my-books-snackbar");
+            snackbar.style.display = "block";
             wantToReadBooks.push(isbn);
         }
         else{
+            setRemovedOpen(true);
+            const snackbar = document.getElementById("removed-from-my-books-snackbar");
+            snackbar.style.display = "block";
             removeItemOnce(wantToReadBooks, isbn);
         }
         setWantToRead(!wantToRead);
+
     };
 
     const handleNumberClick = (number) => {
@@ -97,6 +108,18 @@ export const Book = () => {
                 }
             }
         }
+    }
+
+    const handleAddedClose = () => {
+        setAddedOpen(false);
+        const snackbar = document.getElementById("added-to-my-books-snackbar");
+        snackbar.style.display = "none";
+    }
+
+    const handleRemovedClose = () => {
+        setRemovedOpen(false);
+        const snackbar = document.getElementById("removed-from-my-books-snackbar");
+        snackbar.style.display = "none";
     }
     const authors = book["authors"];
     let res = authors.split(" ");
@@ -228,7 +251,23 @@ export const Book = () => {
                 <Button variant="contained" color="primary" onClick={() => { handleNumberClick(6) }}>
                     6
                 </Button>
+
+                <div id="added-to-my-books-snackbar" style={{display :"none"}}>
+                    <Snackbar open={addedOpen} autoHideDuration={2000} onClose={handleAddedClose}>
+                        <Alert onClose={handleAddedClose} severity="success">
+                            Added to My Books!
+                        </Alert>
+                    </Snackbar>
+                </div>
+                <div id="removed-from-my-books-snackbar" style={{display :"none"}}>
+                    <Snackbar open={removedOpen} autoHideDuration={2000} onClose={handleRemovedClose}>
+                        <Alert onClose={handleRemovedClose} severity="info">
+                            Removed from My Books!
+                        </Alert>
+                    </Snackbar>
+                </div>
             </div>
+
         </div>
 
     );
