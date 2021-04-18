@@ -76,6 +76,8 @@ export const Book = () => {
     };
 
     const handleNumberClick = (number) => {
+        const div = document.getElementById("visualizations-div");
+        div.style.marginBottom = "0";
         for (let key in visualizationsMap) {
             if (visualizationsMap.hasOwnProperty(key)) {
                 const node = document.getElementById(visualizationsMap[key]);
@@ -139,7 +141,7 @@ export const Book = () => {
                 </div>
             </Card>
 
-            <div>
+            <div id="visualizations-div" style={{"margin-bottom": "4rem"}}>
                 <Grid container>
                     <Grid item xs={6} align='left'>
                         <Typography variant="body2" color="textSecondary"  display="inline">
