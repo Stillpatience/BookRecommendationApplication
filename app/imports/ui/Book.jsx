@@ -171,7 +171,7 @@ export const Book = () => {
                         </Typography>}
                     <Typography variant="subtitle2" color="white" id="full-description" style={{display :"none"}}>
                         <small>
-                            {full_description} {short_description} {"("} <a style={{cursor :"pointer", textDecoration :"underline"}}
+                            {full_description} {"("} <a style={{cursor :"pointer", textDecoration :"underline"}}
                                                                             onClick={showShortDescription}>show less</a> {")"}
                         </small>
                     </Typography>
