@@ -13,9 +13,10 @@ import {Paper} from "@material-ui/core";
 
 export const InitializationBooks = () => {
     const classes = useStyles();
-    let books = BooksCollection.find({"isbn":{$ne : "isbn"}},{limit: 50}).fetch();
+    let book_ids = [9, 41, 197, 203, 49, 42, 59, 61, 136, 65, 2, 7, 535, 76, 139, 433, 110, 251, 111, 913]
+    let books = BooksCollection.find({"isbn":{$ne : "isbn"}, "id":{$in : book_ids}},{limit: 50}).fetch();
     while (typeof books === 'undefined'){
-        books = BooksCollection.find({"isbn":{$ne : "isbn"}},{limit: 50}).fetch();
+        books = BooksCollection.find({"isbn":{$ne : "isbn"}, "id":{$in : book_ids}},{limit: 50}).fetch();
     }
     books = books.sort(function (a, b) {
         return d3.ascending(a["title"], b["title"]);
