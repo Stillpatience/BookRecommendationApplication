@@ -3,7 +3,7 @@ import {BooksCollection, SimilarBooksCollection} from '../api/links';
 import {RoutePaths} from "./RoutePaths";
 import {Link} from "react-router-dom";
 import SearchBar from "material-ui-search-bar";
-import {recommendedBooks, setBooks, updateRecommendations, visualizationsMap} from "../utils/utils";
+import {hideVisualizations, recommendedBooks, setBooks, updateRecommendations} from "../utils/utils";
 import {useStyles} from "./styles";
 import Typography from "@material-ui/core/Typography";
 import {Snackbar} from "@material-ui/core";
@@ -25,16 +25,6 @@ export const getShortTitle = (book) =>{
     return book_title;
 }
 
-const hideVisualizations = () => {
-    for (let key in visualizationsMap) {
-        if (visualizationsMap.hasOwnProperty(key)) {
-            const node = document.getElementById(visualizationsMap[key]);
-            if (node !== null){
-                node.style.display = "none";
-            }
-        }
-    }
-}
 export const Books = (props) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);

@@ -164,6 +164,17 @@ export const getBookFromID = (id, books) => {
     return result_book;
 }
 
+export const hideVisualizations = () => {
+    for (let key in visualizationsMap) {
+        if (visualizationsMap.hasOwnProperty(key)) {
+            const node = document.getElementById(visualizationsMap[key]);
+            if (node !== null){
+                node.style.display = "none";
+            }
+        }
+    }
+}
+
 export let selectedBooks = []
 export let propagatedIDs = []
 export const setRating = (user, book_id, newValue, propagated) => {

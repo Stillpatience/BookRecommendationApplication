@@ -6,7 +6,7 @@ import {BooksCollection} from "../api/links";
 import SearchBar from "material-ui-search-bar";
 import Typography from "@material-ui/core/Typography";
 import {useStyles} from "./styles";
-import {setBooks} from "../utils/utils";
+import {hideVisualizations, setBooks} from "../utils/utils";
 
 export const MyBooks = () => {
     const classes = useStyles();
@@ -15,6 +15,7 @@ export const MyBooks = () => {
     for (let i=0; i < wantToReadBooks.length; i++){
         books.push(BooksCollection.findOne({isbn: parseInt(wantToReadBooks[i])}));
     }
+    hideVisualizations()
     return (
         <div id="my-books-div" style={{"margin-bottom": "4rem"}}>
         <div>

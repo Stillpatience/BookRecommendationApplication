@@ -7,6 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import {Genres} from './Genres'
 import {Snackbar} from "@material-ui/core";
 import {Alert} from "@material-ui/lab";
+import {hideVisualizations} from "../utils/utils";
 
 export const Settings = (props) => {
 
@@ -22,6 +23,7 @@ export const Settings = (props) => {
         snackbar.style.display = "block"
     }
     const [open, setOpen] = React.useState(false);
+    hideVisualizations()
     return (
         <div >
             <FormControl component="fieldset">
