@@ -16,7 +16,7 @@ export const MyBooks = () => {
         books.push(BooksCollection.findOne({isbn: parseInt(wantToReadBooks[i])}));
     }
     return (
-        <div>
+        <div id="my-books-div" style={{"margin-bottom": "4rem"}}>
         <div>
             <SearchBar
                 onChange={(newValue) => {

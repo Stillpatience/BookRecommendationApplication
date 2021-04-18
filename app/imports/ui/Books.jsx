@@ -64,7 +64,7 @@ export const Books = (props) => {
     }
 
     return (
-        <div>
+        <div id="books-div" style={{"margin-bottom": "4rem"}}>
             <div>
                 <SearchBar
                     onChange={(newValue) => {setBooks(books, newValue);}
@@ -88,7 +88,7 @@ export const Books = (props) => {
             <div id="welcome-snackbar" style={{display :"block"}}>
                 <Snackbar open={open && props.firstTimeBooks} autoHideDuration={2000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="info">
-                        Welcome to BookFlix!
+                        Welcome to GreatReads!
                     </Alert>
                 </Snackbar>
             </div>

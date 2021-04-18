@@ -16,7 +16,7 @@ export const InitializationBooks = () => {
         books = BooksCollection.find({"isbn":{$ne : "isbn"}},{limit: 50}).fetch();
     }
     return (
-        <div>
+        <div id="initialization-books-div" style={{"margin-bottom": "4rem"}}>
             <div className={classes.books_container}>
                 {books.map(book => {
                     const book_img = book["id"] + ".jpg"
