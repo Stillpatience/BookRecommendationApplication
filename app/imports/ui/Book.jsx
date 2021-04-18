@@ -36,6 +36,14 @@ const showFullDescription = () => {
 
 }
 
+const showShortDescription = () => {
+    const fullDescription = document.getElementById("short-description");
+    fullDescription.style.display = "block"
+    const shortDescription = document.getElementById("full-description");
+    shortDescription.style.display = "none"
+
+}
+
 export const Book = () => {
 
     const classes = useStyles();
@@ -127,15 +135,22 @@ export const Book = () => {
                 </div>
                 </div>
                 <div className={classes.flex_header} style={{backgroundColor: "rgb(98, 2, 238)", color: 'white'}}>
-                    <Typography variant="subtitle2" color="white" id="short-description" style={{display :"block"}}>
+                    {short_description === full_description ?
+                        <Typography variant="subtitle2" color="white" id="short-description" style={{display :"block"}}>
+                            <small>
+                                {short_description}
+                            </small>
+                        </Typography> :
+                        <Typography variant="subtitle2" color="white" id="short-description" style={{display :"block"}}>
+                            <small>
+                            {short_description} {"("} <a style={{cursor :"pointer", textDecoration :"underline"}}
+                                                   onClick={showFullDescription}>more</a> {")"}
+                            </small>
+                        </Typography>}
+                    <Typography variant="subtitle2" color="white" id="full-description" style={{display :"none"}}>
                         <small>
-                        {short_description} {"("} <a style={{cursor :"pointer", textDecoration :"underline"}}
-                                               onClick={showFullDescription}>more</a> {")"}
-                        </small>
-                    </Typography>
-                    <Typography variant="subtitle1" color="white" id="full-description" style={{display :"none"}}>
-                        <small>
-                            {full_description}
+                            {full_description} {short_description} {"("} <a style={{cursor :"pointer", textDecoration :"underline"}}
+                                                                            onClick={showShortDescription}>show less</a> {")"}
                         </small>
                     </Typography>
                 </div>
