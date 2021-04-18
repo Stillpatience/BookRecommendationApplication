@@ -1,6 +1,26 @@
 import {genresMap, ratings} from "../ui/Books";
-import {GenresCollection, SimilarBooksCollection} from "../api/links";
+import {BooksCollection, GenresCollection, SimilarBooksCollection} from "../api/links";
 
+export const setBooks = (books, search) =>{
+    let titles = []
+    const new_books = BooksCollection.find({"title" : {$regex : ".*"+search+".*", $options: 'i'}}).fetch();
+    new_books.forEach(book =>
+        titles.push(book["title"])
+    )
+
+    const node = document.getElementById("books");
+
+    const children = node.childNodes;
+    children.forEach(child =>
+        {
+            if (!titles.includes(child.id)){
+                child.style.display = "none";
+            } else {
+                child.style.display = "block";
+            }
+        }
+    )
+}
 export const removeItemOnce = (arr, value) => {
     let index = arr.indexOf(value);
     if (index > -1) {

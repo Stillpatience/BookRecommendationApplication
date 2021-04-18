@@ -3,47 +3,15 @@ import {BooksCollection, SimilarBooksCollection} from '../api/links';
 import {RoutePaths} from "./RoutePaths";
 import {Link} from "react-router-dom";
 import SearchBar from "material-ui-search-bar";
-import {recommendedBooks, updateRecommendations, visualizationsMap} from "../utils/utils";
+import {recommendedBooks, setBooks, updateRecommendations, visualizationsMap} from "../utils/utils";
 import {useStyles} from "./styles";
 import Typography from "@material-ui/core/Typography";
+import {Snackbar} from "@material-ui/core";
+import {Alert} from "@material-ui/lab";
 
 export var wantToReadBooks = [];
 export var ratings = {};
 export var genresMap = {};
-
-function setBooks(books, search){
-    let titles = []
-    const new_books = BooksCollection.find({"title" : {$regex : ".*"+search+".*", $options: 'i'}}).fetch();
-    new_books.forEach(book =>
-        titles.push(book["title"])
-    )
-
-    const node = document.getElementById("books");
-
-    const children = node.childNodes;
-    children.forEach(child =>
-        {
-            if (!titles.includes(child.id)){
-                child.style.display = "none";
-            } else {
-                child.style.display = "block";
-            }
-        }
-    )
-}
-
-export const getGenresFromID = (genres, id) => {
-    genres.forEach(genre => {
-        if (genre["id"] === id){
-            if (typeof genresMap[id] == 'undefined'){
-                genresMap[id] = [genre["genres"]];
-            } else {
-                genresMap[id] = genresMap[id].push(genre["genres"]);
-            }
-        }
-        }
-    )
-}
 
 export const getShortTitle = (book) =>{
     let book_title = book["title"].toString();
@@ -57,7 +25,6 @@ export const getShortTitle = (book) =>{
     return book_title;
 }
 
-//TODO: remove this
 const hideVisualizations = () => {
     for (let key in visualizationsMap) {
         if (visualizationsMap.hasOwnProperty(key)) {
@@ -70,6 +37,7 @@ const hideVisualizations = () => {
 }
 export const Books = () => {
     const classes = useStyles();
+    const [open, setOpen] = React.useState(true);
 
     let books;
     while (typeof books === 'undefined'){
@@ -88,6 +56,11 @@ export const Books = () => {
         books = recommendedBooks;
     }
     hideVisualizations();
+    const handleClose = () => {
+        setOpen(false);
+        const snackbar = document.getElementById("welcome-snackbar");
+        snackbar.style.display = "none";
+    }
 
     return (
         <div>
@@ -110,6 +83,13 @@ export const Books = () => {
                             <small><Typography className={classes.word_wrap} >{getShortTitle(book)}</Typography></small>
                         </div>
                 )}
+            </div>
+            <div id="welcome-snackbar" style={{display :"block"}}>
+                <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="info">
+                        Welcome to BookFlix!
+                    </Alert>
+                </Snackbar>
             </div>
         </div>);
 }

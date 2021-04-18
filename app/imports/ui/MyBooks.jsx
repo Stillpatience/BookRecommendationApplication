@@ -6,27 +6,7 @@ import {BooksCollection} from "../api/links";
 import SearchBar from "material-ui-search-bar";
 import Typography from "@material-ui/core/Typography";
 import {useStyles} from "./styles";
-
-function setBooks(books, search){
-    let titles = []
-    const new_books = BooksCollection.find({"title" : {$regex : ".*"+search+".*", $options: 'i'}}).fetch();
-    new_books.forEach(book =>
-        titles.push(book["title"])
-    )
-
-    const node = document.getElementById("books");
-
-    const children = node.childNodes;
-    children.forEach(child =>
-        {
-            if (!titles.includes(child.id)){
-                child.style.display = "none";
-            } else {
-                child.style.display = "block";
-            }
-        }
-    )
-}
+import {setBooks} from "../utils/utils";
 
 export const MyBooks = () => {
     const classes = useStyles();
