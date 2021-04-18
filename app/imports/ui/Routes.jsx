@@ -30,6 +30,8 @@ export const Routes = () => {
         setGenreState({ ...genreStates, [event.target.name]: event.target.checked })
     }
 
+    const [firstTime, setFirstTime] = React.useState(true);
+
     return (
         <Switch>
             <Route path={RoutePaths.LOGIN}>
@@ -52,7 +54,7 @@ export const Routes = () => {
                 <AppNavigation />
             </Route>
             <Route path={RoutePaths.REGISTER}>
-                <Register />
+                <Register firstTime={firstTime} setFirstTime={setFirstTime}/>
             </Route>
             <Route path={RoutePaths.TERMS_AND_CONDITIONS}>
                 <TermsAndConditions />

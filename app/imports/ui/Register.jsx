@@ -10,8 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {useStyles} from "./styles";
 import {Link} from "react-router-dom";
+import {Snackbar} from "@material-ui/core";
+import {Alert} from "@material-ui/lab";
 
-export const Register = () => {
+export const Register = (props) => {
     const classes = useStyles();
 
     const [checked, setChecked] = React.useState(false);
@@ -20,10 +22,21 @@ export const Register = () => {
         setChecked(!checked);
     }
 
+    const handleClick = () => {
+        setFirstTime(false);
+    }
+
     const ConditionalLink = ({ children, to, condition }) => (!!condition && to)
         ? <Link to={to}>{children}</Link>
         : <div>{children}</div>;
 
+    const setFirstTime = props.setFirstTime;
+    const firstTime = props.firstTime;
+
+    const handleClose = () => {
+        const snackbar = document.getElementById("terms-and-conditions-snackbar");
+        snackbar.style.display = "none";
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -81,10 +94,18 @@ export const Register = () => {
                             fullWidth
                             variant="contained"
                             color="primary"
+                            onClick={handleClick}
                         >
                             Sign up
                         </Button>
                     </ConditionalLink>
+                    <div id="terms-and-conditions-snackbar" style={{display :"block"}}>
+                        <Snackbar open={!checked && !firstTime} autoHideDuration={2000} onClose={handleClose}>
+                            <Alert onClose={handleClose} severity="error">
+                                Please accept the terms and conditions
+                            </Alert>
+                        </Snackbar>
+                    </div>
 
                 </form>
             </div>
