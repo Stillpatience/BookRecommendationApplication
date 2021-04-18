@@ -65,6 +65,7 @@ export const Routes = () => {
                 <SetUp />
             </Route>
             <Route path={RoutePaths.INITIALIZATION_BOOKS}>
+
                 <InitializationBooks />
             </Route>
             <Redirect to={RoutePaths.LOGIN} />

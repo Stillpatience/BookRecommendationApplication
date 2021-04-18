@@ -16,7 +16,7 @@ export const SetUp = () => {
                 <br/>
                 <Typography component="h5">
                     To understand your preferences, we will ask you to select some books that you like in the following screen.
-                    You can select as many or as few books as you want.
+                    Please select at least 5 books.
                 </Typography>
             </Paper>
             <br/>

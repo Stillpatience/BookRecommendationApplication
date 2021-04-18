@@ -82,4 +82,13 @@ export const useStyles = makeStyles((theme) => ({
         "margin": "auto",
     },
 
+    //Initialization page
+    fixed_header: {
+        padding: theme.spacing(2),
+        margin: 'auto',
+        position: "fixed",
+        top: "0px",
+        width: 0.85 * window.innerWidth,
+    },
+
 }));
