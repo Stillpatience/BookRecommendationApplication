@@ -1,6 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 
-export const BooksCollectionName = 'descriptions';
+export const BooksCollectionName = 'descriptions-selected-columns';
 export const FullBooksCollectionName = 'full_descriptions';
 
 export const LinksCollection = new Mongo.Collection('links');
