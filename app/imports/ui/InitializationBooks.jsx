@@ -27,14 +27,14 @@ export const InitializationBooks = () => {
     return (
         <div>
             <div>
-                <Paper className={classes.fixed_header} style={{backgroundColor: "rgb(98, 2, 238)", color: 'white'}}>
+                <Paper className={classes.fixed_header} style={{backgroundColor: "rgb(98, 2, 238)", color: 'white', "zIndex": 100}}>
                     <Typography id="amount-of-books-selected" component="h5" style={{color: 'red'}}>
                         Selected 0/5 books.
                     </Typography>
                 </Paper>
             </div>
 
-            <div id="initialization-books-div" style={{"margin-bottom": "4rem", "margin-top": "4rem"}}>
+            <div id="initialization-books-div" style={{"marginBottom": "4rem", "marginTop": "4rem"}}>
                 <div className={classes.books_container}>
                     {books.map(book => {
                         const book_img = book["id"] + ".jpg"
@@ -96,12 +96,12 @@ export const InitializationBooks = () => {
                     })}
                 </div>
                 <div>
-                    <div id="confirm-selection-button-disabled" style={{display :"block"}}>
+                    <div id="confirm-selection-button-disabled" style={{display :"block", "zIndex": 100}}>
                         <Link to={RoutePaths.RATE_AND_DISCOVER}>
                             <Button
                                 id="confirm-selection-button-disabled"
                                 type="submit"
-                                fullWidth
+                                width={0.8 * window.innerWidth}
                                 variant="contained"
                                 disabled
                                 color="primary"
@@ -111,11 +111,11 @@ export const InitializationBooks = () => {
                             </Button>
                         </Link>
                     </div>
-                    <div id="confirm-selection-button-enabled" style={{display :"none"}}>
+                    <div id="confirm-selection-button-enabled" style={{display :"none",  "zIndex": 100}}>
                         <Link to={RoutePaths.RATE_AND_DISCOVER}>
                             <Button
                                 type="submit"
-                                fullWidth
+                                width={0.8 * window.innerWidth}
                                 variant="contained"
                                 color="primary"
                                 className={classes.bottom_fixed}
