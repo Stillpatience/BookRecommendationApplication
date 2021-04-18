@@ -78,7 +78,6 @@ export const Book = () => {
 
     const handleClick = () => {
         if (wantToRead){
-            console.log("visible now")
             setAddedOpen(true);
             const snackbar = document.getElementById("added-to-my-books-snackbar");
             snackbar.style.display = "block";

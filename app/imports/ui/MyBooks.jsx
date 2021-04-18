@@ -1,9 +1,11 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {RoutePaths} from "./RoutePaths";
-import {wantToReadBooks} from "./Books";
+import {getShortTitle, wantToReadBooks} from "./Books";
 import {BooksCollection} from "../api/links";
 import SearchBar from "material-ui-search-bar";
+import Typography from "@material-ui/core/Typography";
+import {useStyles} from "./styles";
 
 function setBooks(books, search){
     let titles = []
@@ -27,6 +29,8 @@ function setBooks(books, search){
 }
 
 export const MyBooks = () => {
+    const classes = useStyles();
+
     let books = [];
     for (let i=0; i < wantToReadBooks.length; i++){
         books.push(BooksCollection.findOne({isbn: parseInt(wantToReadBooks[i])}));
@@ -43,18 +47,17 @@ export const MyBooks = () => {
                 autoFocus
             />
         </div>
-        <div className="grid-container" id="books">
-            {
-                books.map(book =>
-                    <div className="grid-item" id={book["title"]}>
-                        <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
-                            <img id={book["isbn"]} src={book["id"] + ".jpg"} alt="Loading" width="98" height="146" />
-                        </Link>
-                        <div className="word-wrap">
-                            <p>{book["title"]}</p>
+            <div className={classes.books_container} id="books">
+                {
+                    books.map(book =>
+                        <div className={classes.books_item} id={book["title"]}>
+                            <Link to={RoutePaths.BOOK + "/" + book["isbn"]}>
+                                <img id={book["isbn"]} src={book["id"] + ".jpg"} width="98" height="146"
+                                     alt="Loading"/>
+                            </Link>
+                            <small><Typography className={classes.word_wrap} >{getShortTitle(book)}</Typography></small>
                         </div>
-                    </div>
-                )}
-        </div>
+                    )}
+            </div>
         </div>);
 }
