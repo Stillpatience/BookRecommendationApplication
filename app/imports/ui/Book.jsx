@@ -19,7 +19,7 @@ import {
     visualizationsMap
 } from "../utils/utils"
 import {numberWithCommas} from "../utils/utils"
-import {Card, CardContent, CardMedia, Snackbar} from "@material-ui/core";
+import {Card, CardContent, CardMedia, InputLabel, MenuItem, Select, Snackbar} from "@material-ui/core";
 import BarChart from "./BarChart";
 import OtherBookExplanation from "./OtherBookExplanation";
 import VennDiagram from "./VennDiagram";
@@ -119,6 +119,11 @@ export const Book = () => {
         setRemovedOpen(false);
         const snackbar = document.getElementById("removed-from-my-books-snackbar");
         snackbar.style.display = "none";
+    }
+
+    const handleChange = (event) => {
+        console.log(event.target.value)
+        handleNumberClick(event.target.value)
     }
     const authors = book["authors"];
     let res = authors.split(" ");
@@ -232,25 +237,19 @@ export const Book = () => {
                 <DoubleBarChart book_id={book_id}/>
                 <ArrowsExplanation book_id={book_id}/>
                 <Baseline book_id={book_id}/>
-                <Button variant="contained" color="primary" onClick={() => { handleNumberClick(1) }}>
-                    1
-                </Button>
-                <Button variant="contained" color="primary" onClick={() => { handleNumberClick(2) }}>
-                    2
-                </Button>
-                <Button variant="contained" color="primary" onClick={() => { handleNumberClick(3) }}>
-                    3
-                </Button>
-                <Button variant="contained" color="primary" onClick={() => { handleNumberClick(4) }}>
-                    4
-                </Button>
-                <Button variant="contained" color="primary" onClick={() => { handleNumberClick(5) }}>
-                    5
-                </Button>
-                <Button variant="contained" color="primary" onClick={() => { handleNumberClick(6) }}>
-                    6
-                </Button>
-
+                <InputLabel id="demo-simple-select-label">Visualization</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    onChange={handleChange}
+                >
+                    <MenuItem value={1}>One</MenuItem>
+                    <MenuItem value={2}>Two</MenuItem>
+                    <MenuItem value={3}>Three</MenuItem>
+                    <MenuItem value={4}>Four</MenuItem>
+                    <MenuItem value={5}>Five</MenuItem>
+                    <MenuItem value={6}>Six</MenuItem>
+                </Select>
                 <div id="added-to-my-books-snackbar" style={{display :"none"}}>
                     <Snackbar open={addedOpen} autoHideDuration={2000} onClose={handleAddedClose}>
                         <Alert onClose={handleAddedClose} severity="success">
