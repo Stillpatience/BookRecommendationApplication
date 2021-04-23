@@ -42,7 +42,8 @@ export const InitializationBooks = () => {
                         return <div>
                         <div className={classes.books_item}>
                                 <img id={book["isbn"]} src={book_img} width="98" height="146"
-                                     alt="Loading" onClick={() => {
+                                     alt="Loading" style={{opacity: 0.75}}
+                                     onClick={() => {
                                         const bookISBN = book["isbn"];
                                         const bookID = book["id"];
                                         const element = document.getElementById(bookISBN);
@@ -51,12 +52,14 @@ export const InitializationBooks = () => {
                                         if (!selectedBooks.includes(bookID)) {
                                             selectedBooks.push(bookID);
                                             previouslyLikedBooks.push(bookID)
-                                            element.style.opacity = "0.5";
+                                            element.style.border = "0.25rem solid rgb(98, 2, 238)";
+                                            element.style.opacity = "1";
                                             checkElement.style.display = "block"
                                         } else {
                                             removeItemOnce(selectedBooks, bookID);
                                             removeItemOnce(previouslyLikedBooks, bookID);
-                                            element.style.opacity = "1";
+                                            element.style.border = "";
+                                            element.style.opacity = "0.75";
                                             checkElement.style.display = "none"
 
                                         }
