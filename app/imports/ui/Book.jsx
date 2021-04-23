@@ -122,7 +122,6 @@ export const Book = () => {
     }
 
     const handleChange = (event) => {
-        console.log(event.target.value)
         handleNumberClick(event.target.value)
     }
     const authors = book["authors"];

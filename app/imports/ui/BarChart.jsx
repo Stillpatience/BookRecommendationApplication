@@ -1,7 +1,20 @@
 import React, {Component} from 'react';
 import * as d3 from "d3";
 import {getHighestCountMap, countSimilarGenres, countGenresMap} from "../utils/utils";
+import {genresMap} from "./Books";
+import {BooksCollection} from "../api/links";
 
+const getBooksWithGenre = (genreName) => {
+    let book_ids = [];
+    for (const key in genresMap) {
+        if (genresMap.hasOwnProperty(key)) {
+            if (genresMap[key].includes(genreName)){
+                book_ids.push(key);
+            }
+        }
+    }
+    return book_ids;
+}
 class BarChart extends Component {
     componentDidMount() {
         this.drawChart();
@@ -14,7 +27,8 @@ class BarChart extends Component {
         const similarGenresCount = countSimilarGenres(genresCount, this.props.book_id);
 
         let genres = getHighestCountMap(similarGenresCount);
-
+        console.log(genresMap)
+        console.log("Object.keys(genresMap)", Object.keys(genresMap))
         //sort bars based on value
         genres = genres.sort(function (a, b) {
             return d3.descending(a.value, b.value);
@@ -86,7 +100,19 @@ class BarChart extends Component {
             .attr("width", function (d) {
                 return x(d.value);
             })
-            .attr("style", "fill:rgb(117, 33, 240);stroke-width:3;");
+            .attr("style", "fill:rgb(117, 33, 240);stroke-width:3;")
+            .append("div")
+            .attr("class", "node-label")
+            .attr("title", (d) => {
+                const book_ids = getBooksWithGenre(d.name)
+                const textExplanation = "Found in "
+                book_ids.forEach(book_id => {
+                    let book = BooksCollection.findOne({id: parseInt(book_id)});
+                    console.log(book["title"])
+                    textExplanation.concat(book["title"])
+                })
+                return textExplanation
+            });
 
         //add a value label to the right of each bar
         bars.append("text")
@@ -97,17 +123,8 @@ class BarChart extends Component {
                 return yCoordinates[d.name] + 3 * barHeight;
             })
             //x position is 3 pixels to the right of the bar
-            .attr("x", function (d) {
-                return x(d.value);
-            })
-            .attr("text-anchor", d =>
-            {
-                    if (d.value > 50){
-                        return "end"
-                    } else {
-                        return "start"
-                    }
-            })
+            .attr("x", 0)
+            .attr("text-anchor", "begin")
             .text(function (d) {
                 return d.value + "% match";
             });

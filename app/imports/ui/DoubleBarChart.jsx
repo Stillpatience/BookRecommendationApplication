@@ -200,18 +200,9 @@ class DoubleBarChart extends Component {
                 }
             })
             //x position is 3 pixels to the right of the bar
-            .attr("x", function (d) {
-                return x(d.value);
-            })
+            .attr("x", 0)
             .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
-            .attr("text-anchor", d =>
-            {
-                if (d.value > 50){
-                    return "end"
-                } else {
-                    return "start"
-                }
-            })
+            .attr("text-anchor", "start")
             .text(function (d) {
                 return parseFloat(d.value).toFixed(0) + "% match";
             });
