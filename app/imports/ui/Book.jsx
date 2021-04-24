@@ -52,8 +52,12 @@ export const Book = () => {
     const user = 1;
 
     const [stars, setStars] = React.useState(0);
-    const [addedOpen, setAddedOpen] = React.useState(false);
-    const [removedOpen, setRemovedOpen] = React.useState(false);
+    const [addedStarsOpen, setStarsOpen] = React.useState(false);
+    const [removedStarsOpen, setRemovedStarsOpen] = React.useState(false);
+
+
+    const [addedOpenWantToRead, setAddedOpenWantToRead] = React.useState(false);
+    const [removedOpenWantToRead, setRemovedOpenWantToRead] = React.useState(false);
 
     const url = window.location.href
     const isbn = url.substring(url.indexOf(RoutePaths.BOOK) + RoutePaths.BOOK.length + 1, url.length);
@@ -76,15 +80,15 @@ export const Book = () => {
         short_description = full_description.substring(0,200)
     }
 
-    const handleClick = () => {
+    const handleWantToReadClick = () => {
         if (wantToRead){
-            setAddedOpen(true);
+            setAddedOpenWantToRead(true);
             const snackbar = document.getElementById("added-to-my-books-snackbar");
             snackbar.style.display = "block";
             wantToReadBooks.push(isbn);
         }
         else{
-            setRemovedOpen(true);
+            setRemovedOpenWantToRead(true);
             const snackbar = document.getElementById("removed-from-my-books-snackbar");
             snackbar.style.display = "block";
             removeItemOnce(wantToReadBooks, isbn);
@@ -110,14 +114,26 @@ export const Book = () => {
     }
 
     const handleAddedClose = () => {
-        setAddedOpen(false);
+        setAddedOpenWantToRead(false);
         const snackbar = document.getElementById("added-to-my-books-snackbar");
         snackbar.style.display = "none";
     }
 
     const handleRemovedClose = () => {
-        setRemovedOpen(false);
+        setRemovedOpenWantToRead(false);
         const snackbar = document.getElementById("removed-from-my-books-snackbar");
+        snackbar.style.display = "none";
+    }
+
+    const handleAddedRating = () => {
+        setStarsOpen(false);
+        const snackbar = document.getElementById("added-star-rating");
+        snackbar.style.display = "none";
+    }
+
+    const handleRemovedRating = () => {
+        setRemovedStarsOpen(false);
+        const snackbar = document.getElementById("removed-star-rating");
         snackbar.style.display = "none";
     }
 
@@ -210,6 +226,17 @@ export const Book = () => {
                                     value={getRating(user, book_id) && !propagatedIDs.includes(book_id) ?
                                         getRating(user, book_id) : stars}
                                     onChange={(event, newValue) => {
+                                        if (newValue !== null){
+                                            setStarsOpen(true);
+                                            const snackbar = document.getElementById("added-star-rating");
+                                            snackbar.style.display = "block";
+                                        } else {
+                                            setRemovedStarsOpen(true);
+                                            const snackbar = document.getElementById("removed-star-rating");
+                                            snackbar.style.display = "block";
+
+                                        }
+
                                         setStars(newValue);
                                         if (newValue > 2){
                                             previouslyLikedBooks.push(book_id)
@@ -224,7 +251,7 @@ export const Book = () => {
                     </Grid>
 
                     <Grid item xs  >
-                        <Button variant="contained" color={wantToRead ? "primary" : "inherit"} onClick={handleClick}>
+                        <Button variant="contained" color={wantToRead ? "primary" : "inherit"} onClick={handleWantToReadClick}>
                             Want to read
                         </Button>
                     </Grid>
@@ -250,16 +277,30 @@ export const Book = () => {
                     <MenuItem value={6}>Six</MenuItem>
                 </Select>
                 <div id="added-to-my-books-snackbar" style={{display :"none"}}>
-                    <Snackbar open={addedOpen} autoHideDuration={2000} onClose={handleAddedClose}>
+                    <Snackbar open={addedOpenWantToRead} autoHideDuration={2000} onClose={handleAddedClose}>
                         <Alert onClose={handleAddedClose} severity="success">
                             Added to My Books!
                         </Alert>
                     </Snackbar>
                 </div>
                 <div id="removed-from-my-books-snackbar" style={{display :"none"}}>
-                    <Snackbar open={removedOpen} autoHideDuration={2000} onClose={handleRemovedClose}>
+                    <Snackbar open={removedOpenWantToRead} autoHideDuration={2000} onClose={handleRemovedClose}>
                         <Alert onClose={handleRemovedClose} severity="info">
                             Removed from My Books!
+                        </Alert>
+                    </Snackbar>
+                </div>
+                <div id="added-star-rating" style={{display :"none"}}>
+                    <Snackbar open={addedStarsOpen} autoHideDuration={2000} onClose={handleAddedRating}>
+                        <Alert onClose={handleAddedRating} severity="success">
+                            Added rating!
+                        </Alert>
+                    </Snackbar>
+                </div>
+                <div id="removed-star-rating" style={{display :"none"}}>
+                    <Snackbar open={removedStarsOpen} autoHideDuration={2000} onClose={handleRemovedRating}>
+                        <Alert onClose={handleRemovedRating} severity="info">
+                            Removed rating!
                         </Alert>
                     </Snackbar>
                 </div>
