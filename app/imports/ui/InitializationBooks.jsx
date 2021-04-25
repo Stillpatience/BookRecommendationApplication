@@ -104,7 +104,6 @@ export const InitializationBooks = () => {
                     <div id="confirm-selection-button-disabled" style={{display :"block", "zIndex": 100}}>
                         <Link to={RoutePaths.RATE_AND_DISCOVER}>
                             <Button
-                                id="confirm-selection-button-disabled"
                                 type="submit"
                                 width={0.8 * window.innerWidth}
                                 variant="contained"
