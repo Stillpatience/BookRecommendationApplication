@@ -7,7 +7,7 @@ const getGenrePercentages = (book_id) => {
     const genreItems = GenresCollection.find({"id":book_id}, {}).fetch();
     const genres = [];
     genreItems.forEach(genreItem => {
-            genres.push({"name":"This book: " +genreItem["genres"], "value": (1 / genreItems.length) * 100});
+            genres.push({"name":"This book: " +genreItem["genres"], "value": 100});
         }
     )
     return genres
@@ -91,7 +91,7 @@ class DoubleBarChart extends Component {
     drawChart() {
         let genresCount = countGenresMap();
         let this_book_genres = getGenrePercentages(this.props.book_id);
-
+        console.log("this_book_genres", this_book_genres)
         const similarGenresCount = countSimilarGenres(genresCount, this.props.book_id);
         let genres = getSimilarGenres(similarGenresCount);
         if (this_book_genres.length > 0 && genres.length > 0) {

@@ -27,8 +27,7 @@ class BarChart extends Component {
         const similarGenresCount = countSimilarGenres(genresCount, this.props.book_id);
 
         let genres = getHighestCountMap(similarGenresCount);
-        console.log(genresMap)
-        console.log("Object.keys(genresMap)", Object.keys(genresMap))
+
         //sort bars based on value
         genres = genres.sort(function (a, b) {
             return d3.descending(a.value, b.value);
@@ -100,19 +99,7 @@ class BarChart extends Component {
             .attr("width", function (d) {
                 return x(d.value);
             })
-            .attr("style", "fill:rgb(117, 33, 240);stroke-width:3;")
-            .append("div")
-            .attr("class", "node-label")
-            .attr("title", (d) => {
-                const book_ids = getBooksWithGenre(d.name)
-                const textExplanation = "Found in "
-                book_ids.forEach(book_id => {
-                    let book = BooksCollection.findOne({id: parseInt(book_id)});
-                    console.log(book["title"])
-                    textExplanation.concat(book["title"])
-                })
-                return textExplanation
-            });
+            .attr("style", "fill:rgb(117, 33, 240);stroke-width:3;");
 
         //add a value label to the right of each bar
         bars.append("text")
