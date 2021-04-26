@@ -27,7 +27,7 @@ export const Settings = (props) => {
     return (
         <div >
             <FormControl component="fieldset">
-                <FormLabel component="legend">Stop receiving recommendations for following genres: </FormLabel>
+                <FormLabel component="legend">Only receive recommendations with following genres: </FormLabel>
                 <FormGroup>
                     {Genres.map(genre =>
                     <FormControlLabel

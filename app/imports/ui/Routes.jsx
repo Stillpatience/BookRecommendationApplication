@@ -22,7 +22,7 @@ import {Genres} from "./Genres";
 export const Routes = () => {
     const genreStatesMap = {}
     Genres.forEach(genre =>{
-        genreStatesMap[genre] = false
+        genreStatesMap[genre] = true
     })
     const [genreStates, setGenreState] = React.useState(genreStatesMap);
 
