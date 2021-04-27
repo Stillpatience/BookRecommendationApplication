@@ -107,6 +107,8 @@ class ArrowsExplanation extends Component {
 
         const highestRecommendation = getHighestRecommendation(ellipses)
 
+        const colors = ["#4e79a7","#f28e2c","#e15759","#76b7b2","#59a14f","#edc949","#af7aa1","#ff9da7","#9c755f","#bab0ab"]
+
         const svgEllipses = svg
             .selectAll("ellipse")
             .data(ellipses)
@@ -164,30 +166,43 @@ class ArrowsExplanation extends Component {
 
         let legend = new Set();
 
+        let colorIndex = 0
+        let colorMap = {}
+
         ellipses.forEach(ellipse => {
-                const stroke_width = ellipse["interest"] / highestInterest * 5;
-                legend.add(stroke_width)
+                const stroke_width = 5;
+                const weight = ellipse["interest"] / highestInterest * 5;
+                legend.add(weight)
+                if (typeof colorMap[weight] == 'undefined'){
+                    colorMap[weight] = colors[colorIndex++]
+                }
                 svgEllipses.append("line")
                     .attr("class", "line")
                     .attr("x1", left_ellipse_x + left_ellipse_rx)
                     .attr("y1", left_ellipse_y)
                     .attr("x2", ellipse["cx"] - ellipse["rx"])
                     .attr("y2", ellipse["cy"])
-                    .attr("style", "stroke:rgb(98, 2, 238);stroke-width:"+stroke_width);
+                    .attr("style", "stroke:" + colorMap[weight] +";stroke-width:"+stroke_width);
             }
         )
         ellipses.forEach(ellipse => {
-                const stroke_width = ellipse["recommendation"] / highestRecommendation * 5;
-                legend.add(stroke_width)
-                svgEllipses.append("line")
-                    .attr("class", "line")
-                    .attr("x1", right_ellipse_x - right_ellipse_rx)
-                    .attr("y1", right_ellipse_y)
-                    .attr("x2", ellipse["cx"] + ellipse["rx"])
-                    .attr("y2", ellipse["cy"])
-                    .attr("style", "stroke:rgb(98, 2, 238);stroke-width:"+stroke_width);
+            const stroke_width = 5;
+            const weight = ellipse["recommendation"] / highestRecommendation * 5;
+            legend.add(weight)
+            if (typeof colorMap[weight] == 'undefined') {
+                colorMap[weight] = colors[colorIndex++]
             }
-        )
+            svgEllipses.append("line")
+                .attr("class", "line")
+                .attr("x1", right_ellipse_x - right_ellipse_rx)
+                .attr("y1", right_ellipse_y)
+                .attr("x2", ellipse["cx"] + ellipse["rx"])
+                .attr("y2", ellipse["cy"])
+                .attr("style", "stroke:" + colorMap[weight] +";stroke-width:"+stroke_width);
+        })
+
+
+        console.log("colorMap", colorMap)
 
         let height_offset = 0;
 
@@ -207,9 +222,9 @@ class ArrowsExplanation extends Component {
             .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
             .text("Link strength");
 
-        legend.forEach(strokewidth => {
+        legend.forEach(weight => {
             height_offset += 20;
-
+            const stroke_width = 5;
             svgEllipses.append("line")
                 .attr("class", "line")
                 .attr("x1", right_ellipse_x - right_ellipse_rx + 40)
@@ -220,9 +235,9 @@ class ArrowsExplanation extends Component {
                 .attr("shape-rendering", "crispEdges")
                 .attr("stroke", "none")
                 .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
-                .attr("style", "stroke:rgb(98, 2, 238);stroke-width:"+strokewidth);
+                .attr("style", "stroke:" + colorMap[weight] +";stroke-width:"+stroke_width);
 
-            const linkStrength = strokewidth / 5 * 100;
+            const linkStrength = weight / 5 * 100;
             let string = linkStrength.toString();
             if (string !== "100"){
                 string = string.slice(0, 2);
