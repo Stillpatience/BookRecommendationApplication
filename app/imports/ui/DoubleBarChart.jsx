@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import * as d3 from "d3";
 import {countSimilarGenres, countGenresMap} from "../utils/utils";
 import {GenresCollection} from "../api/links";
+import {genresMap} from "./Books";
 
 const getGenrePercentages = (book_id) => {
     const genreItems = GenresCollection.find({"id":book_id}, {}).fetch();
@@ -21,10 +22,11 @@ const getSimilarGenres = (genresCount) => {
             total_amount_of_genres += genresCount[key];
         }
     }
+
     for (const key in genresCount) {
         if (genresCount.hasOwnProperty(key)) {
 
-            let new_value = Math.floor((genresCount[key]/total_amount_of_genres) * 100)
+            let new_value = Math.floor((genresCount[key]/Object.keys(genresMap).length) * 100)
             newMap.push({"name":"Your taste: " + key, "value": new_value})
         }
     }
@@ -91,7 +93,7 @@ class DoubleBarChart extends Component {
     drawChart() {
         let genresCount = countGenresMap();
         let this_book_genres = getGenrePercentages(this.props.book_id);
-        console.log("this_book_genres", this_book_genres)
+
         const similarGenresCount = countSimilarGenres(genresCount, this.props.book_id);
         let genres = getSimilarGenres(similarGenresCount);
         if (this_book_genres.length > 0 && genres.length > 0) {
