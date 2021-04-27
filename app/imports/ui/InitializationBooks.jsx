@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {RoutePaths} from "./RoutePaths";
 import {BooksCollection} from "../api/links";
 import {useStyles} from "./styles";
@@ -9,7 +9,8 @@ import Typography from "@material-ui/core/Typography";
 import CheckIcon from '@material-ui/icons/Check';
 import {getShortTitle} from "./Books";
 import * as d3 from "d3";
-import {Paper} from "@material-ui/core";
+import {Paper, Snackbar} from "@material-ui/core";
+import {Alert} from "@material-ui/lab";
 
 export const InitializationBooks = () => {
     const classes = useStyles();
@@ -21,8 +22,21 @@ export const InitializationBooks = () => {
     books = books.sort(function (a, b) {
         return d3.ascending(a["title"], b["title"]);
     })
+    const [selectMoreOpen, setSelectMoreOpen] = useState(false)
 
+    const handleDisabledButtonClicked = () => {
+        setSelectMoreOpen(true)
+        const selectMoreButton =
+            document.getElementById( "select-more-snackbar");
+        selectMoreButton.style.display = "block"
+    }
 
+    const handleSelectMoreClose = () => {
+        setSelectMoreOpen(false);
+        const selectMoreButton =
+            document.getElementById( "select-more-snackbar");
+        selectMoreButton.style.display = "none"
+    }
     let enoughBooks = false;
 
     return (
@@ -102,18 +116,15 @@ export const InitializationBooks = () => {
                 </div>
                 <div>
                     <div id="confirm-selection-button-disabled" style={{display :"block", "zIndex": 100}}>
-                        <Link to={RoutePaths.RATE_AND_DISCOVER}>
-                            <Button
-                                type="submit"
-                                width={0.8 * window.innerWidth}
-                                variant="contained"
-                                disabled
-                                color="primary"
-                                className={classes.bottom_fixed}
-                            >
-                                Confirm selection
-                            </Button>
-                        </Link>
+                        <Button
+                            type="submit"
+                            width={0.8 * window.innerWidth}
+                            variant="contained"
+                            className={classes.bottom_fixed}
+                            onClick={handleDisabledButtonClicked}
+                        >
+                            Confirm selection
+                        </Button>
                     </div>
                     <div id="confirm-selection-button-enabled" style={{display :"none",  "zIndex": 100}}>
                         <Link to={RoutePaths.RATE_AND_DISCOVER}>
@@ -127,6 +138,13 @@ export const InitializationBooks = () => {
                                 Confirm selection
                             </Button>
                         </Link>
+                    </div>
+                    <div id="select-more-snackbar" style={{display :"none"}}>
+                        <Snackbar open={selectMoreOpen} autoHideDuration={2000} onClose={handleSelectMoreClose}>
+                            <Alert onClose={handleSelectMoreClose} severity="warning">
+                                Please select at least 5 books you like!
+                            </Alert>
+                        </Snackbar>
                     </div>
                 </div>
             </div>
