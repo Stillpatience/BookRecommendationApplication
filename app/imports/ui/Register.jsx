@@ -86,7 +86,7 @@ export const Register = (props) => {
                         onClick={handleClicked}
                     />
                     <Typography variant="body2" color={checked ? "primary" : "error"}  display="inline">
-                        I agree to the <Link to={RoutePaths.TERMS_AND_CONDITIONS}>terms & conditions </Link>
+                        I agree to the <Link to={RoutePaths.TERMS_AND_CONDITIONS} target='_blank'>terms & conditions </Link>
                     </Typography>
                     <ConditionalLink to={RoutePaths.SETUP} condition={checked}>
                         <Button
