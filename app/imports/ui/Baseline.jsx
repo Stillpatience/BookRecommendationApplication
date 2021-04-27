@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import * as d3 from "d3";
 import {BooksCollection} from "../api/links";
-import {previouslyLikedBooks} from "../utils/utils";
+import {previousRecommendations} from "../utils/utils";
 import {getShortTitle} from "./Books";
 
 class Baseline extends Component {
@@ -10,7 +10,8 @@ class Baseline extends Component {
     }
 
     drawChart(){
-        const amountOfBooks = Object.keys(previouslyLikedBooks).length;
+        const amountOfBooks = previousRecommendations[this.props.book_id] ?
+            Object.keys(previousRecommendations[this.props.book_id]).length : 0;
         const w = 0.9 * window.innerWidth;
         const booksPerLine = Math.floor(w / 98);
         const amountOfLines = Math.ceil(amountOfBooks / booksPerLine)
@@ -44,13 +45,13 @@ class Baseline extends Component {
             .attr("dy", ".35em")
             .attr("font-size", "1em")
             .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
-            .text("Other books you have liked previously: ")
+            .text("Related books you have liked previously: ")
 
         let x_img = 0
         let current_width = 0
         let x = 0
 
-        previouslyLikedBooks.forEach(book_id => {
+        previousRecommendations[this.props.book_id]?.forEach(book_id => {
             let book = BooksCollection.find({"id":parseInt(book_id)}, {}).fetch();
             let book_title = getShortTitle(book[0]);
             let image_url = "/" + book_id + ".jpg";

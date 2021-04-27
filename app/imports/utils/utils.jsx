@@ -36,21 +36,28 @@ export let recommendedBooks = [];
 
 export let previouslyLikedBooks = [];
 
+export let previousRecommendations = {};
+
 export const updateRecommendations = (similarBooksList1, books) => {
-     let newlyRecommendedBooks = [];
+    let newlyRecommendedBooks = [];
+    const similar_strings = ["similar1", "similar2", "similar3", "similar4", "similar5"];
     selectedBooks.forEach(selectedBook =>{
          let similarBooksList = SimilarBooksCollection.find({"id":selectedBook}).fetch();
-
          similarBooksList.forEach(similarBook => {
              if (similarBook["id"] === selectedBook){
-                 newlyRecommendedBooks.push(getBookFromID(similarBook["similar1"], books));
-                 newlyRecommendedBooks.push(getBookFromID(similarBook["similar2"], books));
-                 newlyRecommendedBooks.push(getBookFromID(similarBook["similar3"], books));
-                 newlyRecommendedBooks.push(getBookFromID(similarBook["similar4"], books));
-                 newlyRecommendedBooks.push(getBookFromID(similarBook["similar5"], books));
+                 similar_strings.forEach(similar_string => {
+                     newlyRecommendedBooks.push(getBookFromID(similarBook[similar_string], books));
+                     if (typeof previousRecommendations[similarBook[similar_string]] !== 'undefined'
+                         && !previousRecommendations[similarBook[similar_string]].includes(selectedBook)){
+                        previousRecommendations[similarBook[similar_string]].push(selectedBook);
+                     } else {
+                         previousRecommendations[similarBook[similar_string]] = [selectedBook];
+                     }
+                 })
              }
          })
      })
+    console.log("previousRecommendations1", previousRecommendations)
     newlyRecommendedBooks.forEach(book => {
          if (typeof book == 'undefined'){
 
@@ -67,12 +74,12 @@ export const updateRecommendations = (similarBooksList1, books) => {
 
     for (let key in ratings) {
         let res = key.split(",");
-        let book_id = parseInt(res[1]);
+        let og_book_id = parseInt(res[1]);
         let user = parseInt(res[0]);
         let rating = parseFloat(ratings[key]);
 
-        if (newlyRatedBooks.includes(book_id)){
-            const similarBooks = SimilarBooksCollection.findOne({"id":book_id});
+        if (newlyRatedBooks.includes(og_book_id)){
+            const similarBooks = SimilarBooksCollection.findOne({"id":og_book_id});
             const similars = ["similar1", "similar2", "similar3", "similar4", "similar5"];
             if (rating >= 3) {
                 similars.forEach(similarString => {
@@ -83,11 +90,17 @@ export const updateRecommendations = (similarBooksList1, books) => {
                     } else {
                         setRating(user, book_id, rating, true);
                     }
+                    if (typeof previousRecommendations[book_id] !== 'undefined' && !previousRecommendations[book_id].includes(og_book_id)){
+                        previousRecommendations[book_id].push(og_book_id);
+                    } else {
+                        previousRecommendations[book_id] = [og_book_id];
+                    }
                 });
                 newlyRatedBooks = [];
             }
         }
     }
+    console.log("previousRecommendations2", previousRecommendations)
 
     let items = Object.keys(ratings).map(function(key) {
         return [key, ratings[key]];
