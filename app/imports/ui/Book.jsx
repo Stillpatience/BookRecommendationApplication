@@ -28,6 +28,7 @@ import ArrowsExplanation from "./ArrowsExplanation";
 import Baseline from "./Baseline";
 import {useStyles} from "./styles";
 import {Alert} from "@material-ui/lab";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const showFullDescription = () => {
     const fullDescription = document.getElementById("full-description");
@@ -148,6 +149,9 @@ export const Book = () => {
         <div>
             <Card >
                 <div className={classes.flex_header} style={{backgroundColor: "rgb(98, 2, 238)", color: 'white'}}>
+                    <div>
+                        <Link to={RoutePaths.RATE_AND_DISCOVER}><ArrowBackIcon style={{ color: 'white'}}/></Link>
+                    </div>
                     <div className={classes.right}>
                     <CardMedia
                         title={getShortTitle(book)}
@@ -172,9 +176,7 @@ export const Book = () => {
 
                     </div>
 
-                <div>
-                    <Link to={RoutePaths.RATE_AND_DISCOVER}><CloseIcon style={{ color: 'white'}}/></Link>
-                </div>
+
                 </div>
                 <div className={classes.flex_header} style={{backgroundColor: "rgb(98, 2, 238)", color: 'white'}}>
                     {short_description === full_description ?
