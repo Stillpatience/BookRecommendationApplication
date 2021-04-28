@@ -11,6 +11,7 @@ import {getShortTitle} from "./Books";
 import * as d3 from "d3";
 import {Paper, Snackbar} from "@material-ui/core";
 import {Alert} from "@material-ui/lab";
+import ClearIcon from '@material-ui/icons/Clear';
 
 export const InitializationBooks = () => {
     const classes = useStyles();
@@ -42,11 +43,24 @@ export const InitializationBooks = () => {
     return (
         <div>
             <div>
-                <Paper className={classes.fixed_header} style={{backgroundColor: "rgb(98, 2, 238)", color: 'white', "zIndex": 100}}>
-                    <Typography id="amount-of-books-selected" component="h5" style={{color: 'red'}}>
-                        Selected 0/5 books.
-                    </Typography>
-                </Paper>
+                    <Paper className={classes.fixed_header} style={{backgroundColor: "rgb(98, 2, 238)", color: 'white', "zIndex": 100}}>
+                        <div style={{display: "flex"}}>
+                            <div>
+
+                                <Typography id="amount-of-books-selected" component="h5" >
+                                    Selected 0/5 books.
+                                </Typography>
+                            </div>
+
+                            <div id={"selection-clear-icon"} style={{color: 'red'}}>
+                                <ClearIcon />
+                            </div>
+                            <div id={"selection-ok-icon"} style={{"display": "none"}}>
+                                <CheckIcon />
+                            </div>
+                        </div>
+                    </Paper>
+
             </div>
 
             <div id="initialization-books-div" style={{"marginBottom": "4rem", "marginTop": "4rem"}}>
@@ -80,11 +94,15 @@ export const InitializationBooks = () => {
                                         }
                                         const countElement = document.getElementById("amount-of-books-selected");
                                         countElement.innerText = "Selected " + selectedBooks.length.toString() + "/5 books";
+                                        const okElement = document.getElementById("selection-ok-icon");
+                                        const notOkElement = document.getElementById("selection-clear-icon");
                                         if (selectedBooks.length >= 5) {
-                                            countElement.style.color = "white"
+                                            okElement.style.display = "block"
+                                            notOkElement.style.display = "none"
                                         }
                                         else {
-                                            countElement.style.color = "red"
+                                            okElement.style.display = "none"
+                                            notOkElement.style.display = "block"
                                         }
                                         enoughBooks = selectedBooks.length >= 5;
                                         if (enoughBooks) {
