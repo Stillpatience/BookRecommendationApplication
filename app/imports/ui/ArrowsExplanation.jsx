@@ -72,7 +72,7 @@ class ArrowsExplanation extends Component {
         let genreScores = getGenreScores(genres_in_book, genresCount);
 
 
-        const newHeight = genreScores.length * 100;
+        const newHeight = genreScores.length * 100 + 60;
 
         const width = 0.8 * window.innerWidth,
             height = newHeight;
@@ -208,7 +208,7 @@ class ArrowsExplanation extends Component {
         if (ellipses.length > 0) {
             height_offset = ellipses[ellipses.length - 1]["cy"];
         }
-        height_offset += 20;
+        height_offset += 0;
 
         svgEllipses.append("text")
             .attr("class", "label")
