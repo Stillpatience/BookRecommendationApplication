@@ -3,7 +3,7 @@ import {RoutePaths} from "./RoutePaths";
 import {BooksCollection, GenresCollection} from "../api/links";
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
+import BrowserInteractionTime from 'browser-interaction-time'
 import {Link} from "react-router-dom";
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
@@ -47,7 +47,14 @@ const showShortDescription = () => {
 }
 
 export const Book = () => {
-
+    const browserInteractionTime = new BrowserInteractionTime({
+        timeIntervalEllapsedCallbacks: [],
+        absoluteTimeEllapsedCallbacks: [],
+        browserTabInactiveCallbacks: [],
+        browserTabActiveCallbacks: [],
+        idleTimeoutMs: 3000,
+        checkCallbacksIntervalMs: 250
+    })
     const classes = useStyles();
 
     const user = 1;
@@ -99,6 +106,11 @@ export const Book = () => {
     };
 
     const handleNumberClick = (number) => {
+        browserInteractionTime.stopTimer()
+        console.log("Time spent", browserInteractionTime.getTimeInMilliseconds() / 1000)
+        browserInteractionTime.reset()
+        browserInteractionTime.startTimer()
+        console.log("Started with visualization ", number)
         const div = document.getElementById("visualizations-div");
         div.style.marginBottom = "0";
         for (let key in visualizationsMap) {

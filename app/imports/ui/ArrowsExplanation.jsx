@@ -202,7 +202,6 @@ class ArrowsExplanation extends Component {
         })
 
 
-        console.log("colorMap", colorMap)
 
         let height_offset = 0;
 

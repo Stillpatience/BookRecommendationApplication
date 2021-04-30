@@ -57,7 +57,6 @@ export const updateRecommendations = (similarBooksList1, books) => {
              }
          })
      })
-    console.log("previousRecommendations1", previousRecommendations)
     newlyRecommendedBooks.forEach(book => {
          if (typeof book == 'undefined'){
 
@@ -100,7 +99,6 @@ export const updateRecommendations = (similarBooksList1, books) => {
             }
         }
     }
-    console.log("previousRecommendations2", previousRecommendations)
 
     let items = Object.keys(ratings).map(function(key) {
         return [key, ratings[key]];
