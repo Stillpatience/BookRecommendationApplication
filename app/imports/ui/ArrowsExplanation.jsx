@@ -86,7 +86,9 @@ class ArrowsExplanation extends Component {
             .attr("id", "arrows")
             .style("display", "none")
             .append("g")
-
+        genreScores.sort(function(first, second) {
+            return second["interest"] - first["interest"];
+        });
         genreScores.forEach( genreScore =>
             {
                 ellipses.push({
@@ -104,10 +106,13 @@ class ArrowsExplanation extends Component {
 
         const highestInterest = getHighestInterest(ellipses);
 
-
         const highestRecommendation = getHighestRecommendation(ellipses)
 
         const colors = ["#4e79a7","#f28e2c","#e15759","#76b7b2","#59a14f","#edc949","#af7aa1","#ff9da7","#9c755f","#bab0ab"]
+
+        ellipses.sort(function(first, second) {
+            return second["interest"] - first["interest"];
+        });
 
         const svgEllipses = svg
             .selectAll("ellipse")
@@ -169,9 +174,16 @@ class ArrowsExplanation extends Component {
         let colorIndex = 0
         let colorMap = {}
 
+
+        console.log("items", ellipses)
+
+        console.log("ellipses", ellipses)
+
         ellipses.forEach(ellipse => {
                 const stroke_width = 5;
                 const weight = ellipse["interest"] / highestInterest * 5;
+                console.log("highestInterest", highestInterest)
+                console.log("interest weight", weight)
                 legend.add(weight)
                 if (typeof colorMap[weight] == 'undefined'){
                     colorMap[weight] = colors[colorIndex++]
