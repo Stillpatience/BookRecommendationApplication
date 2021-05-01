@@ -55,9 +55,21 @@ class OtherBookExplanation extends Component {
             .style("font-family" , '"Roboto", "Helvetica", "Arial", sans-serif')
             .text("Other books you read contain the same genres: ")
 
-        for (const key in genresToBooks) {
-            if (genresToBooks.hasOwnProperty(key)) {
-                const books = genresToBooks[key];
+        const items = Object.keys(genresToBooks).map(function(key) {
+            return [key, genresToBooks[key]];
+        });
+        items.sort(function(first, second) {
+            return second[1].length - first[1].length;
+        });
+        let genresToBooksNew = {}
+        items.forEach(item => {
+            genresToBooksNew[item[0]] = item[1]
+        })
+
+        let amountOfGenres = 0;
+        for (const key in genresToBooksNew) {
+            if (genresToBooksNew.hasOwnProperty(key) && amountOfGenres++ < 3) {
+                const books = genresToBooksNew[key];
                 let y_title = y
                 const fo = svg.append("foreignObject")
                     .attr("x", 0)
